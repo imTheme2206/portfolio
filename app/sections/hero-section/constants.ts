@@ -31,18 +31,19 @@ export const heroImages: ImageData[] = [
     height: 470,
   },
   {
-    alt: "Hero Image 1",
+    alt: "",
     width: 520,
     height: 870,
   },
   {
-    alt: "blank",
+    src: undefined,
+    alt: "Software Engineer",
     width: 520,
-    height: 570,
+    height: 670,
   },
   {
     src: undefined,
-    alt: "blank",
+    alt: "Coffee Enjoyer",
     width: 320,
     height: 570,
   },
@@ -51,7 +52,7 @@ export const heroImages: ImageData[] = [
     src: "/assets/images/hero-section/hero-5.webp",
     alt: "Hero Image 4",
     width: 520,
-    height: 1070,
+    height: 1270,
   },
   {
     // src: undefined,
@@ -65,7 +66,7 @@ export const heroImages: ImageData[] = [
     src: "/assets/images/hero-section/hero-5.webp",
     alt: "Hero Image 5",
     width: 560,
-    height: 1075,
+    height: 1220,
   },
   {
     src: "/assets/images/hero-section/hero-1.webp",
@@ -78,6 +79,6 @@ export const heroImages: ImageData[] = [
     src: "/assets/images/hero-section/hero-5.webp",
     alt: "Hero Image 5",
     width: 560,
-    height: 1075,
+    height: 475,
   },
 ] as const;

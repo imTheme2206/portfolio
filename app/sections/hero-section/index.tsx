@@ -13,32 +13,40 @@ export const HeroIndex = () => {
   );
 
   return (
-    <div id="hero-section" className="mx-auto relative">
-      <div className="w-full gap-16 flex overflow-hidden">
-        <ParallaxContainer>
-          <div
-            ref={containerRef}
-            className="col-span-4 grid grid-cols-4 auto-rows-[10px] gap-4 grid-flow-dense"
-          >
-            {heroImages.map((img, i) => (
-              <ParallaxImageComponent
-                key={`${img.src}-${i}`}
-                registerLayer={delegate?.registerLayer}
-                width={img.width}
-                height={img.height}
-                src={img.src}
-                alt={img.alt}
-                index={i}
-              />
-            ))}
-          </div>
-        </ParallaxContainer>
-      </div>
-      <div className="absolute inset-0 lg:-bottom-160 z-50 flex justify-center items-center px-20 font-bold pointer-events-none">
-        <div>
-          <div className="uppercase text-5xl sm:text-5xl md:text-6xl xl:text-[9rem] lg:flex lg:gap-x-6 xl:gap-x-20 flex-wrap xl:flex-nowrap justify-center">
-            <Marquee items={["Worrachit", "Pongkatekarm", "-"]} />
-          </div>
+    <div
+      id="hero-section"
+      className="mx-auto relative w-screen h-screen overflow-hidden"
+    >
+      <ParallaxContainer>
+        <div
+          ref={containerRef}
+          className="absolute inset-0 h-full w-full overflow-hidden grid grid-cols-2 md:grid-cols-4 auto-rows-[10px] gap-5 grid-flow-dense"
+        >
+          {heroImages.map((img, i) => (
+            <ParallaxImageComponent
+              key={`${img.src}-${i}`}
+              registerLayer={delegate?.registerLayer}
+              width={img.width}
+              height={img.height}
+              src={img.src}
+              alt={img.alt}
+              index={i}
+            />
+          ))}
+        </div>
+      </ParallaxContainer>
+      <div className="absolute inset-0 -bottom-180 lg:-bottom-200 z-50 flex justify-center items-center px-20 font-bold pointer-events-none">
+        <div className="justify-center">
+          <Marquee
+            items={[
+              "Worrachit",
+              "Pongkatekarm",
+              "—",
+              "Worrachit",
+              "Pongkatekarm",
+              "—",
+            ]}
+          />
         </div>
       </div>
     </div>

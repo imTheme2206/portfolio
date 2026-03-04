@@ -7,6 +7,7 @@ import ReactLenis from "lenis/react";
 import { useLayoutEffect, useRef } from "react";
 import { Gap } from "./components/gap";
 import { NavBar } from "./components/navigation-bar";
+import { Experiences } from "./sections/experiences-section";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, Flip);
 export default function Home() {
@@ -23,19 +24,21 @@ export default function Home() {
   }, []);
   return (
     <>
-      <ReactLenis root options={{ autoRaf: false }} ref={lenisRef} />
-      <main>
-        <NavBar />
-        <div className="w-dvw">
-          <HeroIndex />
-        </div>
-        <Gap size="xl" />
-        {/*<About />
+      <ReactLenis root options={{ autoRaf: false }} ref={lenisRef}>
+        <main>
+          <NavBar />
+          <div className="w-dvw">
+            <HeroIndex />
+          </div>
+          <Gap size="xl" />
+          {/*<About />
         <Gap size="lg" />
         <Projects />
         <Gap size="lg" />
-        <Experiences />*/}
-      </main>
+        */}
+          <Experiences />
+        </main>
+      </ReactLenis>
     </>
   );
 }

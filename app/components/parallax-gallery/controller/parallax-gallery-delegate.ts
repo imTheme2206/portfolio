@@ -8,7 +8,7 @@ export type Layer = {
 export class ParallaxGalleryDelegate implements ParallaxDelegate {
   private layers: Layer[] = [];
   private bounds: DOMRect | null = null;
-  private readonly SCALE = 1.15;
+  private readonly SCALE = 1.1;
 
   constructor(private container: HTMLElement) {}
 

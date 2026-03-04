@@ -17,18 +17,16 @@ export const ParallaxContainer = (props: {
   return (
     <div
       ref={containerRef}
-      className="max-w-full w-full grid place-items-center h-full"
+      className="w-full grid place-items-center h-full"
       style={{
-        scale: 1.15,
+        scale: 1.1,
       }}
     >
       <div
         ref={contentRef}
-        className="w-full h-full relative px-16 py-16 grid gap-16 mr-auto"
+        className="w-full relative px-16 py-16 grid gap-16 mr-auto"
       >
-        <div className="max-h-[40dvh] md:max-h-[60dvh] xl:max-h-[90vh] overflow-hidden">
-          {props.children}
-        </div>
+        <div className="h-screen">{props.children}</div>
       </div>
     </div>
   );

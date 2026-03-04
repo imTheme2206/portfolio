@@ -34,9 +34,8 @@ const horizontalLoop = (
     widths: number[] = [],
     xPercents: number[] = [],
     curIndex = 0,
-    pixelsPerSecond = (config.speed || 1) * 100,
-    snap =
-      config.snap === false ? (v: any) => v : gsap.utils.snap(config.snap || 1), // some browsers shift by a pixel to accommodate flex layouts, so for example if width is 20% the first element's width might be 242px, and the next 243px, alternating back and forth. So we snap to 5 percentage points to make things look more natural
+    pixelsPerSecond = (config.speed || 1) * 80,
+    snap = gsap.utils.snap(config.snap || 1), // some browsers shift by a pixel to accommodate flex layouts, so for example if width is 20% the first element's width might be 242px, and the next 243px, alternating back and forth. So we snap to 5 percentage points to make things look more natural
     totalWidth,
     curX,
     distanceToStart,
@@ -151,8 +150,10 @@ export const Marquee = ({
       // smoother timeScale control
       const quickTimeScale = gsap.quickTo(tl, "timeScale", {
         duration: 0.4,
-        ease: "power3",
+        ease: "power2",
       });
+
+      let storedDirection = 1;
 
       Observer.create({
         target: window,
@@ -160,11 +161,13 @@ export const Marquee = ({
         onChangeY(self) {
           const velocity = self.velocityY;
           const direction = velocity < 0 ? -1 : 1;
+          storedDirection = direction;
+          const boost = gsap.utils.clamp(1, 4, 1 + Math.abs(velocity) / 1500);
 
-          quickTimeScale(direction * (1 + Math.abs(velocity) / 1000));
+          quickTimeScale(direction * boost);
         },
         onStop() {
-          quickTimeScale(reverse ? -1 : 1);
+          quickTimeScale(storedDirection);
         },
       });
     }, containerRef);
@@ -173,15 +176,12 @@ export const Marquee = ({
   }, [speed, reverse]);
 
   return (
-    <div
-      ref={containerRef}
-      className="overflow-hidden w-full flex items-center"
-    >
+    <div ref={containerRef} className=" w-full flex items-center">
       <div ref={railRef} className="flex will-change-transform">
-        {[...items, ...items].map((text, i) => (
+        {items.map((text, i) => (
           <h4
             key={i}
-            className={`whitespace-nowrap leading-none mr-24 text-white ${fontSize}`}
+            className={`whitespace-nowrap leading-none text-white flex mr-14 ${fontSize}`}
           >
             {text}
           </h4>

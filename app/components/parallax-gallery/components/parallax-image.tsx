@@ -1,9 +1,6 @@
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import {
-  ParallaxGalleryDelegate,
-  type Layer,
-} from "../controller/parallax-gallery-delegate";
+import { ParallaxGalleryDelegate } from "../controller/parallax-gallery-delegate";
 import { useParallaxEngine } from "../hooks/use-parallax";
 
 export type ImageData = {
@@ -55,6 +52,12 @@ export const ParallaxImageComponent = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!src) {
+      setLoaded(true);
+    }
+  }, []);
 
   // Calculate column span based on width - wider images span more columns out of 4
   const colSpan = width && width > 800 ? 2 : 1;
@@ -130,8 +133,8 @@ export const ParallaxImageComponent = ({
           onLoad={() => setLoaded(true)}
           className="w-full h-full object-cover absolute inset-0 will-change-transform transition-[filter,opacity] duration-500 ease-out"
           style={{
-            // transform: "scale(1.15)",
-            scale: 1.15,
+            // transform: "scale(1)",
+            scale: 1.1,
             opacity: loaded ? 1 : 0,
           }}
           width={width}
@@ -139,7 +142,9 @@ export const ParallaxImageComponent = ({
           src={src}
         />
       ) : (
-        <div className="w-full h-full bg-zinc-800"></div>
+        <div className="w-full h-full bg-zinc-800 text-white grid place-items-center text-2xl uppercase">
+          {alt}
+        </div>
       )}
     </div>
   );

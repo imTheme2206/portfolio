@@ -2,7 +2,7 @@ import type { ParallaxDelegate } from "./parallax-engine";
 
 export class ParallaxContainerDelegate implements ParallaxDelegate {
   private bounds: DOMRect | null = null;
-  private containerScale = 1.15;
+  private containerScale = 1.1;
 
   constructor(
     private container: HTMLElement,
