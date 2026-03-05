@@ -32,7 +32,7 @@ export const NavBar = () => {
       {
         ...commonAnimationEasing,
         // backgroundColor: "rgba(11,11,11,0.2)",
-        backdropFilter: "blur(10px)",
+        // backdropFilter: "blur(10px)",
         pointerEvents: "auto",
       },
       0,

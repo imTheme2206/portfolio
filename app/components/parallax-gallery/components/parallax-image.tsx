@@ -142,7 +142,7 @@ export const ParallaxImageComponent = ({
           src={src}
         />
       ) : (
-        <div className="w-full h-full bg-zinc-800 text-white grid place-items-center text-2xl uppercase">
+        <div className="w-full h-full bg-zinc-800 text-primary grid place-items-center text-2xl uppercase">
           {alt}
         </div>
       )}

@@ -4,10 +4,14 @@ import gsap from "gsap";
 
 type AnimatedTextProps = {
   text: string;
+  flow?: "horizontal" | "vertical";
   className?: string;
 };
 
-export const AnimatedText = (props: AnimatedTextProps) => {
+export const AnimatedText = ({
+  flow = "vertical",
+  ...props
+}: AnimatedTextProps) => {
   const containerRef = useRef(null);
   const lineRefs = useRef<HTMLSpanElement[]>([]);
   const lines = props.text.split("\\n").filter((l) => l.trim() !== "");
@@ -15,11 +19,12 @@ export const AnimatedText = (props: AnimatedTextProps) => {
   useGSAP(() => {
     if (lineRefs.current.length > 0) {
       gsap.from(lineRefs.current, {
-        y: 100,
+        x: flow === "horizontal" ? 100 : undefined,
+        y: flow === "vertical" ? 100 : undefined,
         opacity: 0,
         duration: 1,
-        stagger: 0.3,
-        ease: "back.out",
+        stagger: 0.1,
+        ease: "power1.out",
         scrollTrigger: {
           trigger: containerRef.current,
         },

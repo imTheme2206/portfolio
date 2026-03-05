@@ -6,6 +6,7 @@ import {
   useParallaxEngine,
 } from "../../components/parallax-gallery";
 import { heroImages } from "./constants";
+import { AnimatedHeader } from "@/app/components/animated-header";
 
 export const HeroIndex = () => {
   const { containerRef, delegate } = useParallaxEngine(
@@ -35,18 +36,35 @@ export const HeroIndex = () => {
           ))}
         </div>
       </ParallaxContainer>
-      <div className="absolute inset-0 -bottom-180 lg:-bottom-200 z-50 flex justify-center items-center px-20 font-bold pointer-events-none">
+      <div className="absolute inset-0 top-200 z-999 pointer-events-none">
+        <AnimatedHeader
+          // title="test"
+          subtitle="Software Engineer"
+          text={`Hi, I'm just a Frontend enthusiast. \\n I enjoy coding with a home-brew coffee \\n I also goes with the name \\"Theme!"`}
+          withScrollTrigger={false}
+          textFlow="horizontal"
+          disableFlyMotion
+        />
+      </div>
+      <div className="absolute inset-0 -bottom-180 lg:-bottom-190 z-999 flex justify-center items-center px-20 font-bold pointer-events-none">
         <div className="justify-center">
-          <Marquee
-            items={[
+          <Marquee>
+            {[
               "Worrachit",
               "Pongkatekarm",
               "—",
               "Worrachit",
               "Pongkatekarm",
               "—",
-            ]}
-          />
+            ].map((text, index) => (
+              <h4
+                key={index}
+                className={`whitespace-nowrap leading-none text-primary flex text-[120px] md:text-[200px] mr-24`}
+              >
+                {text}
+              </h4>
+            ))}
+          </Marquee>
         </div>
       </div>
     </div>

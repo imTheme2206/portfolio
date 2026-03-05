@@ -1,150 +1,110 @@
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useRef } from "react";
-
+import { AnimatedHeader } from "@/app/components/animated-header";
+import { workExperiences } from "@/app/constants";
 export const Experiences = () => {
-  const sectionRef = useRef<HTMLTableSectionElement | null>(null);
-  const trackRef = useRef<HTMLDivElement | null>(null);
+  const text = `I build secure, high-performance full-stack apps
+    with smooth UX to drive growth
+    not headaches.`;
+  const serviceRefs = useRef<HTMLDivElement[]>([]);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isDesktop = true;
+  useGSAP(() => {
+    const tl = gsap.timeline();
 
-  // useGSAP(
-  //   () => {
-  //     const scrollContents =
-  //       gsap.utils.toArray<HTMLElement>(".scroll-contents");
-  //     const totalSlides = scrollContents.length;
-  //     const slidePercent = 100 / totalSlides;
+    tl.from(containerRef.current, {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top 90%",
+        end: "+=150 90%",
+        scrub: 1,
+      },
+      scale: 0.93,
+    });
 
-  //     const tl = gsap.timeline({
-  //       scrollTrigger: {
-  //         trigger: sectionRef.current,
-  //         start: "top top",
-  //         end: `+=${window.innerWidth * totalSlides}`,
-  //         scrub: 0.5,
-  //         pin: true,
-  //         anticipatePin: 1,
-  //       },
-  //     });
+    // gsap.from(containerRef.current, {
+    //   scrollTrigger: {
+    //     trigger: containerRef.current,
+    //     start: "top 90%",
+    //     end: "+=150 90%",
+    //     scrub: 1,
+    //   },
+    //   scale: 0.95,
+    // });
 
-  //     for (let i = 0; i < totalSlides; i++) {
-  //       const from = -slidePercent * i;
-  //       const to = -slidePercent * (i + 1);
-  //       const mid = (from + to) / 2;
-
-  //       // resist zone: slow crawl out of the current card position
-  //       tl.fromTo(
-  //         trackRef.current,
-  //         { xPercent: from },
-  //         { xPercent: mid, duration: 0.7, ease: "power3.in" },
-  //       );
-
-  //       // release zone: fast movement into the next card position
-  //       tl.to(trackRef.current, {
-  //         xPercent: to,
-  //         duration: 0.3,
-  //         ease: "power1.out",
-  //       });
-  //     }
-  //   },
-  //   { scope: sectionRef },
-  // );
-
-  useGSAP(
-    () => {
-      const scrollContents =
-        gsap.utils.toArray<HTMLElement>(".scroll-contents");
-      const totalSlides = scrollContents.length;
-
-      gsap.to(trackRef.current, {
-        xPercent: -(100 * totalSlides),
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: `+=${window.innerWidth * totalSlides}`,
-          scrub: 0.5,
-          pin: true,
-          anticipatePin: 1,
-        },
-      });
-    },
-    { scope: sectionRef },
-  );
-
+    gsap.from(contentRef.current, {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "+=150 bottom",
+        scrub: 1,
+        pin: true,
+        pinSpacing: true,
+      },
+      xPercent: 100,
+    });
+  }, []);
   return (
-    <section className="relative overflow-hidden">
-      <section ref={sectionRef} className="relative h-screen overflow-hidden">
-        <div className=" absolute top-50 left-20 text-7xl">WORK EXP</div>
-        <div
-          ref={trackRef}
-          className="flex h-full items-center will-change-transform"
-        >
-          <div className="scroll-contents min-w-svw min-h-svh"></div>
-          {[1, 2, 3].map((i) => (
+    <section
+      data-cursor="experience"
+      className="min-h-screen text-primary-foreground flex justify-center"
+    >
+      <div
+        ref={containerRef}
+        className="bg-popover-foreground w-full rounded-4xl"
+      >
+        <AnimatedHeader
+          subtitle={"Behind the scene, Beyond the screen"}
+          title={"Experiences"}
+          text={text}
+          withScrollTrigger={false}
+        />
+        <div ref={contentRef} className="">
+          {workExperiences.map((service, index) => (
             <div
-              key={i}
-              className="scroll-contents card min-w-svw min-h-svh rounded-2xl border-2 border-stone-800 backdrop-blur-md border-solid flex items-center justify-center text-6xl font-bold text-white"
+              // ref={(el) => {
+              //   serviceRefs.current[index] = el as HTMLDivElement;
+              // }}
+              key={index}
+              className="sticky px-10 pt-6 pb-12  bg-popover-foreground last:rounded-b-4xl border-t-2 border-popover"
+              style={
+                isDesktop
+                  ? {
+                      top: `calc(5vh + ${index * 5}em)`,
+                      marginBottom: `${(workExperiences?.length - index - 1) * 5}rem`,
+                    }
+                  : { top: 0 }
+              }
             >
-              Card {i}
+              <div className="flex items-center justify-between gap-4 font-light">
+                <div className="flex flex-col gap-6">
+                  <h2 className="text-4xl lg:text-5xl">{service.title}</h2>
+                  <p className="text-xl leading-relaxed tracking-widest lg:text-2xl text-pretty">
+                    {service.description}
+                  </p>
+                  <div className="flex flex-col gap-2 text-2xl sm:gap-4 lg:text-3xl ">
+                    {service.highlights.map((item, itemIndex) => (
+                      <div key={`item-${index}-${itemIndex}`}>
+                        <h3 className="flex">
+                          <span className="mr-12 text-lg text-primary/30">
+                            0{itemIndex + 1}
+                          </span>
+                          {item.title}
+                        </h3>
+                        {itemIndex < service.highlights.length - 1 && (
+                          <div className="w-full h-px my-2 bg-amber-900/30" />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
-          <div className="scroll-contents min-w-screen"></div>
         </div>
-      </section>
+      </div>
     </section>
   );
 };
-// import { useGSAP } from "@gsap/react";
-// import gsap from "gsap";
-// import { useRef } from "react";
-
-// export const Experiences = () => {
-//   const sectionRef = useRef<HTMLTableSectionElement | null>(null);
-//   const trackRef = useRef<HTMLDivElement | null>(null);
-
-//   useGSAP(
-//     () => {
-//       const scrollContents =
-//         gsap.utils.toArray<HTMLElement>(".scroll-contents");
-
-//       const totalWidth =
-//         scrollContents.reduce((acc, card) => acc + card.offsetWidth, 0) +
-//         (scrollContents.length + 1) * 32; // gap-8 = 32px
-
-//       gsap.to(trackRef.current, {
-//         x: () => -(totalWidth - window.innerWidth),
-//         ease: "none",
-//         scrollTrigger: {
-//           trigger: sectionRef.current,
-//           start: "top top",
-//           end: () => `+=${totalWidth}`,
-//           scrub: true,
-//           pin: true,
-//           anticipatePin: 1,
-//         },
-//       });
-//     },
-//     { scope: sectionRef },
-//   );
-
-//   return (
-//     <section className="relative overflow-hidden">
-//       <section ref={sectionRef} className="relative h-screen overflow-hidden">
-//         <div className=" absolute top-50 left-20 text-7xl">WORK EXP</div>
-//         <div
-//           ref={trackRef}
-//           className="flex gap-16 h-full items-center px-20 will-change-transform"
-//         >
-//           <div className="scroll-contents min-w-[80vw]"></div>
-//           {[1, 2, 3].map((i) => (
-//             <div
-//               key={i}
-//               className="scroll-contents card min-w-[80vw] h-[75vh] rounded-2xl border-2 border-stone-800 backdrop-blur-md border-solid flex items-center justify-center text-6xl font-bold text-white"
-//             >
-//               Card {i}
-//             </div>
-//           ))}
-//           <div className="scroll-contents min-w-screen"></div>
-//         </div>
-//       </section>
-//     </section>
-//   );
-// };

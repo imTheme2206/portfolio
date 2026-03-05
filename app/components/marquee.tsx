@@ -7,7 +7,8 @@ import { Observer } from "gsap/all";
 gsap.registerPlugin(Observer);
 
 type MarqueeProps = {
-  items: string[];
+  // items: string[];
+  children: React.ReactNode;
   speed?: number;
   fontSize?: string;
   gap?: number;
@@ -45,12 +46,12 @@ const horizontalLoop = (
   gsap.set(items, {
     // convert "x" to "xPercent" to make things responsive, and populate the widths/xPercents Arrays to make lookups faster.
     xPercent: (i, el) => {
-      let w = (widths[i] = parseFloat(
+      const w = (widths[i] = parseFloat(
         gsap.getProperty(el, "width", "px") as string,
       ));
-      let parsedXPercentage =
+      const parsedXPercentage =
         parseFloat(gsap.getProperty(el, "x", "px") as string) / w;
-      let elementPercentage = gsap.getProperty(el, "xPercent") as number;
+      const elementPercentage = gsap.getProperty(el, "xPercent") as number;
       xPercents[i] = snap(parsedXPercentage * 100 + elementPercentage);
       return xPercents[i];
     },
@@ -125,9 +126,9 @@ const horizontalLoop = (
 };
 
 export const Marquee = ({
-  items,
+  // items,
+  children,
   speed = 1,
-  fontSize = "text-[120px] md:text-[200px]",
   reverse = false,
 }: MarqueeProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -138,7 +139,7 @@ export const Marquee = ({
 
     const ctx = gsap.context(() => {
       const elements = gsap.utils.toArray<HTMLHeadingElement>(
-        railRef.current!.querySelectorAll("h4"),
+        railRef.current!.children,
       );
 
       const tl = horizontalLoop(elements, {
@@ -147,13 +148,12 @@ export const Marquee = ({
         reversed: reverse,
       });
 
-      // smoother timeScale control
       const quickTimeScale = gsap.quickTo(tl, "timeScale", {
         duration: 0.4,
         ease: "power2",
       });
 
-      let storedDirection = 1;
+      let storedDirection = reverse ? -1 : 1;
 
       Observer.create({
         target: window,
@@ -161,10 +161,11 @@ export const Marquee = ({
         onChangeY(self) {
           const velocity = self.velocityY;
           const direction = velocity < 0 ? -1 : 1;
-          storedDirection = direction;
+          const actualDirection = reverse ? direction * -1 : direction;
+          storedDirection = actualDirection;
           const boost = gsap.utils.clamp(1, 4, 1 + Math.abs(velocity) / 1500);
 
-          quickTimeScale(direction * boost);
+          quickTimeScale(actualDirection * boost);
         },
         onStop() {
           quickTimeScale(storedDirection);
@@ -178,14 +179,7 @@ export const Marquee = ({
   return (
     <div ref={containerRef} className=" w-full flex items-center">
       <div ref={railRef} className="flex will-change-transform">
-        {items.map((text, i) => (
-          <h4
-            key={i}
-            className={`whitespace-nowrap leading-none text-white flex mr-14 ${fontSize}`}
-          >
-            {text}
-          </h4>
-        ))}
+        {children}
       </div>
     </div>
   );

@@ -37,13 +37,13 @@ export const heroImages: ImageData[] = [
   },
   {
     src: undefined,
-    alt: "Software Engineer",
+    // alt: "Software Engineer",
     width: 520,
     height: 670,
   },
   {
     src: undefined,
-    alt: "Coffee Enjoyer",
+    // alt: "Coffee Enjoyer",
     width: 320,
     height: 570,
   },

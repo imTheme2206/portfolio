@@ -1,8 +1,73 @@
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { useRef } from "react";
+"use client";
 
-export const Experiences = () => {
+import { Marquee } from "@/app/components/marquee";
+import { useGSAP } from "@gsap/react";
+import { Icon } from "@iconify/react";
+import gsap from "gsap";
+import React, { useRef } from "react";
+
+const frameworks = [
+  {
+    text: "Next.JS",
+    icon: "nextjs-dark",
+  },
+  {
+    text: "React.JS",
+    icon: "react-dark",
+  },
+  {
+    text: "Laravel",
+    icon: "laravel-dark",
+  },
+  {
+    text: "Node.JS",
+    icon: "nodejs-dark",
+  },
+  {
+    text: "Vue.JS",
+    icon: "vuejs-dark",
+  },
+  {
+    text: "",
+    icon: "",
+  },
+  // {
+  //   text: "GSAP",
+  //   icon: "GSAP",
+  // },
+];
+const languages = [
+  {
+    text: "JavaScript",
+    icon: "javascript",
+  },
+  {
+    text: "TypeScript",
+    icon: "typescript",
+  },
+  {
+    text: "HTML",
+    icon: "HTML",
+  },
+  {
+    text: "CSS",
+    icon: "CSS",
+  },
+  {
+    text: "PHP",
+    icon: "php-dark",
+  },
+  {
+    text: "Go",
+    icon: "golang",
+  },
+  {
+    text: "",
+    icon: "",
+  },
+];
+
+export const Skills = () => {
   const sectionRef = useRef<HTMLTableSectionElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
 
@@ -71,23 +136,48 @@ export const Experiences = () => {
 
   return (
     <section className="relative overflow-hidden">
-      <section ref={sectionRef} className="relative h-screen overflow-hidden">
-        <div className=" absolute top-50 left-20 text-7xl">WORK EXP</div>
-        <div
-          ref={trackRef}
-          className="flex h-full items-center will-change-transform"
-        >
-          <div className="scroll-contents min-w-svw min-h-svh"></div>
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="scroll-contents card min-w-svw min-h-svh rounded-2xl border-2 border-stone-800 backdrop-blur-md border-solid flex items-center justify-center text-6xl font-bold text-white"
-            >
-              Card {i}
-            </div>
+      <section
+        ref={sectionRef}
+        className="relative overflow-hidden flex flex-col gap-12 py-6 bg-secondary-foreground text-primary-foreground"
+      >
+        <Marquee speed={0.5}>
+          {[...languages, ...languages, ...languages].map((l, index) => (
+            <React.Fragment key={index}>
+              {l.text !== "" ? (
+                <div className="flex gap-2 text-2xl font-semibold w-42 mx-24 items-center group">
+                  <Icon
+                    icon={`skill-icons:${l.icon.toLowerCase()}`}
+                    className="size-8 grayscale group-hover:grayscale-0 will-change-transform transition-all"
+                  />
+                  {l.text}
+                </div>
+              ) : (
+                <div className=""></div>
+              )}
+            </React.Fragment>
           ))}
-          <div className="scroll-contents min-w-screen"></div>
-        </div>
+        </Marquee>
+        <Marquee speed={0.5} reverse>
+          {[...frameworks, ...frameworks, ...frameworks].map((l, index) => (
+            <React.Fragment key={index}>
+              {l.text !== "" ? (
+                <div className="flex gap-2 text-2xl font-semibold w-42 mx-24 items-center group">
+                  <Icon
+                    icon={`skill-icons:${l.icon.toLowerCase()}`}
+                    className="size-8 grayscale group-hover:grayscale-0 will-change-transform transition-all"
+                  />
+                  {l.text}
+                </div>
+              ) : (
+                <div className=""></div>
+              )}
+            </React.Fragment>
+          ))}
+        </Marquee>
+        {/*<Marquee
+          reverse
+          speed={0.5}
+        />*/}
       </section>
     </section>
   );

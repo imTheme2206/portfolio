@@ -3,7 +3,7 @@ import { MouseFollower } from "./components/mouse";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Worrachit Pongkatekarm",
+  title: "Worrachit Pongkatekarm • Software Engineer",
   description: "My humble little portfoilio",
 };
 

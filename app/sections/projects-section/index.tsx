@@ -24,21 +24,20 @@ export const Projects = () => {
   return (
     <div>
       <div className="h-dvh w-screen" id="clip">
+        {/*<div className="h-dvh grid place-items-center w-full">TEST</div>*/}
         <div className="in mask-clip-path about-image">
-          <div className="bg-amber-900 w-full h-full">
-            {/*<div className="h-dvh grid place-items-center w-full">TEST</div>*/}
-            {/*<Image
-              src="/assets/images/IMG_8064 2.JPG"
-              alt="test"
-              className="absolute left-0 top-0 size-full object-cover"
-              width={1900}
-              height={900}
-              layout="responsive"
-            />*/}
-          </div>
+          {/*<Image
+            src="/assets/images/IMG_8064 2.JPG"
+            alt="test"
+            className="in object-contain origin-bottom w-full h-full"
+            width={2900}
+            height={1900}
+            layout="responsive"
+          />*/}
+          <div className="bg-secondary w-full h-full"></div>
         </div>
       </div>
-      <div className="bg-amber-900 h-dvh w-screen">
+      <div className="bg-secondary min-h-dvh w-screen">
         <div className="max-w-prose mx-auto py-10 -my-1">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo
           consequatur totam maxime quaerat mollitia, provident fugit. Corrupti,
