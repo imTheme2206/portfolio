@@ -80,11 +80,7 @@ export const NavBar = () => {
         <div
           ref={containerRef}
           className="flex gap-6 mx-auto uppercase align-middle font-semibold will-change-transform"
-        >
-          <a>About</a>
-          <a>resume</a>
-          <a>Contact</a>
-        </div>
+        ></div>
       </div>
     </nav>
   );

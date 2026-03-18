@@ -14,8 +14,9 @@
         "Helvetica Neue",
         sans-serif;
 
-    color: oklch(90% 0.01 100);
+    color: oklch(0.929 0.013 252.508);
 
+    --animation-time: 25ms;
     --background: oklch(0.2309 0.006 271.15);
     --foreground: oklch(0.984 0.003 247.858);
     --card: oklch(0.208 0.042 265.755);
@@ -30,6 +31,7 @@
     --muted-foreground: oklch(0.704 0.04 256.788);
     --accent: oklch(0.279 0.041 260.031);
     --accent-foreground: oklch(0.984 0.003 247.858);
+    --animated-accent: oklch(0.769 0.188 100.08);
     --destructive: oklch(0.704 0.191 22.216);
     --border: oklch(1 0 0 / 10%);
     --input: oklch(1 0 0 / 15%);
@@ -51,10 +53,10 @@
 }
 
 @theme inline {
-    --radius-sm: calc(var(--radius) - 4px);
+    /*--radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);
-    --radius-xl: calc(var(--radius) + 4px);
+    --radius-xl: calc(var(--radius) + 4px);*/
     --color-background: var(--background);
     --color-foreground: var(--foreground);
     --color-card: var(--card);
@@ -104,6 +106,17 @@ body {
 }*/
 .mask-clip-path {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+@utility clip-path {
+    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+}
+
+.span-before {
+    @apply before:absolute before:content-[data-char] before:text-primary before:transition-all before:delay-300 before:translate-y-0;
+}
+.span-after {
+    @apply after:absolute after:content-[data-char] after:text-primary after:transition-all after:delay-300 after:translate-y-4;
 }
 
 .about-subtext {
@@ -192,107 +205,51 @@ body {
     }
 }
 
-/* From Uiverse.io by G4b413l */
-/* https://uiverse.io/G4b413l/tidy-walrus-92 */
-.three-body {
-    --uib-size: 35px;
-    --uib-speed: 0.8s;
-    --uib-color: #5d3fd3;
+a.norris {
+    text-decoration: none;
+    font-size: var(--animated-font-size);
+    overflow: hidden;
+    line-height: var(--animated-font-size);
+}
+a.norris span {
     position: relative;
-    display: inline-block;
-    height: var(--uib-size);
-    width: var(--uib-size);
-    animation: spin78236 calc(var(--uib-speed) * 2.5) infinite linear;
+    color: transparent;
 }
-
-.three-body__dot {
+a.norris span::before,
+a.norris span::after {
     position: absolute;
-    height: 100%;
-    width: 30%;
-}
-
-.three-body__dot:after {
-    content: "";
-    position: absolute;
-    height: 0%;
-    width: 100%;
-    padding-bottom: 100%;
-    background-color: var(--uib-color);
-    border-radius: 50%;
-}
-
-.three-body__dot:nth-child(1) {
-    bottom: 5%;
     left: 0;
-    transform: rotate(60deg);
-    transform-origin: 50% 85%;
+    content: attr(data-char);
+    color: var(--color-primary);
+    transition: all ease-in-out calc(var(--animation-time) * 10);
+    transition-delay: calc(var(--index) * var(--animation-time));
+}
+a.norris span::before {
+    transform: translateY(0);
+}
+a.norris span::after {
+    transform: translateY(var(--animated-font-size));
+}
+a.norris:hover {
+    cursor: pointer;
+    color: var(--animated-accent);
+}
+a.norris:hover span::before,
+a.norris:hover span::after {
+    color: var(--animated-accent);
+}
+a.norris:hover span::before {
+    opacity: 1;
+}
+a.norris:hover span::after {
+    opacity: 0;
 }
 
-.three-body__dot:nth-child(1)::after {
-    bottom: 0;
-    left: 0;
-    animation: wobble1 var(--uib-speed) infinite ease-in-out;
-    animation-delay: calc(var(--uib-speed) * -0.3);
+a.norris:hover span::before {
+    transform: translateY(calc(-1 * var(--animated-font-size)));
+    opacity: 0;
 }
-
-.three-body__dot:nth-child(2) {
-    bottom: 5%;
-    right: 0;
-    transform: rotate(-60deg);
-    transform-origin: 50% 85%;
-}
-
-.three-body__dot:nth-child(2)::after {
-    bottom: 0;
-    left: 0;
-    animation: wobble1 var(--uib-speed) infinite calc(var(--uib-speed) * -0.15)
-        ease-in-out;
-}
-
-.three-body__dot:nth-child(3) {
-    bottom: -5%;
-    left: 0;
-    transform: translateX(116.666%);
-}
-
-.three-body__dot:nth-child(3)::after {
-    top: 0;
-    left: 0;
-    animation: wobble2 var(--uib-speed) infinite ease-in-out;
-}
-
-@keyframes spin78236 {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes wobble1 {
-    0%,
-    100% {
-        transform: translateY(0%) scale(1);
-        opacity: 1;
-    }
-
-    50% {
-        transform: translateY(-66%) scale(0.65);
-        opacity: 0.8;
-    }
-}
-
-@keyframes wobble2 {
-    0%,
-    100% {
-        transform: translateY(0%) scale(1);
-        opacity: 1;
-    }
-
-    50% {
-        transform: translateY(66%) scale(0.65);
-        opacity: 0.8;
-    }
+a.norris:hover span::after {
+    transform: translateY(0);
+    opacity: 1;
 }

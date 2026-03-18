@@ -6,9 +6,11 @@ import { Flip, ScrollTrigger, SplitText } from "gsap/all";
 import ReactLenis from "lenis/react";
 import { useLayoutEffect, useRef } from "react";
 import { Gap } from "./components/gap";
-import { NavBar } from "./components/navigation-bar";
-import { Experiences } from "./sections/experiences-section";
+import { NavBar } from "./components/navigation-bar/index";
 import { About } from "./sections/about-section";
+import { Contacts } from "./sections/contact-section";
+import { Experiences } from "./sections/experiences-section";
+import { Projects } from "./sections/projects-section";
 import { Skills } from "./sections/works-section";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, Flip);
@@ -32,19 +34,16 @@ export default function Home() {
           <div className="w-dvw">
             <HeroIndex />
             <Skills />
-            <Gap size="xl" />
           </div>
-          <About />
-          <Gap size="xl" />
-          <Experiences />
 
           <Gap size="xl" />
+
+          <About />
+          <Projects />
           <Gap size="xl" />
+          <Experiences />
           <Gap size="xl" />
-          <Gap size="xl" />
-          <Gap size="xl" />
-          <Gap size="xl" />
-          <Gap size="xl" />
+          <Contacts />
           {/*
         <Gap size="lg" />
         <Gap size="lg" />
