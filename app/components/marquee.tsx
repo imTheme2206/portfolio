@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { Observer } from "gsap/all";
+import { useEffect, useRef } from "react";
 
 gsap.registerPlugin(Observer);
 

@@ -17,10 +17,13 @@ export const Projects = () => {
     gsap.fromTo(
       el,
       {
+        // scaleY: 0,
+        // transformOrigin: "bottom",
         clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",
       },
       {
         clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
+        // scaleY: 1,
         duration: 0.15,
         ease: "power2.out",
       },
@@ -31,9 +34,10 @@ export const Projects = () => {
     const el = overlayRefs.current[index];
     if (!el) return;
 
-    gsap.killTweensOf(el);
+    // gsap.killTweensOf(el);
     gsap.to(el, {
       clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",
+      transformOrigin: "bottom",
       duration: 0.2,
       ease: "power2.in",
     });
@@ -62,7 +66,7 @@ export const Projects = () => {
                   overlayRefs.current[index] = el as HTMLDivElement;
                 }
               }}
-              className="absolute inset-0 hidden md:block duration-200 bg-accent-foreground -z-10 clip-path"
+              className="absolute inset-0 hidden md:block duration-200 bg-accent-foreground -z-10 will-change-[clip-path]  clip-path"
             />
 
             <div className="flex justify-between px-10 text-accent-foreground transition-all duration-500 md:group-hover:px-12 md:group-hover:text-primary-foreground">

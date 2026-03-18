@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MouseFollower } from "./components/mouse";
+import { MouseTracker } from "./components/cursor-follower";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <MouseFollower />
+        <MouseTracker />
         {children}
       </body>
     </html>

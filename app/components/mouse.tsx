@@ -41,7 +41,6 @@ export const MouseFollower = () => {
   const imgBRef = useRef<HTMLSpanElement | null>(null);
   const currentImageRef = useRef<string | null>(null);
   const activeLayer = useRef<"A" | "B">("A");
-
   const { isMobile } = useDetectScreen();
 
   useLayoutEffect(() => {
@@ -49,6 +48,7 @@ export const MouseFollower = () => {
       return;
     }
     let hasMoved = false;
+    let refId: number | null = null;
     const follower = followerRef.current;
     const onMouseMove = (e: MouseEvent) => {
       if (!hasMoved) {
@@ -61,10 +61,17 @@ export const MouseFollower = () => {
       mousePositionRef.current.x = e.clientX;
       mousePositionRef.current.y = e.clientY;
 
+      if (refId) {
+        return;
+      }
+
       if (followerRef.current) {
-        followerRef.current.style.transform = `
-          translate3d(${mousePositionRef.current.x}px, ${mousePositionRef.current.y}px, 0)
-        `;
+        refId = requestAnimationFrame(() => {
+          followerRef.current!.style.transform = `
+            translate3d(${mousePositionRef.current.x}px, ${mousePositionRef.current.y}px, 0)
+          `;
+          refId = null;
+        });
 
         if (target === "experience") {
           followerRef.current.style.borderColor = `black`;
