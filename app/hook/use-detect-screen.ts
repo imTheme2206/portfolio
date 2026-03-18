@@ -7,7 +7,7 @@ type ScreenType = {
 };
 
 const getScreenType = (): ScreenType => {
-  const width = window.innerWidth;
+  const width = window?.innerWidth;
 
   return {
     isMobile: width < 768,
@@ -17,19 +17,18 @@ const getScreenType = (): ScreenType => {
 };
 
 export const useDetectScreen = (): ScreenType => {
-  const [screen, setScreen] = useState<ScreenType>(() => {
-    if (typeof window === "undefined") {
-      // SSR fallback
-      return { isMobile: false, isTablet: false, isDesktop: true };
-    }
-    return getScreenType();
-  });
+  const [screen, setScreen] = useState<ScreenType>(() => ({
+    isMobile: false,
+    isTablet: false,
+    isDesktop: false,
+  }));
 
   useEffect(() => {
     const handleResize = () => {
       setScreen(getScreenType());
     };
 
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => {

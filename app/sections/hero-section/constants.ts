@@ -28,7 +28,7 @@ export const heroImages: ImageData[] = [
     src: "/assets/images/hero-section/hero-3.webp",
     alt: "Hero Image 3",
     width: 320,
-    height: 470,
+    height: 610,
   },
   {
     alt: "",

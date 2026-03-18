@@ -110,7 +110,7 @@ export const ParallaxImageComponent = ({
   return (
     <div
       ref={containerRef}
-      className="relative transition-all w-full h-full duration-500 ease-linear overflow-hidden grayscale-100 brightness-50 hover:grayscale-0 hover:brightness-100"
+      className="relative transition-all w-full h-full duration-300 ease-linear overflow-hidden grayscale-100 brightness-50 hover:grayscale-0 hover:brightness-100"
       style={{
         gridColumn: `span ${colSpan}`,
         gridRow: `span ${rowSpan}`,

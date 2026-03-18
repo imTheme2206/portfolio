@@ -63,7 +63,7 @@ export const AnimatedHeader = (props: AnimatedHeaderProps) => {
           {title !== "" ? (
             <div className="px-10 relative">
               <h1
-                className={`flex flex-col gap-12 uppercase banner-text-responsive sm:gap-16 md:block text-9xl`}
+                className={`flex flex-col gap-12 uppercase banner-text-responsive sm:gap-16 md:block text-7xl md:text-9xl`}
               >
                 {titleParts.map((part, index) => (
                   <span key={index}>{part} </span>
