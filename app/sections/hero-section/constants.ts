@@ -7,16 +7,16 @@ export type ImageData = {
 
 export const heroImages: ImageData[] = [
   {
-    src: "/assets/images/hero-section/hero-4.webp",
+    src: "/assets/images/hero-section/hero-1.webp",
     alt: "blank",
     width: 560,
     height: 1075,
   },
   {
-    src: "/assets/images/hero-section/hero-1.webp",
+    src: "/assets/images/hero-section/hero-4.webp",
     alt: "Hero Image 1",
     width: 1020,
-    height: 870,
+    height: 890,
   },
   {
     src: "/assets/images/hero-section/hero-2.webp",

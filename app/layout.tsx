@@ -1,5 +1,7 @@
+import ReactLenis from "lenis/react";
 import type { Metadata } from "next";
 import { MouseTracker } from "./components/cursor-follower";
+import { ThemeSwitcher } from "./components/theme-switcher";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,11 +15,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`antialiased`}>
-        <MouseTracker />
-        {children}
-      </body>
-    </html>
+    <ReactLenis root>
+      <html lang="en">
+        <body className={`antialiased`}>
+          <MouseTracker />
+          <ThemeSwitcher />
+          {children}
+        </body>
+      </html>
+    </ReactLenis>
   );
 }

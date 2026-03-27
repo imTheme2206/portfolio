@@ -21,23 +21,23 @@ export const Experiences = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top 90%",
-        end: "+=150 90%",
-        scrub: 1,
+        end: "+=550 90%",
+        scrub: 1.15,
       },
-      scale: 0.93,
+      scale: 0.9,
     });
 
-    gsap.from(contentRef.current, {
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "+=150 bottom",
-        scrub: 1,
-        pin: true,
-        pinSpacing: true,
-      },
-      xPercent: 100,
-    });
+    // gsap.from(contentRef.current, {
+    //   scrollTrigger: {
+    //     trigger: containerRef.current,
+    //     start: "top top",
+    //     end: "+=150 bottom",
+    //     scrub: 1,
+    //     pin: true,
+    //     pinSpacing: true,
+    //   },
+    //   xPercent: 100,
+    // });
   }, []);
 
   return (
@@ -47,7 +47,7 @@ export const Experiences = () => {
     >
       <div
         ref={containerRef}
-        className="bg-popover-foreground w-full rounded-4xl"
+        className="bg-secondary-foreground w-full rounded-4xl"
       >
         <AnimatedHeader
           subtitle={"Behind the scene, Beyond the screen"}
@@ -77,7 +77,7 @@ const ExperienceCards = ({
   return (
     <div
       key={index}
-      className="sticky px-10 pt-6 pb-12  bg-popover-foreground last:rounded-b-4xl border-t-2 border-popover"
+      className="sticky px-10 pt-6 pb-12  bg-secondary-foreground last:rounded-b-4xl border-t-2 border-popover"
       style={
         isDesktop
           ? {

@@ -1,3 +1,4 @@
+import { AnimatedHeader } from "@/app/components/animated-header";
 import { Marquee } from "@/app/components/marquee";
 import {
   ParallaxContainer,
@@ -6,7 +7,6 @@ import {
   useParallaxEngine,
 } from "../../components/parallax-gallery";
 import { heroImages } from "./constants";
-import { AnimatedHeader } from "@/app/components/animated-header";
 
 export const HeroIndex = () => {
   const { containerRef, delegate } = useParallaxEngine(
@@ -57,12 +57,12 @@ export const HeroIndex = () => {
               "Pongkatekarm",
               "—",
             ].map((text, index) => (
-              <h4
+              <h1
                 key={index}
                 className={`whitespace-nowrap leading-none text-primary flex text-[120px] md:text-[200px] mr-24`}
               >
                 {text}
-              </h4>
+              </h1>
             ))}
           </Marquee>
         </div>

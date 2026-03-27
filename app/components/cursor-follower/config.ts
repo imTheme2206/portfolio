@@ -22,19 +22,23 @@ export const defaultTrackerClassName =
 
 export const variantConfig: Record<CursorVariant, CursorProps> = {
   default: {
-    classNames: ["w-10", "h-10", "border-2", "border-primary", "rounded-full"],
+    classNames: ["w-10", "h-10", "border-primary", "border-2", "rounded-full"],
   },
   experience: {
-    classNames: ["w-10", "h-10", "border-2", "border-black", "rounded-full"],
+    classNames: [
+      "w-10",
+      "h-10",
+      "border-background",
+      "border-2",
+      "rounded-full",
+    ],
   },
   clickable: {
     classNames: [
       "w-18",
       "h-18",
       "text-primary-foreground",
-      "bg-secondary-foreground",
-      "border-2",
-      "border-primary",
+      "bg-primary",
       "flex",
       "items-center",
       "justify-center",
@@ -46,9 +50,9 @@ export const variantConfig: Record<CursorVariant, CursorProps> = {
     classNames: [
       "w-126",
       "h-72",
-      "-translate-y-74",
+      "translate-x-14",
+      "-translate-y-36",
       "bg-secondary-foreground",
-      "border-0",
       "p-1",
       "rounded-lg",
     ],

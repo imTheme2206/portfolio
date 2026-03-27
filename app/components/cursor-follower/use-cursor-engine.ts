@@ -134,7 +134,7 @@ export const useCursorEngine = () => {
       window.removeEventListener("mouseover", onHover);
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [isMobile]);
 
   return {
     trackerRef,
