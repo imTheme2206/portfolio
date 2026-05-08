@@ -91,18 +91,18 @@ export const Projects = () => {
               {project.frameworks.map((framework) => (
                 <p
                   key={framework.id}
-                  className="text-primary transition-colors duration-500 md:group-hover:text-primary-foreground font-bold"
+                  className="text-paragraph text-primary transition-colors duration-500 md:group-hover:text-primary-foreground font-bold"
                 >
                   {framework.name}
                 </p>
               ))}
             </div>
 
-            <div className="flex px-10 text-md leading-loose transtion-all duration-500 md:text-lg py-4 gap-x-5 md:group-hover:px-12">
+            <div className="flex px-10 leading-loose transtion-all duration-500 py-4 gap-x-5 md:group-hover:px-12">
               <SplitText
                 component="p"
                 animation="byWord"
-                className="text-primary transition-colors duration-500 md:group-hover:text-primary-foreground"
+                className="text-primary text-paragraph transition-colors duration-500 md:group-hover:text-primary-foreground"
                 disableReverse
               >
                 {project.description}

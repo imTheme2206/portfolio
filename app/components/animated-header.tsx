@@ -12,9 +12,13 @@ type AnimatedHeaderProps = {
   textFlow?: "horizontal" | "vertical";
   withScrollTrigger?: boolean;
   disableFlyMotion?: boolean;
+  dividerColor?: "light" | "dark";
 };
 
-export const AnimatedHeader = (props: AnimatedHeaderProps) => {
+export const AnimatedHeader = ({
+  dividerColor = "dark",
+  ...props
+}: AnimatedHeaderProps) => {
   const contextRef = useRef(null);
   const title = props.title || "";
 
@@ -38,37 +42,39 @@ export const AnimatedHeader = (props: AnimatedHeaderProps) => {
   return (
     <div ref={contextRef}>
       <div style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0, 100%)" }}>
-        <div className="flex flex-col justify-center gap-12 pt-16 sm:gap-16">
+        <div className="flex flex-col justify-center gap-4 sm:gap-8">
           {props.subtitle && (
             <SplitText
               component="p"
               animation="byChar"
-              className={`text-lg font-light tracking-[0.5rem] uppercase px-10`}
+              className={`text-xs lg:text-lg font-light tracking-[0.5rem] uppercase px-8 pt-4 sm:pt-8`}
             >
               {props.subtitle}
             </SplitText>
           )}
           {title !== "" ? (
-            <div className="px-10 relative">
+            <div className="px-4 md:px-10 relative">
               <SplitText
                 component="h1"
                 animation="byChar"
-                className={`text-7xl md:text-9xl`}
+                className={`text-6xl md:text-9xl`}
               >
                 {title}
               </SplitText>
-              <Divider className="absolute inset-x-0 border-t-2" />
+              <Divider
+                className={`absolute inset-x-0 border-t-2 ${dividerColor === "light" ? "border-t-secondary" : "border-t-primary"}`}
+              />
             </div>
           ) : (
-            <div className="h-32"></div>
+            <div className="h-64"></div>
           )}
           {props.text && (
-            <div className={`relative px-10`}>
-              <div className="py-12 sm:py-16 text-end">
+            <div className={`relative px-8`}>
+              <div className="pb-8 sm:pb-16 text-end">
                 <AnimatedText
                   text={props.text}
                   flow={props.textFlow}
-                  className={`font-light uppercase value-text-responsive flex flex-col text-xl`}
+                  className={`font-light uppercase value-text-responsive flex flex-col text-xs lg:text-lg`}
                 />
               </div>
             </div>

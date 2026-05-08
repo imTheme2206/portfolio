@@ -1,19 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Ovo:wght@400;500;600;700;800");
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800");
 @import "tailwindcss";
-/*@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap");*/
-
-@font-face {
-    font-family: "Ovo";
-    src: url("https://fonts.googleapis.com/css2?family=Ovo:wght@400;500;600;700;800");
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "Syne";
-    src: url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800");
-    font-weight: normal;
-    font-style: normal;
-}
+@custom-variant dark (&:where(.dark, .dark *));
 
 h1,
 h2,
@@ -27,28 +15,6 @@ h6 {
 :root {
     font-family: "Syne";
 
-    --animation-time: 25ms;
-    --foreground: oklch(0.9374 0.017 101.17);
-    --background: oklch(0.2686 0 0);
-    --card: oklch(0.2686 0 0);
-    --card-foreground: oklch(0.9374 0.017 101.17);
-    --popover: oklch(0.2686 0 0);
-    --primary: oklch(0.9374 0.017 101.17);
-    --secondary: oklch(0.2686 0 0);
-    --primary-foreground: oklch(0.2686 0 0);
-    --secondary-foreground: oklch(0.9374 0.017 101.17);
-    --popover-foreground: oklch(0.9374 0.017 101.17);
-    --muted: oklch(0.2686 0 0);
-    --muted-foreground: oklch(0.704 0.04 256.788);
-    --accent: oklch(0.2686 0 0);
-    --accent-foreground: oklch(0.9374 0.017 101.17);
-    --animated-accent: oklch(0.8934 0.0779 188.9);
-    --destructive: oklch(0.704 0.191 22.216);
-    --ring: oklch(0.551 0.027 264.364);
-    --page-screen-size: calc(100% - 20rem);
-}
-
-html.light {
     --background: oklch(0.9374 0.017 101.17);
     --foreground: oklch(0.2686 0 0);
     --secondary: oklch(0.9374 0.017 101.17);
@@ -59,6 +25,30 @@ html.light {
     --accent: oklch(0.9374 0.017 101.17);
     --card-foreground: oklch(0.2686 0 0);
     --card: oklch(0.9374 0.017 101.17);
+
+    --theme-switcher-dark: oklch(0.2686 0 0);
+    --theme-switcher-light: oklch(0.9374 0.017 101.17);
+
+    --animation-time: 25ms;
+    --muted: oklch(0.2686 0 0);
+    --muted-foreground: oklch(0.704 0.04 256.788);
+    --animated-accent: oklch(0.8934 0.0779 188.9);
+    --destructive: oklch(0.704 0.191 22.216);
+    --ring: oklch(0.551 0.027 264.364);
+    --page-screen-size: calc(100% - 20rem);
+}
+
+html.dark {
+    --background: oklch(0.2686 0 0);
+    --foreground: oklch(0.9374 0.017 101.17);
+    --primary: oklch(0.9374 0.017 101.17);
+    --secondary: oklch(0.2686 0 0);
+    --secondary-foreground: oklch(0.9374 0.017 101.17);
+    --primary-foreground: oklch(0.2686 0 0);
+    --accent-foreground: oklch(0.9374 0.017 101.17);
+    --accent: oklch(0.2686 0 0);
+    --card-foreground: oklch(0.9374 0.017 101.17);
+    --card: oklch(0.2686 0 0);
 }
 
 @theme {
@@ -80,6 +70,7 @@ html.light {
     --color-border: var(--border);
     --font-heading: "Ovo";
     --font-display: "Syne";
+    --text-paragraph: "font-size:clamp(1.2rem, 1.4vw, 2.5rem)";
     --screen-sidebar: var(--page-screen-size);
 }
 
@@ -90,108 +81,25 @@ body {
     color: var(--foreground);
 }
 
-/*.mask-clip-path {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-}*/
-.mask-clip-path {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+.contact-email::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: oklch(0.9374 0.017 101.17);
+    transition: width 0.5s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-@utility clip-path {
-    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+.contact-email,
+.contact-phone {
+    position: relative;
+    display: inline-block;
 }
-
-.span-before {
-    @apply before:absolute before:content-[data-char] before:text-primary before:transition-all before:delay-300 before:translate-y-0;
-}
-.span-after {
-    @apply after:absolute after:content-[data-char] after:text-primary after:transition-all after:delay-300 after:translate-y-4;
-}
-
-.about-subtext {
-    @apply absolute bottom-[-80dvh] left-1/2 w-full max-w-96 -translate-x-1/2 text-center text-lg md:max-w-[34rem];
-}
-
-.about-image {
-    @apply absolute left-1/2 top-0 z-20 h-[60vh] w-96 origin-center -translate-x-1/2 overflow-hidden rounded-3xl md:w-[30vw];
-}
-
-.about-image-out {
-    @apply absolute left-1/2 top-0 z-20 h-screen origin-center -translate-x-1/2 overflow-hidden w-screen;
-}
-
-.animated-title {
-    @apply flex flex-col gap-1 text-7xl uppercase leading-[.8] text-primary sm:px-32 md:text-[6rem];
-}
-
-.animated-word {
-    @apply font-black opacity-0;
-    transform: translate3d(10px, 51px, -60px) rotateY(60deg) rotateX(-40deg);
-    transform-origin: 50% 50% -150px !important;
-    will-change: opacity, transform;
-}
-
-.story-img-container {
-    @apply relative md:h-dvh h-[90vh] w-full;
-    filter: url("#flt_tag");
-}
-
-.story-img-mask {
-    @apply absolute left-0 top-0 size-full overflow-hidden md:left-[20%] md:top-[-10%] md:size-4/5;
-    clip-path: polygon(4% 0, 83% 21%, 100% 73%, 0% 100%);
-}
-
-.story-img-content {
-    @apply absolute w-full md:h-dvh h-[50dvh] opacity-100 left-10 top-16 md:left-0 md:top-10 lg:left-[-300px] lg:top-[-100px];
-    transform: translate3d(0, 0, 0) rotateX(0) rotateY(0) rotateZ(0) scale(1);
-}
-
-.gallery-img-container {
-    @apply size-64 overflow-hidden bg-violet-300;
-}
-
-.gallery-img {
-    @apply size-full bg-cover;
-}
-
-.gallery-img-4 {
-    @apply sm:size-80 md:h-96 md:w-[25rem] rounded-lg;
-}
-
-.sword-man-clip-path {
-    clip-path: polygon(16% 0, 89% 15%, 75% 100%, 0 97%);
-}
-
-.contact-clip-path-1 {
-    clip-path: polygon(25% 0%, 74% 0, 69% 64%, 34% 73%);
-}
-
-.contact-clip-path-2 {
-    clip-path: polygon(29% 15%, 85% 30%, 50% 100%, 10% 64%);
-}
-
-.indicator-line {
-    @apply h-1 w-px rounded-full bg-primary transition-all duration-200 ease-in-out;
-}
-
-.indicator-line.active {
-    animation: indicator-line 0.5s ease infinite;
-    animation-delay: calc(var(--animation-order) * 0.1s);
-}
-
-@keyframes indicator-line {
-    0% {
-        height: 4px;
-        transform: translateY(-0px);
-    }
-    50% {
-        height: 16px;
-        transform: translateY(-4px);
-    }
-    100% {
-        height: 4px;
-        transform: translateY(-0px);
-    }
+.contact-email:hover::after,
+.contact-phone:hover::after {
+    width: 100%;
 }
 
 a.norris {
@@ -241,4 +149,8 @@ a.norris:hover span::before {
 a.norris:hover span::after {
     transform: translateY(0);
     opacity: 1;
+}
+
+@utility clip-path {
+    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
 }

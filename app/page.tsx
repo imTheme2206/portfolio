@@ -2,35 +2,31 @@
 
 import { HeroIndex } from "@/app/sections/hero-section";
 import gsap from "gsap";
-import { Flip, ScrollTrigger, SplitText } from "gsap/all";
+import { ScrollTrigger, SplitText } from "gsap/all";
+import { useRef } from "react";
 import { Gap } from "./components/gap";
-import { NavBar } from "./components/navigation-bar/index";
 import { About } from "./sections/about-section";
 import { Contacts } from "./sections/contact-section";
 import { Experiences } from "./sections/experiences-section";
 import { Projects } from "./sections/projects-section";
+import { Skills } from "./sections/works-section";
 
-gsap.registerPlugin(ScrollTrigger, SplitText, Flip);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 export default function Home() {
+  const endOfContent = useRef<HTMLDivElement>(null);
   return (
     <>
       <main className="h-full relative bg-background z-20 rounded-4xl">
-        <NavBar />
         <HeroIndex />
-        {/*<Skills />*/}
-        {/*<div className="w-dvw">
-        </div>*/}
-
+        <Skills />
+        <Gap size="lg" />
         <About />
         <Projects />
         <Gap size="xl" />
         <Experiences />
-        {/*
-        <Gap size="lg" />
-        <Gap size="lg" />
-        */}
+        <div ref={endOfContent} />
       </main>
-      <Contacts />
+      <Contacts ref={endOfContent.current!} />
     </>
   );
 }

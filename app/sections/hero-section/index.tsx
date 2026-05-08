@@ -1,4 +1,3 @@
-import { AnimatedHeader } from "@/app/components/animated-header";
 import { Marquee } from "@/app/components/marquee";
 import {
   ParallaxContainer,
@@ -21,7 +20,7 @@ export const HeroIndex = () => {
       <ParallaxContainer>
         <div
           ref={containerRef}
-          className="absolute inset-0 h-full w-full overflow-hidden grid grid-cols-2 md:grid-cols-4 auto-rows-[10px] gap-5 grid-flow-dense"
+          className="absolute inset-0 h-full w-full overflow-hidden grid grid-cols-2 md:grid-cols-4 auto-rows-[4px] gap-y-2 gap-x-2 grid-flow-dense"
         >
           {heroImages.map((img, i) => (
             <ParallaxImageComponent
@@ -36,17 +35,7 @@ export const HeroIndex = () => {
           ))}
         </div>
       </ParallaxContainer>
-      <div className="absolute inset-0 top-200 z-999 pointer-events-none">
-        <AnimatedHeader
-          // title="test"
-          subtitle="Software Engineer"
-          text={`Hi, I'm just a Frontend enthusiast. \\n I enjoy coding with a home-brew coffee \\n I also goes with the name \\"Theme!"`}
-          withScrollTrigger={false}
-          textFlow="horizontal"
-          disableFlyMotion
-        />
-      </div>
-      <div className="absolute inset-0 -bottom-180 lg:-bottom-190 z-999 flex justify-center items-center px-20 font-bold pointer-events-none">
+      <div className="absolute inset-0 -bottom-[70%] z-999 flex justify-center items-center px-20 font-bold pointer-events-none">
         <div className="justify-center">
           <Marquee>
             {[
@@ -59,7 +48,7 @@ export const HeroIndex = () => {
             ].map((text, index) => (
               <h1
                 key={index}
-                className={`whitespace-nowrap leading-none text-primary flex text-[120px] md:text-[200px] mr-24`}
+                className={`whitespace-nowrap leading-none text-secondary dark:text-primary flex text-[120px] md:text-[200px] mr-24`}
               >
                 {text}
               </h1>

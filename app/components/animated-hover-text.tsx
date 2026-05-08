@@ -23,7 +23,7 @@ export const AnimatedHoverText = (props: {
             style={
               {
                 "--index": index + 1,
-                "--animated-accent": props.textColor || "var(--accent)",
+                "--animated-accent": props.textColor || "var(--primary)",
               } as CSSProperties
             }
           >

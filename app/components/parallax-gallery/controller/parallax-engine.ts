@@ -25,7 +25,7 @@ export class ParallaxEngine {
   constructor(
     private container: HTMLElement,
     private delegate: ParallaxDelegate,
-    private ease = 0.08,
+    private ease = 0.1,
   ) {}
 
   attach() {

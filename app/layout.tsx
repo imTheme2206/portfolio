@@ -2,7 +2,9 @@ import ReactLenis from "lenis/react";
 import type { Metadata } from "next";
 import { MouseTracker } from "./components/cursor-follower";
 import { ThemeSwitcher } from "./components/theme-switcher";
+import { Loader } from "./extract-component/loader";
 import "./globals.css";
+import { ThemeProvider } from "./hook/use-theme-provider";
 
 export const metadata: Metadata = {
   title: "Worrachit Pongkatekarm • Software Engineer",
@@ -16,13 +18,18 @@ export default function RootLayout({
 }>) {
   return (
     <ReactLenis root>
-      <html lang="en">
-        <body className={`antialiased`}>
-          <MouseTracker />
-          <ThemeSwitcher />
-          {children}
-        </body>
-      </html>
+      <ThemeProvider>
+        <html lang="en" className="dark">
+          <body className={`antialiased`}>
+            <Loader
+            // onComplete={() => startIntroAnimation()}
+            />
+            <MouseTracker />
+            {children}
+            <ThemeSwitcher />
+          </body>
+        </html>
+      </ThemeProvider>
     </ReactLenis>
   );
 }
