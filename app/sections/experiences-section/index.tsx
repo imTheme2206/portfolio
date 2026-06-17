@@ -110,13 +110,14 @@ export const Experiences = () => {
   }
 
   return (
-    <section data-cursor="invert" id="last-section" className="relative">
+    <section id="last-section" className="relative">
       <div ref={spacerRef} style={{ height: "300vh" }}>
         <div className="sticky top-0 h-screen flex items-center justify-center bg-background">
           <div
             ref={cardRef}
             className="absolute bg-secondary-foreground text-primary-foreground overflow-hidden"
             style={{ width: "14rem", height: "14rem", borderRadius: "50%" }}
+            data-cursor="invert"
           >
             <Image
               ref={imageRef}
@@ -124,7 +125,10 @@ export const Experiences = () => {
               alt="Experience preview"
               fill
               className="object-cover object-center opacity-0"
-              style={{ filter: "grayscale(100%)", willChange: "transform, filter" }}
+              style={{
+                filter: "grayscale(100%)",
+                willChange: "transform, filter",
+              }}
               priority
             />
             <div className="absolute inset-0 bg-secondary-foreground/50 pointer-events-none" />
@@ -133,9 +137,6 @@ export const Experiences = () => {
               ref={circleTextRef}
               className="absolute inset-0 flex flex-col items-center justify-center gap-2 pointer-events-none"
             >
-              <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary-foreground/50">
-                03 — Chapter
-              </span>
               <span className="font-heading italic text-5xl text-primary-foreground leading-none">
                 Experience
               </span>
@@ -153,8 +154,8 @@ export const Experiences = () => {
                   {workExperiences.length} roles
                 </span>
               </div>
-              <span className="font-mono text-xs tracking-[0.15em] uppercase text-primary-foreground/40">
-                Behind the screen →
+              <span className="font-mono text-5xl tracking-[0.15em] uppercase text-primary-foreground">
+                Experience
               </span>
             </div>
           </div>
@@ -164,7 +165,8 @@ export const Experiences = () => {
       <div
         ref={contentRef}
         className="relative bg-secondary-foreground text-primary-foreground"
-        style={{ marginTop: "-100vh" }}
+        style={{ marginTop: "-90vh" }}
+        data-cursor="invert"
       >
         <AnimatedHeader
           subtitle="Behind the scene, Beyond the screen"
@@ -227,20 +229,27 @@ const ExperienceCards = ({
         {/* Meta row */}
         <div
           data-reveal
-          className="flex items-center gap-4 mb-8 font-mono text-[11px] tracking-[0.25em] uppercase text-primary-foreground/35"
+          className="flex items-center gap-4 mb-8 font-mono text-[11px] tracking-[0.25em] uppercase text-primary-foreground/25"
         >
-          <span>0{index + 1}</span>
+          <span>{String(index + 1).padStart(2, "0")}</span>
           <span className="flex-1 h-px bg-primary-foreground/10" />
-          <span>{service.company}</span>
         </div>
 
-        {/* Title */}
-        <h2
+        {/* Title + company */}
+        <div
           data-reveal
-          className="font-heading italic text-5xl lg:text-7xl leading-none mb-8 text-primary-foreground"
+          className="relative flex flex-col lg:flex-row lg:items-end justify-between gap-3 lg:gap-10 mb-8 overflow-hidden"
         >
-          {service.title}
-        </h2>
+          <h2 className="font-heading italic text-5xl lg:text-7xl leading-none text-primary-foreground relative z-10">
+            {service.title}
+          </h2>
+
+          <div className="relative z-10 shrink-0 flex flex-col items-start lg:items-end gap-1 lg:pb-2">
+            <span className="font-display text-2xl lg:text-3xl font-semibold text-primary-foreground/60 tracking-tight leading-none">
+              {service.company}
+            </span>
+          </div>
+        </div>
 
         <div data-reveal className="w-full h-px bg-secondary/40 mb-8" />
 

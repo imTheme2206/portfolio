@@ -1,6 +1,5 @@
 "use client";
 
-import { HeroIndex } from "@/app/sections/hero-section";
 import gsap from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
 import { useRef } from "react";
@@ -8,6 +7,7 @@ import { Gap } from "./components/gap";
 import { About } from "./sections/about-section";
 import { Contacts } from "./sections/contact-section";
 import { Experiences } from "./sections/experiences-section";
+import { HeroIndex } from "./sections/hero-section";
 import { Projects } from "./sections/projects-section";
 import { Skills } from "./sections/works-section";
 

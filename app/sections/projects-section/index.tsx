@@ -116,16 +116,16 @@ export const Projects = () => {
             {/* Large background index watermark */}
             <span
               aria-hidden="true"
-              className="absolute right-6 top-1/2 -translate-y-1/2 font-heading leading-none select-none pointer-events-none text-primary/[0.05] md:group-hover:text-primary-foreground/[0.06] transition-colors duration-500"
+              className="absolute right-6 top-1/2 -translate-y-1/2 font-heading leading-none select-none pointer-events-none text-primary/5 md:group-hover:text-primary-foreground/6 transition-colors duration-500"
               style={{ fontSize: "clamp(5rem, 12vw, 10rem)" }}
             >
               {String(index + 1).padStart(2, "0")}
             </span>
 
             {/* Title row */}
-            <div className="flex items-center gap-4 px-10 text-accent-foreground transition-all duration-500 md:group-hover:px-12 md:group-hover:text-primary-foreground">
+            <div className="flex items-center gap-4 px-4 md:px-10 text-accent-foreground transition-all duration-500 md:group-hover:px-12 md:group-hover:text-primary-foreground">
               {/* Small index */}
-              <span className="text-[11px] tracking-[0.4em] text-primary/30 md:group-hover:text-primary-foreground/50 transition-colors duration-500 font-display select-none shrink-0 tabular-nums w-8">
+              <span className="text-[11px] tracking-[0.4em] text-primary/30 md:group-hover:text-primary-foreground/50 transition-colors duration-500 font-display select-none shrink-0 tabular-nums w-8 hidden sm:block">
                 {String(index + 1).padStart(2, "0")}
               </span>
 
@@ -134,7 +134,7 @@ export const Projects = () => {
                 <SplitText
                   component="h4"
                   animation="byChar"
-                  className="text-3xl lg:text-5xl leading-tight transition-[font-style,letter-spacing] duration-300 md:group-hover:italic md:group-hover:tracking-wide"
+                  className="text-2xl lg:text-5xl leading-tight transition-[font-style,letter-spacing] duration-300 md:group-hover:italic md:group-hover:tracking-wide"
                   disableReverse
                 >
                   {project.name}
@@ -143,7 +143,9 @@ export const Projects = () => {
 
               {/* Arrow */}
               <span
-                ref={(el) => { arrowRefs.current[index] = el; }}
+                ref={(el) => {
+                  arrowRefs.current[index] = el;
+                }}
                 className="text-xl md:text-2xl text-primary/25 md:group-hover:text-primary-foreground transition-colors duration-500 shrink-0 hidden md:block select-none"
               >
                 ↗
@@ -156,14 +158,17 @@ export const Projects = () => {
             />
 
             {/* Frameworks */}
-            <div className="flex flex-wrap px-10 gap-x-4 uppercase transition-all duration-500 md:group-hover:px-12 py-1 pl-[4.5rem] md:pl-[4.5rem]">
+            <div
+              className="flex px-10 gap-x-4 uppercase transition-all duration-500 md:group-hover:px-12 py-1 pl-6 md:pl-[4.5rem] overflow-scroll"
+              style={{ scrollbarWidth: "none" }}
+            >
               {project.frameworks.map((framework, fi) => (
                 <p
                   key={framework.id}
                   ref={(el) => {
                     frameworkRefs.current[index][fi] = el;
                   }}
-                  className="text-paragraph text-primary transition-colors duration-500 md:group-hover:text-primary-foreground font-bold text-md md:text-lg leading-loose"
+                  className="text-primary transition-colors duration-500 text-nowrap md:group-hover:text-primary-foreground font-bold text-sm md:text-lg md:leading-loose"
                 >
                   {framework.name}
                 </p>
@@ -183,7 +188,8 @@ export const Projects = () => {
             </div>
 
             {/* Mobile image */}
-            <div className="mx-6 mt-2 mb-1 md:hidden rounded-xl overflow-hidden relative"
+            <div
+              className="mx-6 mt-2 mb-1 md:hidden rounded-xl overflow-hidden relative"
               style={{ aspectRatio: "16/9" }}
             >
               <img

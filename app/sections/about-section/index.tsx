@@ -56,14 +56,20 @@ export function About() {
 
   useGSAP(
     () => {
-      // ── Sticker infinite rotation ──
-      gsap.to(stickerRef.current, {
-        rotation: 360,
-        duration: 22,
-        ease: "none",
-        repeat: -1,
-        transformOrigin: "center center",
-      });
+      // // ── Sticker infinite rotation (paused while section is off-screen) ──
+      // gsap.to(stickerRef.current, {
+      //   rotation: 360,
+      //   duration: 22,
+      //   ease: "none",
+      //   repeat: -1,
+      //   transformOrigin: "center center",
+      //   scrollTrigger: {
+      //     trigger: sectionRef.current,
+      //     start: "top bottom",
+      //     end: "bottom top",
+      //     toggleActions: "play pause resume pause",
+      //   },
+      // });
 
       // ── Mouse tilt on image ──
       const tiltEl = tiltRef.current;
@@ -269,7 +275,6 @@ export function About() {
             </div>
           </div>
 
-          {/* ── Right: full-height image ── */}
           <div
             ref={tiltRef}
             className="relative will-change-transform h-full order-1 lg:order-2"
@@ -287,7 +292,7 @@ export function About() {
             </div>
 
             {/* Rotating sticker */}
-            <div className="absolute bottom-10 -left-7 z-10 pointer-events-none hidden lg:block">
+            {/*<div className="absolute bottom-10 -left-7 z-10 pointer-events-none hidden lg:block">
               <div className="relative w-28 h-28 md:w-36 md:h-36">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="text-white text-xl md:text-2xl">✦</span>
@@ -318,15 +323,14 @@ export function About() {
                   </text>
                 </svg>
               </div>
-            </div>
+            </div>*/}
 
-            {/* Floating label */}
-            <span
+            {/*<span
               className="float-label absolute top-8 right-8 z-10 italic uppercase text-[10px] tracking-[0.4em] text-white/70 bg-black/25 backdrop-blur-sm px-3 py-1 rounded-sm"
               style={{ transform: "rotate(2deg)" }}
             >
               Self-portrait
-            </span>
+            </span>*/}
           </div>
         </div>
       </section>

@@ -1,4 +1,3 @@
-import ReactLenis from "lenis/react";
 import type { Metadata } from "next";
 import { MouseTracker } from "./components/cursor-follower";
 import { ThemeSwitcher } from "./components/theme-switcher";
@@ -17,19 +16,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ReactLenis root>
-      <ThemeProvider>
-        <html lang="en" className="dark">
-          <body className={`antialiased`}>
-            <Loader
-            // onComplete={() => startIntroAnimation()}
-            />
-            <MouseTracker />
-            {children}
-            <ThemeSwitcher />
-          </body>
-        </html>
-      </ThemeProvider>
-    </ReactLenis>
+    // <ReactLenis root>
+    <ThemeProvider>
+      <html lang="en" className="dark">
+        <body className={`antialiased`}>
+          <Loader
+          // onComplete={() => startIntroAnimation()}
+          />
+          <MouseTracker />
+          {children}
+          <ThemeSwitcher />
+        </body>
+      </html>
+    </ThemeProvider>
+    // </ReactLenis>
   );
 }

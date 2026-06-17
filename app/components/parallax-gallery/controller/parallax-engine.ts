@@ -37,6 +37,11 @@ export class ParallaxEngine {
   private autoPan = false;
   private autoPanConfig: AutoPanConfig = { ...DEFAULT_AUTO_PAN };
   private autoStart = 0;
+  /** ambient (non-interactive) frames are throttled to this rate to cut
+   * compositor load; the sweep is slow enough that 30fps is imperceptible.
+   * Interactive (pointer-driven) frames always run at the display rate. */
+  private autoPanFps = 30;
+  private lastApply = 0;
   private current: Vector = {
     x: 0,
     y: 0,
@@ -132,7 +137,19 @@ export class ParallaxEngine {
     }
   }
 
-  private animate = () => {
+  private animate = (now = performance.now()) => {
+    // Throttle ambient sweep frames: when the pointer isn't over the gallery
+    // the only motion is the slow auto-pan, which looks identical at 30fps but
+    // halves the per-frame transform writes the compositor has to paint.
+    if (!this.isInside) {
+      const minDelta = 1000 / this.autoPanFps;
+      if (now - this.lastApply < minDelta) {
+        this.frame = requestAnimationFrame(this.animate);
+        return;
+      }
+    }
+    this.lastApply = now;
+
     if (this.autoPan && !this.isInside) {
       const t = performance.now() - this.autoStart;
       const { speedX, speedY, amplitudeX, amplitudeY, phaseY } =
