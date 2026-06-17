@@ -10,7 +10,7 @@ type LoaderProps = {
   onComplete?: () => void;
 };
 
-const ITALIC_FROM = 5; // chars from index 5 onward render italic (the surname)
+const ITALIC_FROM = 5;
 
 export function Loader({
   name = "imTheme",
@@ -63,7 +63,7 @@ export function Loader({
                 ".loader-char",
                 {
                   yPercent: -110,
-                  duration: 0.7,
+                  duration: 0.3,
                   stagger: 0.03,
                   ease: "expo.in",
                 },
@@ -71,7 +71,7 @@ export function Loader({
               )
               .to(
                 ".loader-bar, .loader-meta",
-                { opacity: 0, duration: 0.4, ease: "power2.out" },
+                { opacity: 0, duration: 0.7, ease: "power2.out" },
                 0.1,
               )
               .to(

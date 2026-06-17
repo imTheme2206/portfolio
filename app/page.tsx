@@ -21,6 +21,7 @@ export default function Home() {
         <Skills />
         <Gap size="lg" />
         <About />
+        <Gap size="xl" />
         <Projects />
         <Gap size="xl" />
         <Experiences />

@@ -33,7 +33,6 @@ export const Experiences = () => {
       },
     });
 
-    // Phase 1 — unrotate + grow; circle text scales up and fades; image gains color
     tl.to(cardRef.current, {
       rotate: 0,
       width: "55vw",
@@ -52,8 +51,6 @@ export const Experiences = () => {
         { scale: 1.25, opacity: 0, ease: "power1.in", duration: 0.25 },
         "<",
       )
-
-      // Phase 2 — squash into landscape pill; pill label slides in
       .to(cardRef.current, {
         width: "82vw",
         height: "22rem",
@@ -67,8 +64,6 @@ export const Experiences = () => {
         "<0.1",
       )
       .to(imageRef.current, { scale: 1.08, ease: "none", duration: 0.25 }, "<")
-
-      // Phase 3 — flood to full screen; pill text fades, image zooms
       .to(cardRef.current, {
         width: "100%",
         height: "100%",
@@ -82,8 +77,6 @@ export const Experiences = () => {
         "<",
       )
       .to(imageRef.current, { scale: 1.18, ease: "none", duration: 0.25 }, "<")
-
-      // Phase 4 — content arrives
       .to(contentRef.current, {
         autoAlpha: 1,
         y: 0,
@@ -118,7 +111,6 @@ export const Experiences = () => {
 
   return (
     <section data-cursor="invert" id="last-section" className="relative">
-      {/* 300vh scroll space drives the card expansion */}
       <div ref={spacerRef} style={{ height: "300vh" }}>
         <div className="sticky top-0 h-screen flex items-center justify-center bg-background">
           <div
@@ -126,24 +118,17 @@ export const Experiences = () => {
             className="absolute bg-secondary-foreground text-primary-foreground overflow-hidden"
             style={{ width: "14rem", height: "14rem", borderRadius: "50%" }}
           >
-            {/* Hero image — starts desaturated, gains color in phase 1 */}
             <Image
               ref={imageRef}
               src="/assets/images/hero-section/hero-4.webp"
               alt="Experience preview"
               fill
               className="object-cover object-center opacity-0"
-              style={{
-                filter: "grayscale(100%)",
-                willChange: "transform, filter",
-              }}
+              style={{ filter: "grayscale(100%)", willChange: "transform, filter" }}
               priority
             />
-
-            {/* Soft dark overlay so text is always legible */}
             <div className="absolute inset-0 bg-secondary-foreground/50 pointer-events-none" />
 
-            {/* Circle phase — large centred italic label */}
             <div
               ref={circleTextRef}
               className="absolute inset-0 flex flex-col items-center justify-center gap-2 pointer-events-none"
@@ -156,7 +141,6 @@ export const Experiences = () => {
               </span>
             </div>
 
-            {/* Pill phase — left label + right tagline */}
             <div
               ref={pillTextRef}
               className="absolute inset-0 flex items-center justify-between px-14 pointer-events-none"
@@ -177,8 +161,6 @@ export const Experiences = () => {
         </div>
       </div>
 
-      {/* Content overlaps the last 100vh of the spacer so it appears
-          seamlessly as the card reaches full-screen */}
       <div
         ref={contentRef}
         className="relative bg-secondary-foreground text-primary-foreground"
@@ -209,10 +191,29 @@ const ExperienceCards = ({
 }) => {
   const { isDesktop } = useDetectScreen();
   const total = workExperiences.length;
+  const innerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const els = innerRef.current?.querySelectorAll("[data-reveal]");
+    if (!els?.length) return;
+
+    gsap.from(els, {
+      scrollTrigger: {
+        trigger: innerRef.current,
+        start: "top 88%",
+        toggleActions: "play none none none",
+      },
+      opacity: 0,
+      y: 20,
+      stagger: 0.07,
+      duration: 0.6,
+      ease: "power2.out",
+    });
+  }, []);
 
   return (
     <div
-      className="sticky px-10 pt-6 pb-12 bg-secondary-foreground rounded-b-4xl border-t border-secondary/50"
+      className="sticky px-10 pt-8 pb-14 bg-secondary-foreground rounded-b-4xl border-t border-secondary/50"
       style={
         isDesktop
           ? {
@@ -222,22 +223,54 @@ const ExperienceCards = ({
           : { top: 0 }
       }
     >
-      <div className="flex items-center justify-between gap-4 font-light">
-        <div className="flex flex-col gap-6">
-          <h2 className="text-4xl lg:text-5xl">{service.title}</h2>
-          <p className="text-paragraph leading-relaxed tracking-widest lg:text-2xl text-pretty">
+      <div ref={innerRef}>
+        {/* Meta row */}
+        <div
+          data-reveal
+          className="flex items-center gap-4 mb-8 font-mono text-[11px] tracking-[0.25em] uppercase text-primary-foreground/35"
+        >
+          <span>0{index + 1}</span>
+          <span className="flex-1 h-px bg-primary-foreground/10" />
+          <span>{service.company}</span>
+        </div>
+
+        {/* Title */}
+        <h2
+          data-reveal
+          className="font-heading italic text-5xl lg:text-7xl leading-none mb-8 text-primary-foreground"
+        >
+          {service.title}
+        </h2>
+
+        <div data-reveal className="w-full h-px bg-secondary/40 mb-8" />
+
+        {/* Two-column body */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+          <p
+            data-reveal
+            className="text-primary-foreground/60 leading-relaxed text-base lg:text-lg text-pretty font-light"
+          >
             {service.description}
           </p>
-          <div className="flex flex-col gap-2 text-paragraph sm:gap-4 lg:text-3xl">
-            {service.highlights.map((item, itemIndex) => (
-              <div key={`item-${index}-${itemIndex}`}>
-                <h3 className="flex">
-                  <span className="mr-12 text-lg">0{itemIndex + 1}</span>
-                  {item.title}
-                </h3>
-                {itemIndex < service.highlights.length - 1 && (
-                  <div className="w-full h-px my-2 bg-secondary/30" />
-                )}
+
+          <div className="flex flex-col">
+            {service.highlights.map((item, i) => (
+              <div
+                key={`${index}-${i}`}
+                data-reveal
+                className="group/row flex items-baseline justify-between py-3.5 border-b border-secondary/20 last:border-0 cursor-default overflow-hidden"
+              >
+                <div className="flex items-baseline gap-5 min-w-0">
+                  <span className="shrink-0 font-mono text-[10px] tracking-widest text-primary-foreground/25">
+                    0{i + 1}
+                  </span>
+                  <span className="text-primary-foreground font-light text-base lg:text-lg transition-all duration-300 group-hover/row:italic group-hover/row:translate-x-1 truncate">
+                    {item.title}
+                  </span>
+                </div>
+                <span className="shrink-0 ml-6 font-mono text-[11px] text-primary-foreground/35 opacity-0 translate-y-2 transition-all duration-300 group-hover/row:opacity-100 group-hover/row:translate-y-0 text-right">
+                  {item.description}
+                </span>
               </div>
             ))}
           </div>

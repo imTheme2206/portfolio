@@ -83,7 +83,7 @@ export const ParallaxImageComponent = ({
   return (
     <div
       ref={containerRef}
-      className="relative transition-all w-full h-full duration-300 ease-linear overflow-hidden grayscale-85 brightness-50 hover:grayscale-0 hover:brightness-100 not-dark:grayscale-0 not-dark:brightness-90"
+      className="group relative w-full h-full overflow-hidden"
       style={{
         gridColumn: `span ${colSpan}`,
         gridRow: `span ${rowSpan}`,
@@ -104,9 +104,8 @@ export const ParallaxImageComponent = ({
           draggable={false}
           alt={alt || "Gallery image"}
           onLoad={() => setLoaded(true)}
-          className="w-full h-full object-cover absolute inset-0 will-change-transform transition-[filter,opacity] duration-500 ease-out"
+          className="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 ease-out"
           style={{
-            // transform: "scale(1)",
             scale: 1.1,
             opacity: loaded ? 1 : 0,
           }}
@@ -119,6 +118,7 @@ export const ParallaxImageComponent = ({
           {alt}
         </div>
       )}
+      <div className="absolute inset-0 transition-opacity duration-300 dark:bg-black/55 dark:opacity-100 dark:group-hover:opacity-0 not-dark:opacity-0 pointer-events-none" />
     </div>
   );
 };

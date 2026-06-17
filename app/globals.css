@@ -15,40 +15,46 @@ h6 {
 :root {
     font-family: "Syne";
 
-    --background: oklch(0.9374 0.017 101.17);
-    --foreground: oklch(0.2686 0 0);
-    --secondary: oklch(0.9374 0.017 101.17);
-    --primary: oklch(0.2686 0 0);
-    --secondary-foreground: oklch(0.2686 0 0);
-    --primary-foreground: oklch(0.9374 0.017 101.17);
-    --accent-foreground: oklch(0.2686 0 0);
-    --accent: oklch(0.9374 0.017 101.17);
-    --card-foreground: oklch(0.2686 0 0);
-    --card: oklch(0.9374 0.017 101.17);
+    /* Husky-tone palette — light mode (Soft Ivory + Espresso Ink + Husky Blue/Muted Bronze) */
+    --background: #f6f1eb; /* Soft Ivory */
+    --foreground: #2b2622; /* Espresso Ink */
+    --secondary: #f6f1eb;
+    --primary: #2b2622;
+    --secondary-foreground: #2b2622;
+    --primary-foreground: #f6f1eb;
+    --accent-foreground: #2b2622;
+    --accent: #f6f1eb;
+    --card-foreground: #2b2622;
+    --card: #e5ddd3; /* Pale Linen */
 
-    --theme-switcher-dark: oklch(0.2686 0 0);
-    --theme-switcher-light: oklch(0.9374 0.017 101.17);
+    --theme-switcher-dark: #2b2622;
+    --theme-switcher-light: #f6f1eb;
 
     --animation-time: 25ms;
-    --muted: oklch(0.2686 0 0);
-    --muted-foreground: oklch(0.704 0.04 256.788);
-    --animated-accent: oklch(0.8934 0.0779 188.9);
-    --destructive: oklch(0.704 0.191 22.216);
-    --ring: oklch(0.551 0.027 264.364);
+    --muted: #2b2622;
+    --muted-foreground: #8b8178; /* Faded Taupe */
+    --animated-accent: #9a7356; /* Muted Bronze — warm hover pop */
+    --destructive: #a85e52; /* Burnt Clay */
+    --ring: #5f7892; /* Husky Blue */
     --page-screen-size: calc(100% - 20rem);
 }
 
 html.dark {
-    --background: oklch(0.2686 0 0);
-    --foreground: oklch(0.9374 0.017 101.17);
-    --primary: oklch(0.9374 0.017 101.17);
-    --secondary: oklch(0.2686 0 0);
-    --secondary-foreground: oklch(0.9374 0.017 101.17);
-    --primary-foreground: oklch(0.2686 0 0);
-    --accent-foreground: oklch(0.9374 0.017 101.17);
-    --accent: oklch(0.2686 0 0);
-    --card-foreground: oklch(0.9374 0.017 101.17);
-    --card: oklch(0.2686 0 0);
+    --background: #17191c; /* Deep Husk */
+    --foreground: #ece7e1; /* Warm Snow */
+    --primary: #ece7e1;
+    --secondary: #17191c;
+    --secondary-foreground: #ece7e1;
+    --primary-foreground: #17191c;
+    --accent-foreground: #ece7e1;
+    --accent: #17191c;
+    --card-foreground: #ece7e1;
+    --card: #262c33; /* Ash Stone */
+
+    --muted-foreground: #8b8f95; /* Fog Ash */
+    --animated-accent: #a48368; /* Muted Bronze (dark variant) */
+    --destructive: #b36b5e;
+    --ring: #7089a3;
 }
 
 @theme {
@@ -88,7 +94,7 @@ body {
     left: 0;
     width: 0;
     height: 1px;
-    background: oklch(0.9374 0.017 101.17);
+    background: var(--primary);
     transition: width 0.5s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
@@ -153,4 +159,12 @@ a.norris:hover span::after {
 
 @utility clip-path {
     clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+}
+
+/* Halo of bg color around floating hero labels so they stay readable over the image grid */
+.hero-float-halo {
+    text-shadow:
+        0 0 14px var(--background),
+        0 0 6px var(--background),
+        0 1px 2px var(--background);
 }

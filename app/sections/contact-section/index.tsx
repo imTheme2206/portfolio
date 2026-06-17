@@ -45,22 +45,21 @@ const socials = [
 export const Contacts = (props: { ref?: HTMLDivElement }) => {
   const [isScrollToBottom, setIsScrollToBottom] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const handleScroll = () => {
-    if (!containerRef.current) {
-      return;
-    }
-    const scrollTop = window.scrollY;
-    const windowHeight = window.innerHeight + containerRef.current.clientHeight;
-    const documentHeight = document.documentElement.scrollHeight;
-    setIsScrollToBottom(scrollTop + windowHeight >= documentHeight);
-  };
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsScrollToBottom(entry.isIntersecting);
+      },
+      { threshold: 0 },
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -89,6 +88,7 @@ export const Contacts = (props: { ref?: HTMLDivElement }) => {
             ))}
           </Marquee>
         </div>
+        <div ref={sentinelRef} aria-hidden="true" />
       </div>
     </div>
   );
@@ -106,19 +106,12 @@ export default function ContactSection(props: { ref?: HTMLDivElement }) {
   const footerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!props.ref) {
-      return;
-    }
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
-        defaults: {
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: props.ref!,
-            start: "top bottom",
-            onLeave: () => tl.play(),
-            onEnterBack: () => tl.reverse(),
-          },
+        scrollTrigger: {
+          trigger: "#last-section",
+          start: "bottom bottom",
+          toggleActions: "play none none reverse",
         },
       });
 

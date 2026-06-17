@@ -12,6 +12,7 @@ export { useParallaxEngine } from "./hooks/use-parallax";
 export { ParallaxContainerDelegate } from "./controller/parallax-container-delegate";
 export {
   ParallaxEngine,
+  type AutoPanConfig,
   type ParallaxDelegate,
 } from "./controller/parallax-engine";
 export { ParallaxGalleryDelegate } from "./controller/parallax-gallery-delegate";
