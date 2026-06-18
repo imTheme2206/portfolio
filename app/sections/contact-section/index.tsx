@@ -134,12 +134,12 @@ export default function ContactSection() {
         </div>
 
         <div className="relative z-20 flex flex-col gap-5">
-          <p
+          {/*<p
             ref={docsLabelRef}
             className="text-paragraph leading-relaxed uppercase tracking-[0.3em] text-primary px-4"
           >
             {contact.docsLabel}
-          </p>
+          </p>*/}
 
           {/* Cards row — horizontal scroll on mobile, flex on desktop */}
           <div
@@ -158,6 +158,7 @@ export default function ContactSection() {
                   type={doc.type}
                   label={doc.label}
                   href={doc.href}
+                  preview={doc.preview}
                 />
               ))}
             </div>
@@ -165,15 +166,15 @@ export default function ContactSection() {
 
           <div
             ref={infoRef}
-            className="flex flex-col gap-4 sm:flex-row sm:items-end sm:gap-12"
+            className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-2"
           >
             <div className="flex gap-2 px-4 items-center">
-              <span className="text-paragraph uppercase tracking-[0.25em] text-primary">
+              <span className="text-2xl uppercase tracking-[0.25em] text-primary">
                 Email
               </span>
               <a
                 href={`mailto:${contact.email}`}
-                className="contact-email text-primary/40 transition-colors duration-300 hover:text-primary text-paragraph"
+                className="contact-email text-primary/40 transition-colors duration-300 hover:text-primary text-xl"
                 style={{
                   letterSpacing: "-0.01em",
                 }}
@@ -181,13 +182,27 @@ export default function ContactSection() {
                 {contact.email}
               </a>
             </div>
+            <div className="flex gap-2 px-4 items-center">
+              <span className="text-2xl uppercase tracking-[0.25em] text-primary">
+                Tel
+              </span>
+              <a
+                href={`tel:${contact.tel}`}
+                className="contact-email text-primary/40 transition-colors duration-300 hover:text-primary text-xl"
+                style={{
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                {contact.tel}
+              </a>
+            </div>
           </div>
           <div className="relative z-20 flex items-start justify-between px-4">
-            <span className="text-xs uppercase tracking-[0.25em] text-primary">
-              {contact.footer.left}
-            </span>
-            <span className="text-xs uppercase tracking-[0.25em] text-primary">
+            <span className="text-base uppercase tracking-[0.25em] text-primary">
               {contact.footer.right}
+            </span>
+            <span className="text-base uppercase tracking-[0.25em] text-primary">
+              {contact.footer.left}
             </span>
           </div>
         </div>

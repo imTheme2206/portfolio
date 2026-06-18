@@ -8,9 +8,15 @@ type DocumentCardProps = {
   label: string;
   type: "CV" | "Resume";
   href: string;
+  preview: string;
 };
 
-export const DocumentCard = ({ label, type, href }: DocumentCardProps) => {
+export const DocumentCard = ({
+  label,
+  type,
+  href,
+  preview,
+}: DocumentCardProps) => {
   const cardRef = useRef<HTMLAnchorElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const shimmerRef = useRef<HTMLDivElement>(null);
@@ -41,10 +47,23 @@ export const DocumentCard = ({ label, type, href }: DocumentCardProps) => {
     });
 
     // Arrow shoots out then returns
-    gsap.timeline()
-      .to(arrowRef.current, { x: 4, y: -4, opacity: 0, duration: 0.2, ease: "power2.in" })
+    gsap
+      .timeline()
+      .to(arrowRef.current, {
+        x: 4,
+        y: -4,
+        opacity: 0,
+        duration: 0.2,
+        ease: "power2.in",
+      })
       .set(arrowRef.current, { x: -4, y: 4 })
-      .to(arrowRef.current, { x: 0, y: 0, opacity: 1, duration: 0.25, ease: "power2.out" });
+      .to(arrowRef.current, {
+        x: 0,
+        y: 0,
+        opacity: 1,
+        duration: 0.25,
+        ease: "power2.out",
+      });
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -140,7 +159,6 @@ export const DocumentCard = ({ label, type, href }: DocumentCardProps) => {
         </span>
       </div>
 
-      {/* Image wrapper — overflow:hidden clips the zoom */}
       <div className="relative flex-1 overflow-hidden">
         <Image
           ref={imageRef}
@@ -148,7 +166,7 @@ export const DocumentCard = ({ label, type, href }: DocumentCardProps) => {
           height={420}
           className="h-full w-full object-cover"
           style={{ filter: "grayscale(50%)" }}
-          src="/assets/images/hero-section/hero-1.webp"
+          src={preview}
           alt={label}
           priority
         />

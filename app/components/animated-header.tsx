@@ -57,7 +57,7 @@ export const AnimatedHeader = ({
               <SplitText
                 component="h1"
                 animation="byChar"
-                className={`text-6xl md:text-9xl`}
+                className={`text-6xl md:text-8xl`}
               >
                 {title}
               </SplitText>

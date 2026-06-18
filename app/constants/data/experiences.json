@@ -2,11 +2,11 @@
   "experiencesHeader": {
     "subtitle": "Behind the scene, Beyond the screen",
     "title": "Experiences",
-    "since": "Since 2019",
+    "since": "Since 2022",
     "circleText": "Experience",
-    "pillText": "Experience",
+    "pillText": "",
     "image": {
-      "src": "/assets/images/hero-section/hero-4.webp",
+      "src": "/assets/images/hero-section/tmp5.webp",
       "alt": "Experience preview"
     }
   },
@@ -14,6 +14,7 @@
     {
       "title": "Full-Stack Developer",
       "company": "Bit Concept Co., Ltd.",
+      "range": "Oct 2025 - Present",
       "description": "Embedded with a backend team to own frontend-facing infrastructure and cross-team API contract management. I design CI/CD pipelines, maintain developer tooling, and integrate AI-assisted workflows to accelerate complex feature delivery across distributed, async teams.",
       "highlights": [
         {
@@ -25,20 +26,8 @@
           "description": "(OpenAPI → TypeScript types, npm package publishing, zero manual duplication)"
         },
         {
-          "title": "AI-Assisted Development",
-          "description": "(Claude Code, CLAUDE.md engineering configs, multi-session planning workflows)"
-        },
-        {
           "title": "API Contract Management",
           "description": "(OpenAPI/Scramble, cross-team integration, consistent frontend-backend contracts)"
-        },
-        {
-          "title": "Developer Tooling",
-          "description": "(Component scaffolding automation, type generation, test data setup via AI agents)"
-        },
-        {
-          "title": "Cloud Infrastructure",
-          "description": "(Image optimization pipelines, cloud storage workflows, asset load time reduction)"
         },
         {
           "title": "Backend Collaboration",
@@ -53,6 +42,7 @@
     {
       "title": "Frontend Developer",
       "company": "Digithun Worldwide Co., Ltd.",
+      "range": "Feb 2024 - Sept 2025",
       "description": "Core contributor to ShopScape — a multi-tenant e-commerce platform serving brands like Yuedpao, SE-ED, and 365BeautyClub. I engineered complex CMS systems, bulk data pipelines, and real-time streaming UIs across Super Admin, Seller, and Buyer applications.",
       "highlights": [
         {
@@ -60,44 +50,16 @@
           "description": "(Draft/Commit workflows, React Context DnD, 60fps debounced reorder callbacks)"
         },
         {
-          "title": "Rich Text Editing",
-          "description": "(Lexical editor integration, complex serialization for blogs and voucher systems)"
-        },
-        {
-          "title": "Bulk Data Processing",
-          "description": "(ExcelJS XLSX import/export, per-row error mapping, client-side pagination)"
-        },
-        {
-          "title": "Real-Time Streaming UI",
-          "description": "(ReadableStream ERP sync, live progress display, two-phase cancellation handling)"
-        },
-        {
-          "title": "State Management",
-          "description": "(MobX for complex deal models, SWR optimistic UI, real-time data sync patterns)"
-        },
-        {
-          "title": "Performance Optimization",
-          "description": "(Debounced search, requestIdleCallback, feature flags for incremental rollouts)"
-        },
-        {
           "title": "Analytics Dashboard",
           "description": "(Recharts with custom date pickers, previous period comparison, SWR-keyed caching)"
         },
         {
           "title": "Component Architecture",
-          "description": "(Polymorphic coupon UI, crop image workflows, reusable form helpers with dirty state guards)"
-        },
-        {
-          "title": "SEO & Structured Data",
-          "description": "(JSON-LD injection for products and blogs, SSR-ready metadata compliance)"
+          "description": "(Polymorphic coupon UI, reusable form helpers with dirty state guards)"
         },
         {
           "title": "CDP & Analytics Tracking",
           "description": "(Cookie-gated CDP integration, configurable customer tracking, data-driven insights)"
-        },
-        {
-          "title": "Category & Slug Management",
-          "description": "(3-level hierarchy system, SWR data fetching, Yup strict schema validation)"
         },
         {
           "title": "Buyer Experience",
@@ -108,6 +70,7 @@
     {
       "title": "Frontend Developer",
       "company": "Bluewind Solution Co., Ltd.",
+      "range": "Sept 2022 - Jan 2024",
       "description": "First professional role building responsive enterprise web UIs within an ASP.NET MVC environment. Focused on cross-browser compatibility, REST API integration, and page performance across production systems used by enterprise clients.",
       "highlights": [
         {
@@ -121,10 +84,6 @@
         {
           "title": "REST API Integration",
           "description": "(AJAX-driven dynamic updates, backend contract collaboration, no full-page reloads)"
-        },
-        {
-          "title": "Page Performance",
-          "description": "(Asset optimization, deferred loading, DOM query improvements for enterprise modules)"
         },
         {
           "title": "Interactive UI Features",

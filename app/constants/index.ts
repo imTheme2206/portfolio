@@ -57,6 +57,7 @@ export type Highlight = {
 export type WorkExperience = {
   title: string;
   company: string;
+  range: string;
   description: string;
   highlights: Highlight[];
 };
@@ -64,6 +65,7 @@ export type WorkExperience = {
 export type Contact = {
   title: string;
   email: string;
+  tel: string;
   docsLabel: string;
   footer: { left: string; right: string };
 };
@@ -79,6 +81,7 @@ export type DocumentLink = {
   type: "CV" | "Resume";
   label: string;
   href: string;
+  preview: string;
 };
 
 // Name shown in the large scrolling marquee (rendered as "first last — first last —").

@@ -2,10 +2,11 @@
   "contact": {
     "title": "Contact",
     "email": "pkk.theme@gmail.com",
+    "tel": "+66 808 919 082",
     "docsLabel": "Documents",
     "footer": {
       "left": "Portfolio · 2026",
-      "right": "Based in Bangkok"
+      "right": "Based in Bangkok — Thailand"
     }
   },
   "socials": [
@@ -43,12 +44,14 @@
     {
       "type": "CV",
       "label": "Curriculum Vitae · PDF",
-      "href": "/cv.pdf"
+      "href": "/cv.pdf",
+      "preview": "/assets/images/docs-preview/cv.webp"
     },
     {
       "type": "Resume",
       "label": "Resume · PDF",
-      "href": "/resume.pdf"
+      "href": "/resume.pdf",
+      "preview": "/assets/images/docs-preview/resume.webp"
     }
   ]
 }

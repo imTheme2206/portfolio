@@ -231,16 +231,16 @@ const ExperienceCards = ({
       <div ref={innerRef}>
         <div
           data-reveal
-          className="flex items-center gap-4 mb-8 font-mono text-[11px] tracking-[0.25em] uppercase text-primary-foreground/25"
+          className="flex items-center gap-4 mb-8 font-mono text-[11px] tracking-[0.25em] uppercase text-primary-foreground/60"
         >
-          <span>{String(index + 1).padStart(2, "0")}</span>
+          <span className="text-sm">{service.range}</span>
+          {/*<span>{String(index + 1).padStart(2, "0")}</span>*/}
           <span className="flex-1 h-px bg-primary-foreground/10 relative" />
           <p className="absolute top-0 right-0 bg-primary px-4 sm:text-lg sm:-mt-2">
             {service.company}
           </p>
         </div>
 
-        {/* Title + company */}
         <div
           data-reveal
           className="relative flex flex-col lg:flex-row lg:items-end justify-between gap-3 lg:gap-10 mb-8 overflow-hidden"
@@ -256,7 +256,7 @@ const ExperienceCards = ({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
           <p
             data-reveal
-            className="text-primary-foreground/60 leading-relaxed text-base lg:text-lg text-pretty font-light"
+            className="text-primary-foreground leading-relaxed text-base lg:text-xl text-pretty font-light"
           >
             {service.description}
           </p>
@@ -273,10 +273,10 @@ const ExperienceCards = ({
                     0{i + 1}
                   </span>
                   <div className="flex flex-col">
-                    <p className="text-primary-foreground font-light text-base lg:text-lg transition-all duration-100 group-hover/row:italic group-hover/row:translate-x-1 truncate">
+                    <p className="text-primary-foreground font-light text-lg lg:text-lg transition-all duration-100 group-hover/row:italic group-hover/row:translate-x-1 truncate">
                       {item.title}
                     </p>
-                    <p className="hidden sm:block shrink-0 font-mono text-[11px] text-primary-foreground/35 opacity-0 translate-y-2 transition-all duration-300 group-hover/row:opacity-100 group-hover/row:translate-y-0 truncate">
+                    <p className="hidden sm:block shrink-0 font-mono text-sm text-primary-foreground/60 opacity-0 translate-y-2 transition-all duration-300 group-hover/row:opacity-100 group-hover/row:translate-y-0 truncate">
                       {item.description}
                     </p>
                   </div>
