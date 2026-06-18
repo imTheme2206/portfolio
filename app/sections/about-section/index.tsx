@@ -14,8 +14,6 @@ gsap.registerPlugin(ScrollTrigger, GSAPSplitText);
 export function About() {
   const sectionRef = useRef<HTMLElement>(null);
   const imgWrapRef = useRef<HTMLDivElement>(null);
-  const tiltRef = useRef<HTMLDivElement>(null);
-  const stickerRef = useRef<SVGSVGElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
   const line1aRef = useRef<HTMLParagraphElement>(null);
@@ -27,36 +25,6 @@ export function About() {
 
   useGSAP(
     () => {
-      // ── Mouse tilt on image ──
-      // const tiltEl = tiltRef.current;
-      // let onMove: ((e: MouseEvent) => void) | null = null;
-      // let onLeave: (() => void) | null = null;
-      // if (tiltEl) {
-      //   const tiltY = gsap.quickTo(tiltEl, "rotateY", {
-      //     duration: 0.7,
-      //     ease: "power3.out",
-      //   });
-      //   const tiltX = gsap.quickTo(tiltEl, "rotateX", {
-      //     duration: 0.7,
-      //     ease: "power3.out",
-      //   });
-      //   gsap.set(tiltEl, {
-      //     transformPerspective: 900,
-      //     transformOrigin: "center center",
-      //   });
-      //   onMove = (e: MouseEvent) => {
-      //     const r = tiltEl.getBoundingClientRect();
-      //     tiltY(((e.clientX - r.left - r.width / 2) / (r.width / 2)) * 7);
-      //     tiltX(-(((e.clientY - r.top - r.height / 2) / (r.height / 2)) * 7));
-      //   };
-      //   onLeave = () => {
-      //     tiltY(0);
-      //     tiltX(0);
-      //   };
-      //   tiltEl.addEventListener("mousemove", onMove);
-      //   tiltEl.addEventListener("mouseleave", onLeave);
-      // }
-
       // ── SplitText heading for scrub control ──
       const split = headingRef.current
         ? new GSAPSplitText(headingRef.current, {
@@ -134,13 +102,6 @@ export function About() {
         { scale: 0, opacity: 0, stagger: 0.055, duration: 0.35 },
         1.55,
       );
-
-      return () => {
-        if (tiltEl && onMove) tiltEl.removeEventListener("mousemove", onMove);
-        if (tiltEl && onLeave)
-          tiltEl.removeEventListener("mouseleave", onLeave);
-        split?.revert();
-      };
     },
     { scope: sectionRef },
   );
@@ -223,7 +184,7 @@ export function About() {
               {skills.map((s) => (
                 <span
                   key={s}
-                  className="about-skill text-[11px] font-display px-3 py-1.5 rounded-full border border-foreground/20 text-foreground/80 hover:border-foreground hover:bg-foreground hover:text-background transition-colors duration-300 cursor-default select-none"
+                  className="about-skill text-base font-display px-3 py-1.5 rounded-full border border-foreground/20 text-foreground/80 hover:border-foreground hover:bg-foreground hover:text-background transition-colors duration-300 cursor-default select-none"
                 >
                   {s}
                 </span>
@@ -232,7 +193,6 @@ export function About() {
           </div>
 
           <div
-            ref={tiltRef}
             className="relative will-change-transform h-full order-1 lg:order-2"
             style={{ transformStyle: "preserve-3d" }}
           >

@@ -44,13 +44,13 @@
     {
       "type": "CV",
       "label": "Curriculum Vitae · PDF",
-      "href": "/cv.pdf",
+      "href": "assets/documents/worrachit-pongkatekarm-cv.pdf",
       "preview": "/assets/images/docs-preview/cv.webp"
     },
     {
       "type": "Resume",
       "label": "Resume · PDF",
-      "href": "/resume.pdf",
+      "href": "assets/documents/worrachit-pongkatekarm-resume.pdf",
       "preview": "/assets/images/docs-preview/resume.webp"
     }
   ]

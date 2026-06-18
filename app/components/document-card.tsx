@@ -154,7 +154,7 @@ export const DocumentCard = ({
             ),
           )}
         </div>
-        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/30 transition-colors duration-500 group-hover:text-white/60">
+        <span className="font-mono text-base uppercase tracking-[0.2em] text-white/30 transition-colors duration-500 group-hover:text-white/60">
           {type}
         </span>
       </div>

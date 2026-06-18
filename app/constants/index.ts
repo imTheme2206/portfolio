@@ -43,9 +43,10 @@ export type Project = {
   id: number;
   name: string;
   description: string;
-  href: string;
+  href?: string;
+  github?: string;
   image: string;
-  bgImage: string;
+  bgImage?: string;
   frameworks: Framework[];
 };
 

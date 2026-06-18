@@ -33,6 +33,18 @@ export const variantConfig: Record<CursorVariant, CursorProps> = {
       "rounded-full",
     ],
   },
+  thumbnail: {
+    classNames: [
+      "w-126",
+      "h-72",
+      "translate-x-14",
+      "-translate-y-36",
+      "bg-secondary-foreground",
+      "p-1",
+      "rounded-lg",
+    ],
+    showThumbnail: true,
+  },
   clickable: {
     classNames: [
       "w-18",
@@ -45,17 +57,5 @@ export const variantConfig: Record<CursorVariant, CursorProps> = {
       "rounded-full",
     ],
     text: "CLICK",
-  },
-  thumbnail: {
-    classNames: [
-      "w-126",
-      "h-72",
-      "translate-x-14",
-      "-translate-y-36",
-      "bg-secondary-foreground",
-      "p-1",
-      "rounded-lg",
-    ],
-    showThumbnail: true,
   },
 };

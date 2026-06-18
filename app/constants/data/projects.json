@@ -9,8 +9,8 @@
       "name": "Personal Portfolio",
       "description": "This very site — an animated portfolio with a custom parallax gallery engine, GSAP scroll-linked motion, Lenis smooth scroll, and a CSS-driven light/dark theme.",
       "href": "",
-      "image": "/assets/images/hero-section/hero-1.webp",
-      "bgImage": "/assets/images/backgrounds/blanket.jpg",
+      "github": "",
+      "image": "/assets/images/projects-section/portfolio.webp",
       "frameworks": [
         {
           "id": 1,
@@ -38,8 +38,9 @@
       "id": 2,
       "name": "Giteractive",
       "description": "An interactive Git visualizer that lets users run Git commands and watch the commit graph, branches, and staging area update in real time on a node-based canvas.",
-      "href": "",
-      "image": "/assets/images/projects-section/giteractive.png",
+      "href": "https://imtheme2206.github.io/giteractive/",
+      "github": "https://github.com/imTheme2206/giteractive",
+      "image": "/assets/images/projects-section/giteractive.webp",
       "frameworks": [
         {
           "id": 1,
@@ -72,7 +73,8 @@
       "name": "Enlightened Fellows Discord Bot",
       "description": "A TypeScript Discord bot running two subsystems in one process: a Discord.js v14 bot and an Elysia HTTP API, sharing a DDD-lite domain layer. Features a custom Monster Hunter Wilds armor set-search engine (DFS combination optimizer over an in-memory index), scheduled cron jobs for MH Wilds events and Genshin code alerts, and a Drizzle/Postgres data layer on Supabase.",
       "href": "",
-      "image": "/assets/images/projects-section/enlightened-fellows.png",
+      "github": "https://github.com/imTheme2206/enlightened-fellows-discord-bot",
+      "image": "/assets/images/projects-section/enlightened-fellows.webp",
       "frameworks": [
         {
           "id": 1,

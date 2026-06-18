@@ -61,6 +61,7 @@ export function useParallaxEngine<T extends ParallaxDelegate>(
     }
 
     return () => engine.detach();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [disabled, autoPan]);
 
   return {

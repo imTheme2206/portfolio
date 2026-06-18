@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 export type ImageData = {
   src: string;
@@ -24,13 +24,7 @@ export const ParallaxImageComponent = ({
 } & Partial<HTMLImageElement>) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    if (!src) {
-      setLoaded(true);
-    }
-  }, []);
+  const [loaded, setLoaded] = useState(!src);
 
   // Calculate column span based on width - wider images span more columns out of 4
   const colSpan = width && width > 800 ? 2 : 1;

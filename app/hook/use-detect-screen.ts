@@ -22,10 +22,11 @@ const ssrFallback: ScreenType = {
 };
 
 export const useDetectScreen = (): ScreenType => {
-  const [screen, setScreen] = useState<ScreenType>(ssrFallback);
+  const [screen, setScreen] = useState<ScreenType>(() =>
+    typeof window !== "undefined" ? getScreenType() : ssrFallback,
+  );
 
   useEffect(() => {
-    setScreen(getScreenType());
     const handleResize = () => setScreen(getScreenType());
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);

@@ -58,6 +58,7 @@ export const SplitText = ({
 
   return React.createElement(
     component,
+    // eslint-disable-next-line react-hooks/refs -- component is always a DOM string tag, not a function component
     { ref: contentRef, className: className, style: style },
     children,
   );

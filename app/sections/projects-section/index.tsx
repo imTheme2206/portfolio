@@ -5,6 +5,7 @@ import { Divider } from "@/app/components/divider";
 import { SplitText } from "@/app/components/split-text";
 import { projects, projectsHeader } from "@/app/constants";
 import { useGSAP } from "@gsap/react";
+import { Icon } from "@iconify/react";
 import gsap from "gsap";
 import Image from "next/image";
 import { useRef } from "react";
@@ -14,7 +15,6 @@ export const Projects = () => {
   const frameworkRefs = useRef<(HTMLElement | null)[][]>(
     projects.map(() => []),
   );
-  const arrowRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   useGSAP(() => {
     projects.forEach((_, i) => {
@@ -59,13 +59,6 @@ export const Projects = () => {
         { y: 0, opacity: 1, stagger: 0.06, duration: 0.35, ease: "power2.out" },
       );
     }
-
-    gsap.to(arrowRefs.current[index], {
-      x: 5,
-      y: -5,
-      duration: 0.3,
-      ease: "power2.out",
-    });
   };
 
   const handleMouseLeave = (index: number) => {
@@ -78,13 +71,6 @@ export const Projects = () => {
       transformOrigin: "bottom",
       duration: 0.2,
       ease: "power2.in",
-    });
-
-    gsap.to(arrowRefs.current[index], {
-      x: 0,
-      y: 0,
-      duration: 0.4,
-      ease: "elastic.out(1, 0.7)",
     });
   };
 
@@ -134,15 +120,36 @@ export const Projects = () => {
                 </SplitText>
               </div>
 
-              {/* Arrow */}
-              <span
-                ref={(el) => {
-                  arrowRefs.current[index] = el;
-                }}
-                className="text-xl md:text-2xl text-primary/25 md:group-hover:text-primary-foreground transition-colors duration-500 shrink-0 hidden md:block select-none"
-              >
-                ↗
-              </span>
+              {/* Links */}
+              <div className="shrink-0 hidden md:flex items-center gap-6">
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="text-primary/25 md:group-hover:text-primary-foreground transition-colors duration-500 hover:scale-110 active:scale-95"
+                    aria-label={`${project.name} GitHub repository`}
+                  >
+                    <Icon icon="mdi:github" className="text-xl md:text-4xl" />
+                  </a>
+                )}
+                {project.href && (
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="text-primary/25 md:group-hover:text-primary-foreground transition-colors duration-500 hover:scale-110 active:scale-95"
+                    aria-label={`${project.name} live site`}
+                  >
+                    <Icon
+                      icon="mdi:open-in-new"
+                      className="text-xl md:text-4xl"
+                    />
+                  </a>
+                )}
+              </div>
             </div>
 
             <Divider
@@ -152,7 +159,7 @@ export const Projects = () => {
 
             {/* Frameworks */}
             <div
-              className="flex px-10 gap-x-4 uppercase transition-all duration-500 md:group-hover:px-12 py-1 pl-6 md:pl-[4.5rem] overflow-scroll"
+              className="flex px-10 gap-x-4 uppercase transition-all duration-500 md:group-hover:px-12 py-1 pl-6 md:pl-18 overflow-scroll"
               style={{ scrollbarWidth: "none" }}
             >
               {project.frameworks.map((framework, fi) => (
@@ -169,7 +176,7 @@ export const Projects = () => {
             </div>
 
             {/* Description */}
-            <div className="flex px-10 leading-loose transition-all duration-500 py-3 md:group-hover:px-12 pl-[4.5rem] md:pl-[4.5rem]">
+            <div className="flex px-10 leading-loose transition-all duration-500 py-3 md:group-hover:px-12 pl-18">
               <SplitText
                 component="p"
                 animation="byWord"
@@ -189,10 +196,8 @@ export const Projects = () => {
                 <Image
                   src={project.image}
                   alt={project.name}
-                  className="w-full h-full object-cover relative"
-                  width={320}
-                  height={280}
-                  layout="responsive"
+                  className="object-cover"
+                  fill
                 />
               )}
               <span
@@ -203,6 +208,38 @@ export const Projects = () => {
               </span>
               <div className="absolute inset-0 bg-foreground/10 rounded-xl" />
             </div>
+
+            {/* Mobile links */}
+            {(project.github || project.href) && (
+              <div className="flex md:hidden items-center gap-4 px-6 py-2">
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center gap-1.5 text-primary/50 text-sm font-bold uppercase tracking-wide"
+                    aria-label={`${project.name} GitHub repository`}
+                  >
+                    <Icon icon="mdi:github" className="text-lg" />
+                    GitHub
+                  </a>
+                )}
+                {project.href && (
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center gap-1.5 text-primary/50 text-sm font-bold uppercase tracking-wide"
+                    aria-label={`${project.name} live site`}
+                  >
+                    <Icon icon="mdi:open-in-new" className="text-lg" />
+                    Visit
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         ))}
       </div>

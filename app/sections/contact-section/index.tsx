@@ -5,6 +5,7 @@ import { AnimatedHoverText } from "@/app/components/animated-hover-text";
 import { DocumentCard } from "@/app/components/document-card";
 import { Marquee } from "@/app/components/marquee";
 import { contact, documents, socials } from "@/app/constants";
+import { useDetectScreen } from "@/app/hook/use-detect-screen";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
@@ -14,6 +15,7 @@ export const Contacts = () => {
   const [isScrollToBottom, setIsScrollToBottom] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const screen = useDetectScreen();
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
@@ -44,10 +46,10 @@ export const Contacts = () => {
             {[...socials, ...socials, ...socials].map((l, index) => (
               <React.Fragment key={index}>
                 {l.title !== "" ? (
-                  <div className="flex gap-2 text-2xl font-semibold mx-24 w-full items-center group">
+                  <div className="flex gap-2 text-2xl font-semibold mx-24 mb-6 mt-4 sm:mb-0 w-full items-center group">
                     <AnimatedHoverText
                       text={l.title}
-                      fontSize="5rem"
+                      fontSize={screen.isDesktop ? "5rem" : "3rem"}
                       textColor={l.textColor}
                       href={l.link}
                     />
@@ -169,12 +171,12 @@ export default function ContactSection() {
             className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-2"
           >
             <div className="flex gap-2 px-4 items-center">
-              <span className="text-2xl uppercase tracking-[0.25em] text-primary">
+              <span className="text-base sm:text-2xl uppercase tracking-[0.25em] text-primary">
                 Email
               </span>
               <a
                 href={`mailto:${contact.email}`}
-                className="contact-email text-primary/40 transition-colors duration-300 hover:text-primary text-xl"
+                className="contact-email text-primary/40 transition-colors duration-300 hover:text-primary text-sm sm:text-xl"
                 style={{
                   letterSpacing: "-0.01em",
                 }}
@@ -183,12 +185,12 @@ export default function ContactSection() {
               </a>
             </div>
             <div className="flex gap-2 px-4 items-center">
-              <span className="text-2xl uppercase tracking-[0.25em] text-primary">
+              <span className=" text-base sm:text-2xl uppercase tracking-[0.25em] text-primary">
                 Tel
               </span>
               <a
                 href={`tel:${contact.tel}`}
-                className="contact-email text-primary/40 transition-colors duration-300 hover:text-primary text-xl"
+                className="contact-email text-primary/40 transition-colors duration-300 hover:text-primary text-sm sm:text-xl"
                 style={{
                   letterSpacing: "-0.01em",
                 }}
@@ -198,10 +200,10 @@ export default function ContactSection() {
             </div>
           </div>
           <div className="relative z-20 flex items-start justify-between px-4">
-            <span className="text-base uppercase tracking-[0.25em] text-primary">
+            <span className=" text-[10px] sm:text-base uppercase tracking-[0.25em] text-primary">
               {contact.footer.right}
             </span>
-            <span className="text-base uppercase tracking-[0.25em] text-primary">
+            <span className=" text-[10px] sm:text-base uppercase tracking-[0.25em] text-primary">
               {contact.footer.left}
             </span>
           </div>
