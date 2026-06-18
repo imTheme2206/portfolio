@@ -157,7 +157,7 @@ export const Experiences = () => {
                   {workExperiences.length} roles
                 </span>
               </div>
-              <span className="font-mono text-5xl tracking-[0.15em] uppercase text-primary-foreground">
+              <span className="font-heading italic text-3xl tracking-[0.15em] uppercase text-primary-foreground">
                 {experiencesHeader.pillText}
               </span>
             </div>
@@ -218,7 +218,7 @@ const ExperienceCards = ({
 
   return (
     <div
-      className="sticky px-10 pt-8 pb-10 bg-secondary-foreground rounded-b-4xl border-t border-secondary/50"
+      className="sticky px-4 sm:px-10 pt-8 pb-10 bg-secondary-foreground rounded-b-4xl border-t border-secondary/50"
       style={
         isDesktop
           ? {
@@ -231,12 +231,11 @@ const ExperienceCards = ({
       <div ref={innerRef}>
         <div
           data-reveal
-          className="flex items-center gap-4 mb-8 font-mono text-[11px] tracking-[0.25em] uppercase text-primary-foreground/60"
+          className="flex flex-col sm:flex-row sm:items-center justify-center sm:justify-baseline gap-4 mb-8 font-mono sm:tracking-[0.25em] uppercase text-primary-foreground/60 text-xs sm:text-sm"
         >
-          <span className="text-sm">{service.range}</span>
-          {/*<span>{String(index + 1).padStart(2, "0")}</span>*/}
-          <span className="flex-1 h-px bg-primary-foreground/10 relative" />
-          <p className="absolute top-0 right-0 bg-primary px-4 sm:text-lg sm:-mt-2">
+          <p className="text-sm flex-1">{service.range}</p>
+          <span className="hidden sm:block flex-1 h-px bg-primary-foreground/10 relative" />
+          <p className="absolute top-0 right-0 bg-primary px-4 sm:text-lg mt-1/2 sm:-mt-2">
             {service.company}
           </p>
         </div>
