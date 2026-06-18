@@ -1,9 +1,11 @@
+import Link from "next/link";
 import { CSSProperties } from "react";
 
 export const AnimatedHoverText = (props: {
   text: string;
   fontSize: string;
   textColor?: string;
+  href?: string;
 }) => {
   return (
     <div
@@ -14,7 +16,12 @@ export const AnimatedHoverText = (props: {
         } as CSSProperties
       }
     >
-      <a data-cursor="clickable" className="norris uppercase font-bold">
+      <Link
+        data-cursor="clickable"
+        className="norris uppercase font-bold"
+        href={props.href || ""}
+        target="_blank"
+      >
         {props.text.split("").map((char, index) => (
           <span
             key={index}
@@ -23,14 +30,14 @@ export const AnimatedHoverText = (props: {
             style={
               {
                 "--index": index + 1,
-                "--animated-accent": props.textColor || "var(--accent)",
+                "--animated-accent": props.textColor || "var(--primary)",
               } as CSSProperties
             }
           >
             {char}
           </span>
         ))}
-      </a>
+      </Link>
     </div>
   );
 };

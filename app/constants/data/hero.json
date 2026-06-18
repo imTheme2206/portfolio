@@ -1,0 +1,116 @@
+{
+  "heroName": [
+    "Worrachit",
+    "Pongkatekarm"
+  ],
+  "floatingLabels": [
+    {
+      "text": "✦ Software Engineer",
+      "className": "top-[6%] left-[5%] opacity-95",
+      "rotation": -2
+    },
+    {
+      "text": "Coffee Enjoyer",
+      "className": "top-[5%] right-[10%] opacity-90",
+      "rotation": 3
+    },
+    {
+      "text": "(Frontend ／ Motion)",
+      "className": "top-[20%] left-[8%] opacity-85",
+      "rotation": 0,
+      "size": "sm"
+    },
+    {
+      "text": "Bangkok — TH",
+      "className": "top-[30%] right-[5%] opacity-90 origin-right",
+      "rotation": 90
+    },
+    {
+      "text": "Quietly Crafting",
+      "className": "top-[33%] left-[4%] opacity-85",
+      "rotation": -1
+    },
+    {
+      "text": "Design × Code",
+      "className": "top-[68%] left-[8%] opacity-80",
+      "rotation": 1
+    },
+    {
+      "text": "Scroll ↓",
+      "className": "bottom-[3%] right-[4%] opacity-85",
+      "rotation": 0,
+      "size": "sm"
+    }
+  ],
+  "heroImages": [
+    {
+      "src": "/assets/images/hero-section/hero-1.webp",
+      "alt": "blank",
+      "width": 560,
+      "height": 1075
+    },
+    {
+      "src": "/assets/images/hero-section/hero-4.webp",
+      "alt": "Hero Image 1",
+      "width": 1020,
+      "height": 890
+    },
+    {
+      "src": "/assets/images/hero-section/hero-2.webp",
+      "alt": "Hero Image 2",
+      "width": 560,
+      "height": 1375
+    },
+    {
+      "src": "/assets/images/hero-section/hero-3.webp",
+      "alt": "Hero Image 3",
+      "width": 320,
+      "height": 620
+    },
+    {
+      "src": "/assets/images/hero-section/tmp2.webp",
+      "width": 520,
+      "height": 870
+    },
+    {
+      "src": "/assets/images/hero-section/tmp5.webp",
+      "width": 520,
+      "height": 670
+    },
+    {
+      "src": "/assets/images/hero-section/tmp4.webp",
+      "width": 320,
+      "height": 570
+    },
+    {
+      "src": "/assets/images/hero-section/tmp2.webp",
+      "alt": "Hero Image 4",
+      "width": 520,
+      "height": 1270
+    },
+    {
+      "src": "/assets/images/hero-section/hero-6.webp",
+      "alt": "blank",
+      "width": 560,
+      "height": 775
+    },
+    {
+      "src": "/assets/images/hero-section/hero-5.webp",
+      "alt": "Hero Image 5",
+      "width": 560,
+      "height": 1220
+    },
+    {
+      "src": "/assets/images/hero-section/hero-1.webp",
+      "alt": "Hero Image 5",
+      "width": 560,
+      "height": 700
+    },
+    {
+      "src": "/assets/images/hero-section/tmp2.webp",
+      "alt": "Hero Image 5",
+      "width": 560,
+      "height": 475
+    }
+  ]
+}

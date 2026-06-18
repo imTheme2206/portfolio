@@ -1,38 +1,11 @@
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { ParallaxGalleryDelegate } from "../controller/parallax-gallery-delegate";
-import { useParallaxEngine } from "../hooks/use-parallax";
 
 export type ImageData = {
   src: string;
   width: number;
   height: number;
   alt?: string;
-};
-
-export const ParallaxImageGallery = (props: { images: ImageData[] }) => {
-  const { containerRef, delegate } = useParallaxEngine(
-    (container) => new ParallaxGalleryDelegate(container),
-  );
-
-  return (
-    <div
-      ref={containerRef}
-      className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] auto-rows-[4px] gap-5 grid-flow-dense"
-    >
-      {props.images.map((img, i) => (
-        <ParallaxImageComponent
-          key={`${img.src}-${i}`}
-          registerLayer={delegate?.registerLayer}
-          width={img.width}
-          height={img.height}
-          src={img.src}
-          alt={img.alt}
-          index={i}
-        />
-      ))}
-    </div>
-  );
 };
 
 export const ParallaxImageComponent = ({
@@ -66,7 +39,7 @@ export const ParallaxImageComponent = ({
   // Each row is 10px, gap is 16px (gap-4 = 1rem = 16px)
   // Formula: span = (height + gap) / (row_height + gap)
   const ROW_HEIGHT = 10;
-  const GAP = 16;
+  const GAP = 2;
   const aspectRatio = height && width ? height / width : 1;
   // Assuming container width - for 1 column out of 4: ~200px, for 2 columns out of 4: ~416px
   const estimatedWidth = colSpan === 2 ? 416 : 200;
@@ -110,7 +83,7 @@ export const ParallaxImageComponent = ({
   return (
     <div
       ref={containerRef}
-      className="relative transition-all w-full h-full duration-300 ease-linear overflow-hidden grayscale-100 brightness-50 hover:grayscale-0 hover:brightness-100"
+      className="group relative w-full h-full overflow-hidden"
       style={{
         gridColumn: `span ${colSpan}`,
         gridRow: `span ${rowSpan}`,
@@ -131,9 +104,8 @@ export const ParallaxImageComponent = ({
           draggable={false}
           alt={alt || "Gallery image"}
           onLoad={() => setLoaded(true)}
-          className="w-full h-full object-cover absolute inset-0 will-change-transform transition-[filter,opacity] duration-500 ease-out"
+          className="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 ease-out"
           style={{
-            // transform: "scale(1)",
             scale: 1.1,
             opacity: loaded ? 1 : 0,
           }}
@@ -142,10 +114,11 @@ export const ParallaxImageComponent = ({
           src={src}
         />
       ) : (
-        <div className="w-full h-full bg-zinc-800 text-primary grid place-items-center text-2xl uppercase">
+        <div className="w-full h-full bg-secondary text-primary grid place-items-center text-2xl uppercase">
           {alt}
         </div>
       )}
+      <div className="absolute inset-0 transition-opacity duration-300 dark:bg-black/55 dark:opacity-100 dark:group-hover:opacity-0 not-dark:opacity-0 pointer-events-none" />
     </div>
   );
 };

@@ -1,0 +1,49 @@
+{
+  "about": {
+    "sectionLabel": "02 / About",
+    "heading": "About Me",
+    "bioLabel": "Hi! You can call me Theme!",
+    "paragraphs": [
+      [
+        "I'm a software developer obsessed with the intersection",
+        "of engineering precision and design intention."
+      ],
+      [
+        "My work spans startups, agencies, and open-source —",
+        "craft, clarity, systems that scale without losing soul."
+      ]
+    ],
+    "portrait": {
+      "src": "/assets/images/hero-section/tmp.webp",
+      "alt": "Portrait"
+    }
+  },
+  "skills": [
+    "TypeScript",
+    "React",
+    "Next.js",
+    "GSAP",
+    "Tailwind",
+    "Node.js",
+    "Three.js",
+    "WebGL",
+    "Lenis",
+    "Figma",
+    "Vue",
+    "Motion"
+  ],
+  "marqueeWords": [
+    "Design",
+    "✦",
+    "Code",
+    "✦",
+    "Motion",
+    "✦",
+    "Craft",
+    "✦",
+    "Detail",
+    "✦",
+    "System",
+    "✦"
+  ]
+}

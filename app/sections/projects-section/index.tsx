@@ -1,35 +1,71 @@
+"use client";
+
 import { AnimatedHeader } from "@/app/components/animated-header";
 import { Divider } from "@/app/components/divider";
 import { SplitText } from "@/app/components/split-text";
-import { projects } from "@/app/constants";
+import { projects, projectsHeader } from "@/app/constants";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import Image from "next/image";
 import { useRef } from "react";
 
 export const Projects = () => {
   const overlayRefs = useRef<HTMLDivElement[]>([]);
-  const projectDesc = "This is what a free time gets me";
-  useGSAP(() => {});
+  const frameworkRefs = useRef<(HTMLElement | null)[][]>(
+    projects.map(() => []),
+  );
+  const arrowRefs = useRef<(HTMLSpanElement | null)[]>([]);
+
+  useGSAP(() => {
+    projects.forEach((_, i) => {
+      const items = frameworkRefs.current[i]?.filter(Boolean);
+      if (!items?.length) return;
+
+      gsap.from(items, {
+        scrollTrigger: {
+          trigger: items[0],
+          start: "top 88%",
+          toggleActions: "play none none none",
+        },
+        opacity: 0,
+        y: 12,
+        stagger: 0.07,
+        duration: 0.5,
+        ease: "power2.out",
+      });
+    });
+  }, []);
 
   const handleMouseEnter = (index: number) => {
     const el = overlayRefs.current[index];
-    if (!el) return;
+    if (el) {
+      gsap.killTweensOf(el);
+      gsap.fromTo(
+        el,
+        { clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)" },
+        {
+          clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
+          duration: 0.15,
+          ease: "power2.out",
+        },
+      );
+    }
 
-    gsap.killTweensOf(el);
-    gsap.fromTo(
-      el,
-      {
-        // scaleY: 0,
-        // transformOrigin: "bottom",
-        clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",
-      },
-      {
-        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
-        // scaleY: 1,
-        duration: 0.15,
-        ease: "power2.out",
-      },
-    );
+    const items = frameworkRefs.current[index]?.filter(Boolean);
+    if (items?.length) {
+      gsap.fromTo(
+        items,
+        { y: 6, opacity: 0.4 },
+        { y: 0, opacity: 1, stagger: 0.06, duration: 0.35, ease: "power2.out" },
+      );
+    }
+
+    gsap.to(arrowRefs.current[index], {
+      x: 5,
+      y: -5,
+      duration: 0.3,
+      ease: "power2.out",
+    });
   };
 
   const handleMouseLeave = (index: number) => {
@@ -43,43 +79,70 @@ export const Projects = () => {
       duration: 0.2,
       ease: "power2.in",
     });
+
+    gsap.to(arrowRefs.current[index], {
+      x: 0,
+      y: 0,
+      duration: 0.4,
+      ease: "elastic.out(1, 0.7)",
+    });
   };
 
   return (
     <section className="flex flex-col min-h-screen">
       <AnimatedHeader
-        title={"Projects"}
-        text={projectDesc}
+        title={projectsHeader.title}
+        text={projectsHeader.description}
         withScrollTrigger={true}
       />
       <div className="relative flex flex-col font-normal">
         {projects.map((project, index) => (
           <div
             key={index}
-            className="relative flex flex-col gap-1 py-5 cursor-pointer group md:gap-0 z-2"
+            className="relative flex flex-col py-4 md:py-5 cursor-pointer group z-2"
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={() => handleMouseLeave(index)}
             data-cursor="thumbnail"
-            data-image={`/assets/images/hero-section/hero-${index + 1}.webp`}
+            data-image={project.image}
           >
+            {/* Hover fill overlay */}
             <div
               ref={(el) => {
-                if (overlayRefs.current) {
-                  overlayRefs.current[index] = el as HTMLDivElement;
-                }
+                overlayRefs.current[index] = el as HTMLDivElement;
               }}
-              className="absolute inset-0 hidden md:block duration-200 bg-accent-foreground -z-1 will-change-[clip-path]  clip-path"
+              className="absolute inset-0 hidden md:block duration-200 bg-accent-foreground -z-1 will-change-[clip-path] clip-path"
             />
 
-            <div className="flex justify-between px-10 text-accent-foreground transition-all duration-500 md:group-hover:px-12 md:group-hover:text-primary-foreground">
-              <SplitText
-                component="h4"
-                animation="byChar"
-                className="lg:text-4xl text-3xl leading-none mb-1"
-                disableReverse
+            <span
+              aria-hidden="true"
+              className="absolute hidden sm:block right-6 top-1/2 -translate-y-1/2 font-heading leading-none select-none pointer-events-none text-primary/5 z-20 md:group-hover:text-primary-foreground/6 transition-colors duration-500 text-[clamp(5rem,12vw,10rem)]"
+            >
+              {String(index + 1).padStart(2, "0")}
+            </span>
+
+            {/* Title row */}
+            <div className="flex items-center gap-4 px-4 md:px-10 text-accent-foreground transition-all duration-500 md:group-hover:px-12 md:group-hover:text-primary-foreground">
+              {/* Project name */}
+              <div className="flex-1 min-w-0">
+                <SplitText
+                  component="h4"
+                  animation="byChar"
+                  className="text-2xl lg:text-5xl leading-tight transition-[font-style,letter-spacing] duration-300 md:group-hover:italic md:group-hover:tracking-wide"
+                  disableReverse
+                >
+                  {project.name}
+                </SplitText>
+              </div>
+
+              {/* Arrow */}
+              <span
+                ref={(el) => {
+                  arrowRefs.current[index] = el;
+                }}
+                className="text-xl md:text-2xl text-primary/25 md:group-hover:text-primary-foreground transition-colors duration-500 shrink-0 hidden md:block select-none"
               >
-                {project.name}
-              </SplitText>
+                ↗
+              </span>
             </div>
 
             <Divider
@@ -87,34 +150,58 @@ export const Projects = () => {
               disableReverse
             />
 
-            <div className="flex px-10 text-md leading-loose uppercase transtion-all duration-500 md:text-lg gap-x-4 md:group-hover:px-12 py-1">
-              {project.frameworks.map((framework) => (
+            {/* Frameworks */}
+            <div
+              className="flex px-10 gap-x-4 uppercase transition-all duration-500 md:group-hover:px-12 py-1 pl-6 md:pl-[4.5rem] overflow-scroll"
+              style={{ scrollbarWidth: "none" }}
+            >
+              {project.frameworks.map((framework, fi) => (
                 <p
                   key={framework.id}
-                  className="text-primary transition-colors duration-500 md:group-hover:text-primary-foreground font-bold"
+                  ref={(el) => {
+                    frameworkRefs.current[index][fi] = el;
+                  }}
+                  className="text-primary transition-colors duration-500 text-nowrap md:group-hover:text-primary-foreground font-bold text-sm md:text-lg md:leading-loose"
                 >
                   {framework.name}
                 </p>
               ))}
             </div>
 
-            <div className="flex px-10 text-md leading-loose transtion-all duration-500 md:text-lg py-4 gap-x-5 md:group-hover:px-12">
+            {/* Description */}
+            <div className="flex px-10 leading-loose transition-all duration-500 py-3 md:group-hover:px-12 pl-[4.5rem] md:pl-[4.5rem]">
               <SplitText
                 component="p"
                 animation="byWord"
-                className="text-primary transition-colors duration-500 md:group-hover:text-primary-foreground"
+                className="text-primary text-paragraph transition-colors duration-500 md:group-hover:text-primary-foreground"
                 disableReverse
               >
                 {project.description}
               </SplitText>
             </div>
-            <div className="relative flex items-center justify-center px-10 md:hidden h-100">
-              <div className="object-cover w-full h-full rounded-md brightness-10 bg-accent-foreground"></div>
-              <img
-                src={project.image}
-                alt={`${project.name}-image`}
-                className="absolute bg-center px-14 rounded-md"
-              />
+
+            {/* Mobile image */}
+            <div
+              className="mx-6 mt-2 mb-1 md:hidden rounded-xl overflow-hidden relative"
+              style={{ aspectRatio: "16/9" }}
+            >
+              {project.image && (
+                <Image
+                  src={project.image}
+                  alt={project.name}
+                  className="w-full h-full object-cover relative"
+                  width={320}
+                  height={280}
+                  layout="responsive"
+                />
+              )}
+              <span
+                aria-hidden="true"
+                className="absolute block sm:hidden left-2 top-0 font-heading leading-none select-none pointer-events-none text-primary/30 z-20 md:group-hover:text-primary-foreground/6 transition-colors duration-500 text-[clamp(5rem,12vw,10rem)]"
+              >
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div className="absolute inset-0 bg-foreground/10 rounded-xl" />
             </div>
           </div>
         ))}

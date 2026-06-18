@@ -137,6 +137,8 @@ export const Marquee = ({
   useEffect(() => {
     if (!railRef.current) return;
 
+    let cleanup: (() => void) | undefined;
+
     const ctx = gsap.context(() => {
       const elements = gsap.utils.toArray<HTMLHeadingElement>(
         railRef.current!.children,
@@ -154,11 +156,13 @@ export const Marquee = ({
       });
 
       let storedDirection = reverse ? -1 : 1;
+      let visible = true;
 
       Observer.create({
         target: window,
         type: "wheel,touch,pointer",
         onChangeY(self) {
+          if (!visible) return;
           const velocity = self.velocityY;
           const direction = velocity < 0 ? -1 : 1;
           const actualDirection = reverse ? direction * -1 : direction;
@@ -168,12 +172,29 @@ export const Marquee = ({
           quickTimeScale(actualDirection * boost);
         },
         onStop() {
+          if (!visible) return;
           quickTimeScale(storedDirection);
         },
       });
+
+      // Pause the loop while the strip is off-screen so it stops driving the
+      // compositor when the user can't see it; resume on the current direction.
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          visible = entry.isIntersecting;
+          if (visible) tl.resume();
+          else tl.pause();
+        },
+        { threshold: 0 },
+      );
+      io.observe(containerRef.current!);
+      cleanup = () => io.disconnect();
     }, containerRef);
 
-    return () => ctx.revert();
+    return () => {
+      cleanup?.();
+      ctx.revert();
+    };
   }, [speed, reverse]);
 
   return (

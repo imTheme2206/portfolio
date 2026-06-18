@@ -13,25 +13,7 @@ export const useCursorEngine = () => {
   const trackerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
-  let requestId = 0;
-  let currentImage: string | null = null;
   const { isMobile } = useDetectScreen();
-
-  const imageCache = new Map<string, Promise<void>>();
-
-  const preloadImage = (src: string) => {
-    if (imageCache.has(src)) {
-      return imageCache.get(src)!;
-    }
-
-    const img = new Image();
-    img.src = src;
-
-    const promise = img.decode().catch(() => {});
-    imageCache.set(src, promise);
-
-    return promise;
-  };
 
   useLayoutEffect(() => {
     const tracker = trackerRef.current;
@@ -45,6 +27,21 @@ export const useCursorEngine = () => {
     thunbnailContainer.appendChild(registerImageElement());
     let hasMoved = false;
 
+    let requestId = 0;
+    let currentImage: string | null = null;
+    const imageCache = new Map<string, Promise<void>>();
+
+    const preloadImage = (src: string) => {
+      if (imageCache.has(src)) {
+        return imageCache.get(src)!;
+      }
+      const img = new Image();
+      img.src = src;
+      const promise = img.decode().catch(() => {});
+      imageCache.set(src, promise);
+      return promise;
+    };
+
     const updateCursor = (variant: CursorVariant, image?: string) => {
       if (!tracker || !textContainer) {
         return;
@@ -55,7 +52,6 @@ export const useCursorEngine = () => {
       const thumbnailElement =
         thunbnailContainer.firstChild as HTMLImageElement;
 
-      // Reset
       tracker.className = defaultTrackerClassName;
 
       tracker.classList.add(...config.classNames);
@@ -87,16 +83,6 @@ export const useCursorEngine = () => {
 
     const ease = 0.15;
 
-    const onMove = (e: MouseEvent) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
-
-      if (!hasMoved) {
-        hasMoved = true;
-        tracker.classList.remove("opacity-0");
-      }
-    };
-
     const animate = () => {
       currentX += (targetX - currentX) * ease;
       currentY += (targetY - currentY) * ease;
@@ -108,10 +94,28 @@ export const useCursorEngine = () => {
         translate3d(${currentX}px, ${currentY}px, 0)
       `;
 
-      rafId = requestAnimationFrame(animate);
+      if (currentX === targetX && currentY === targetY) {
+        rafId = null;
+      } else {
+        rafId = requestAnimationFrame(animate);
+      }
     };
 
-    let hoverTimeout: any;
+    const onMove = (e: MouseEvent) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+
+      if (!hasMoved) {
+        hasMoved = true;
+        tracker.classList.remove("opacity-0");
+      }
+
+      if (rafId === null) {
+        rafId = requestAnimationFrame(animate);
+      }
+    };
+
+    let hoverTimeout: ReturnType<typeof setTimeout> | undefined;
     const onHover = (e: MouseEvent) => {
       const el = (e.target as HTMLElement).closest("[data-cursor]");
       const variant = el?.getAttribute("data-cursor") as CursorVariant;
@@ -125,14 +129,13 @@ export const useCursorEngine = () => {
     };
 
     updateCursor("default");
-    rafId = requestAnimationFrame(animate);
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseover", onHover);
 
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseover", onHover);
-      if (rafId) cancelAnimationFrame(rafId);
+      if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, [isMobile]);
 

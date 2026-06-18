@@ -1,0 +1,104 @@
+{
+  "projectsHeader": {
+    "title": "Projects",
+    "description": "This is what a free time gets me"
+  },
+  "projects": [
+    {
+      "id": 1,
+      "name": "Personal Portfolio",
+      "description": "This very site — an animated portfolio with a custom parallax gallery engine, GSAP scroll-linked motion, Lenis smooth scroll, and a CSS-driven light/dark theme.",
+      "href": "",
+      "image": "/assets/images/hero-section/hero-1.webp",
+      "bgImage": "/assets/images/backgrounds/blanket.jpg",
+      "frameworks": [
+        {
+          "id": 1,
+          "name": "Next.js"
+        },
+        {
+          "id": 2,
+          "name": "React"
+        },
+        {
+          "id": 3,
+          "name": "TypeScript"
+        },
+        {
+          "id": 4,
+          "name": "Tailwind CSS"
+        },
+        {
+          "id": 5,
+          "name": "GSAP"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Giteractive",
+      "description": "An interactive Git visualizer that lets users run Git commands and watch the commit graph, branches, and staging area update in real time on a node-based canvas.",
+      "href": "",
+      "image": "/assets/images/projects-section/giteractive.png",
+      "frameworks": [
+        {
+          "id": 1,
+          "name": "React"
+        },
+        {
+          "id": 2,
+          "name": "TypeScript"
+        },
+        {
+          "id": 3,
+          "name": "React Flow"
+        },
+        {
+          "id": 4,
+          "name": "Zustand"
+        },
+        {
+          "id": 5,
+          "name": "Tailwind CSS"
+        },
+        {
+          "id": 6,
+          "name": "Vite"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Enlightened Fellows Discord Bot",
+      "description": "A TypeScript Discord bot running two subsystems in one process: a Discord.js v14 bot and an Elysia HTTP API, sharing a DDD-lite domain layer. Features a custom Monster Hunter Wilds armor set-search engine (DFS combination optimizer over an in-memory index), scheduled cron jobs for MH Wilds events and Genshin code alerts, and a Drizzle/Postgres data layer on Supabase.",
+      "href": "",
+      "image": "/assets/images/projects-section/enlightened-fellows.png",
+      "frameworks": [
+        {
+          "id": 1,
+          "name": "TypeScript"
+        },
+        {
+          "id": 2,
+          "name": "Discord.js"
+        },
+        {
+          "id": 3,
+          "name": "Elysia"
+        },
+        {
+          "id": 4,
+          "name": "Drizzle ORM"
+        },
+        {
+          "id": 5,
+          "name": "PostgreSQL"
+        },
+        {
+          "id": 6,
+          "name": "Zod"
+        }
+      ]
+    }
+  ]
+}

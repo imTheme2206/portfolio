@@ -18,13 +18,13 @@ export const registerImageElement = (): HTMLImageElement => {
 };
 
 export const defaultTrackerClassName =
-  "fixed pointer-events-none will-change-transform z-50 -translate-x-1/2 -translate-y-1/2 transition-all duration-400 ease-out";
+  "fixed pointer-events-none will-change-transform z-50 -translate-x-1/2 -translate-y-1/2 transition-[width,height,border-radius,background-color,border-color,opacity] duration-300 ease-out";
 
 export const variantConfig: Record<CursorVariant, CursorProps> = {
   default: {
     classNames: ["w-10", "h-10", "border-primary", "border-2", "rounded-full"],
   },
-  experience: {
+  invert: {
     classNames: [
       "w-10",
       "h-10",

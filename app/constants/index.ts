@@ -1,180 +1,105 @@
-export const workExperiences = [
-  {
-    title: "FullStack Developer",
-    company: "A",
-    description:
-      "Your business deserves a fast, secure, and future-proof digital foundation. I develop custom web apps with clean architecture, optimized databases, and seamless integrations—ensuring reliability at every layer.",
-    highlights: [
-      {
-        title: "Backend Engineering",
-        description: "(REST/GraphQL APIs, Microservices, Auth Systems)",
-      },
-      {
-        title: "Frontend Excellence",
-        description: "(React, Vue, TypeScript, Interactive UI/UX)",
-      },
-      {
-        title: "Database Design",
-        description: "(SQL/NoSQL Optimization, Scalable Structures)",
-      },
-      {
-        title: "Frontend Excellence",
-        description: "(React, Vue, TypeScript, Interactive UI/UX)",
-      },
-      {
-        title: "Database Design",
-        description: "(SQL/NoSQL Optimization, Scalable Structures)",
-      },
-    ],
-  },
-  {
-    title: "Frontend Developer",
-    company: "B",
-    description:
-      "Deploying software shouldn't be a gamble. I automate infrastructure, enforce security, and leverage cloud platforms (AWS/Azure) to keep your app running smoothly—24/7, at any scale.",
-    highlights: [
-      {
-        title: "CI/CD Pipelines",
-        description: "(GitHub Actions, Docker, Kubernetes)",
-      },
-      {
-        title: "Server Management ",
-        description: "(Linux, Nginx, Load Balancing)",
-      },
-      {
-        title: "Performance Tuning",
-        description: "(Caching, Compression, Lighthouse 90+ Scores)",
-      },
-      {
-        title: "Performance Tuning",
-        description: "(Caching, Compression, Lighthouse 90+ Scores)",
-      },
-      {
-        title: "Performance Tuning",
-        description: "(Caching, Compression, Lighthouse 90+ Scores)",
-      },
-    ],
-  },
-  {
-    title: "Frontend Developer",
-    company: "C",
-    description:
-      "Slow or hacked apps destroy trust. I harden security (XSS/SQLI protection, OAuth) and optimize bottlenecks so your app stays fast, safe, and scalable as you grow.",
-    highlights: [
-      {
-        title: "Code Audits",
-        description: "(Refactoring, Tech Debt Cleanup)",
-      },
-      {
-        title: "Pen Testing",
-        description: "(Vulnerability Assessments)",
-      },
-      {
-        title: "SEO Tech Stack",
-        description: "(SSR, Metadata, Structured Data)",
-      },
-      {
-        title: "SEO Tech Stack",
-        description: "(SSR, Metadata, Structured Data)",
-      },
-      {
-        title: "SEO Tech Stack",
-        description: "(SSR, Metadata, Structured Data)",
-      },
-    ],
-  },
-] as const;
+import aboutData from "./data/about.json";
+import contactData from "./data/contact.json";
+import experiencesData from "./data/experiences.json";
+import heroData from "./data/hero.json";
+import projectsData from "./data/projects.json";
+import worksData from "./data/works.json";
 
-export const projects = [
-  {
-    id: 1,
-    name: "Mobile Accessories E-commerce",
-    description:
-      "An online store specializing in phone accessories including cases, chargers, cables, and power banks with MagSafe compatibility.",
-    href: "",
-    image: "/assets/projects/mobile-accessories-store.jpg",
-    bgImage: "/assets/backgrounds/blanket.jpg",
-    frameworks: [
-      { id: 1, name: "React" },
-      { id: 2, name: "Next.js" },
-      { id: 3, name: "Node.js" },
-      { id: 4, name: "MongoDB" },
-      { id: 5, name: "Tailwind CSS" },
-    ],
-  },
-  {
-    id: 2,
-    name: "Plant Shop E-commerce",
-    description:
-      "An online store specializing in rare and decorative plants with a clean, user-friendly interface.",
-    href: "",
-    image: "/assets/projects/plant-shop.jpg",
-    bgImage: "/assets/backgrounds/curtains.jpg",
-    frameworks: [
-      { id: 1, name: "React" },
-      { id: 2, name: "Next.js" },
-      { id: 3, name: "Stripe API" },
-      { id: 4, name: "Tailwind CSS" },
-    ],
-  },
-  {
-    id: 3,
-    name: "Apple Tech Marketplace",
-    description:
-      "An e-commerce platform for Apple products and accessories with deals and category filtering.",
-    href: "",
-    image: "/assets/projects/apple-tech-store.jpg",
-    bgImage: "/assets/backgrounds/map.jpg",
-    frameworks: [
-      { id: 1, name: "Blazor" },
-      { id: 2, name: "ASP.NET Core" },
-      { id: 3, name: "SQL Server" },
-      { id: 4, name: "Bootstrap" },
-    ],
-  },
-  {
-    id: 4,
-    name: "Electronics & Gadgets Store",
-    description:
-      "A multi-category online shop featuring electronics, home appliances, and gaming gear with special offers.",
-    href: "",
-    image: "/assets/projects/electronics-store.jpg",
-    bgImage: "/assets/backgrounds/poster.jpg",
-    frameworks: [
-      { id: 1, name: "Vue.js" },
-      { id: 2, name: "Laravel" },
-      { id: 3, name: "MySQL" },
-      { id: 4, name: "SCSS" },
-    ],
-  },
-  {
-    id: 5,
-    name: "Home Decor Marketplace",
-    description:
-      "A curated collection of designer home decor items, including furniture and artisan vases.",
-    href: "",
-    image: "/assets/projects/home-decor-store.jpg",
-    bgImage: "/assets/backgrounds/table.jpg",
-    frameworks: [
-      { id: 1, name: "Angular" },
-      { id: 2, name: "Firebase" },
-      { id: 3, name: "GraphQL" },
-      { id: 4, name: "Material UI" },
-    ],
-  },
-  {
-    id: 6,
-    name: "Digital Game Store",
-    description:
-      "A gaming platform featuring discounted titles, top sellers, and genre-based browsing.",
-    href: "",
-    image: "/assets/projects/game-store.jpg",
-    bgImage: "/assets/backgrounds/curtains.jpg",
-    frameworks: [
-      { id: 1, name: "Svelte" },
-      { id: 2, name: "Node.js" },
-      { id: 3, name: "MongoDB" },
-      { id: 4, name: "Chakra UI" },
-    ],
-  },
-] as const;
+export type ImageData = {
+  src?: string;
+  width: number;
+  height: number;
+  alt?: string;
+};
+
+export type FloatLabel = {
+  text: string;
+  className: string;
+  rotation: number;
+  size?: "sm" | "md";
+};
+
+export type SkillFramework = {
+  text: string;
+  // Iconify "skill-icons:" id (lowercased at render). Empty string renders a gap.
+  icon: string;
+};
+
+export type About = {
+  sectionLabel: string;
+  heading: string;
+  bioLabel: string;
+  // Each paragraph is split into two lines that animate independently.
+  paragraphs: string[][];
+  portrait: { src: string; alt: string };
+};
+
+export type Framework = {
+  id: number;
+  name: string;
+};
+
+export type Project = {
+  id: number;
+  name: string;
+  description: string;
+  href: string;
+  image: string;
+  bgImage: string;
+  frameworks: Framework[];
+};
+
+export type Highlight = {
+  title: string;
+  description: string;
+};
+
+export type WorkExperience = {
+  title: string;
+  company: string;
+  description: string;
+  highlights: Highlight[];
+};
+
+export type Contact = {
+  title: string;
+  email: string;
+  docsLabel: string;
+  footer: { left: string; right: string };
+};
+
+// `title` doubles as the Iconify/label key. Empty title renders a marquee gap.
+export type SocialLink = {
+  title: string;
+  link: string;
+  textColor?: string;
+};
+
+export type DocumentLink = {
+  type: "CV" | "Resume";
+  label: string;
+  href: string;
+};
+
+// Name shown in the large scrolling marquee (rendered as "first last — first last —").
+export const heroName: readonly string[] = heroData.heroName;
+// Floating text labels scattered over the hero. `className` controls position/opacity.
+export const floatingLabels = heroData.floatingLabels as FloatLabel[];
+export const heroImages = heroData.heroImages as ImageData[];
+
+export const skillFrameworks = worksData.skillFrameworks as SkillFramework[];
+
+export const about = aboutData.about as About;
+export const skills: string[] = aboutData.skills;
+export const marqueeWords: string[] = aboutData.marqueeWords;
+
+export const projectsHeader = projectsData.projectsHeader;
+export const projects = projectsData.projects as Project[];
+
+export const experiencesHeader = experiencesData.experiencesHeader;
+export const workExperiences =
+  experiencesData.workExperiences as WorkExperience[];
+
+export const contact = contactData.contact as Contact;
+export const socials = contactData.socials as SocialLink[];
+export const documents = contactData.documents as DocumentLink[];
