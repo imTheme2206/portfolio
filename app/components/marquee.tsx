@@ -203,7 +203,7 @@ export const Marquee = ({
   }, [speed, reverse]);
 
   return (
-    <div ref={containerRef} className=" w-full flex items-center">
+    <div ref={containerRef} className="w-full flex items-center overflow-x-hidden">
       <div ref={railRef} className="flex will-change-transform">
         {children}
       </div>
