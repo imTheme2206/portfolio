@@ -206,7 +206,7 @@ const ExperienceCards = ({
     gsap.from(els, {
       scrollTrigger: {
         trigger: innerRef.current,
-        start: "top 60%",
+        start: "top 90%",
         toggleActions: "play none none none",
       },
       opacity: 0,
