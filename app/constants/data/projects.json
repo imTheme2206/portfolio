@@ -8,8 +8,8 @@
       "id": 1,
       "name": "Personal Portfolio",
       "description": "This very site — an animated portfolio with a custom parallax gallery engine, GSAP scroll-linked motion, Lenis smooth scroll, and a CSS-driven light/dark theme.",
-      "href": "",
-      "github": "",
+      "href": "/",
+      "github": "https://github.com/imTheme2206/portfolio",
       "image": "/assets/images/projects-section/portfolio.webp",
       "frameworks": [
         {

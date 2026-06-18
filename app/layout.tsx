@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <ReactLenis root>
       <ThemeProvider>
-        <html lang="en" className="dark">
+        <html lang="en" className="dark  overflow-x-hidden lg:overflow-x-auto">
           <body className={`antialiased`}>
             <Loader />
             <MouseTracker />
