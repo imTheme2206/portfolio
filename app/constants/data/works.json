@@ -1,0 +1,15 @@
+{
+  "skillFrameworks": [
+    { "text": "Next.JS", "icon": "nextjs-dark" },
+    { "text": "React.JS", "icon": "react-dark" },
+    { "text": "Laravel", "icon": "laravel-dark" },
+    { "text": "Node.JS", "icon": "nodejs-dark" },
+    { "text": "JavaScript", "icon": "javascript" },
+    { "text": "TypeScript", "icon": "typescript" },
+    { "text": "HTML", "icon": "HTML" },
+    { "text": "CSS", "icon": "CSS" },
+    { "text": "PHP", "icon": "php-dark" },
+    { "text": "Go", "icon": "golang" },
+    { "text": "", "icon": "" }
+  ]
+}

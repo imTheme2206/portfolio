@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatedHeader } from "@/app/components/animated-header";
-import { workExperiences } from "@/app/constants";
+import { experiencesHeader, workExperiences } from "@/app/constants";
 import { useDetectScreen } from "@/app/hook/use-detect-screen";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -81,7 +81,7 @@ export const Experiences = () => {
         autoAlpha: 1,
         y: 0,
         ease: "power1.out",
-        duration: 0.25,
+        duration: 0.15,
       });
   }, [isDesktop]);
 
@@ -94,8 +94,8 @@ export const Experiences = () => {
       >
         <div className="bg-secondary-foreground w-full rounded-4xl">
           <AnimatedHeader
-            subtitle="Behind the scene, Beyond the screen"
-            title="Experiences"
+            subtitle={experiencesHeader.subtitle}
+            title={experiencesHeader.title}
             withScrollTrigger={false}
             dividerColor="light"
           />
@@ -110,7 +110,10 @@ export const Experiences = () => {
   }
 
   return (
-    <section id="last-section" className="relative">
+    <section
+      id="last-section"
+      className="relative bg-secondary-foreground rounded-b-3xl"
+    >
       <div ref={spacerRef} style={{ height: "300vh" }}>
         <div className="sticky top-0 h-screen flex items-center justify-center bg-background">
           <div
@@ -121,8 +124,8 @@ export const Experiences = () => {
           >
             <Image
               ref={imageRef}
-              src="/assets/images/hero-section/hero-4.webp"
-              alt="Experience preview"
+              src={experiencesHeader.image.src}
+              alt={experiencesHeader.image.alt}
               fill
               className="object-cover object-center opacity-0"
               style={{
@@ -138,7 +141,7 @@ export const Experiences = () => {
               className="absolute inset-0 flex flex-col items-center justify-center gap-2 pointer-events-none"
             >
               <span className="font-heading italic text-5xl text-primary-foreground leading-none">
-                Experience
+                {experiencesHeader.circleText}
               </span>
             </div>
 
@@ -148,14 +151,14 @@ export const Experiences = () => {
             >
               <div className="flex flex-col gap-1">
                 <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-primary-foreground/50">
-                  Since 2019
+                  {experiencesHeader.since}
                 </span>
                 <span className="font-heading italic text-3xl text-primary-foreground leading-none">
                   {workExperiences.length} roles
                 </span>
               </div>
               <span className="font-mono text-5xl tracking-[0.15em] uppercase text-primary-foreground">
-                Experience
+                {experiencesHeader.pillText}
               </span>
             </div>
           </div>
@@ -169,8 +172,8 @@ export const Experiences = () => {
         data-cursor="invert"
       >
         <AnimatedHeader
-          subtitle="Behind the scene, Beyond the screen"
-          title="Experiences"
+          subtitle={experiencesHeader.subtitle}
+          title={experiencesHeader.title}
           withScrollTrigger={false}
           dividerColor="light"
         />
@@ -202,7 +205,7 @@ const ExperienceCards = ({
     gsap.from(els, {
       scrollTrigger: {
         trigger: innerRef.current,
-        start: "top 88%",
+        start: "top 60%",
         toggleActions: "play none none none",
       },
       opacity: 0,
@@ -215,24 +218,26 @@ const ExperienceCards = ({
 
   return (
     <div
-      className="sticky px-10 pt-8 pb-14 bg-secondary-foreground rounded-b-4xl border-t border-secondary/50"
+      className="sticky px-10 pt-8 pb-10 bg-secondary-foreground rounded-b-4xl border-t border-secondary/50"
       style={
         isDesktop
           ? {
-              top: `calc(5vh + ${index * 5}em)`,
+              top: `calc(5vh + ${index * 5}rem)`,
               marginBottom: `${(total - index - 1) * 5}rem`,
             }
           : { top: 0 }
       }
     >
       <div ref={innerRef}>
-        {/* Meta row */}
         <div
           data-reveal
           className="flex items-center gap-4 mb-8 font-mono text-[11px] tracking-[0.25em] uppercase text-primary-foreground/25"
         >
           <span>{String(index + 1).padStart(2, "0")}</span>
-          <span className="flex-1 h-px bg-primary-foreground/10" />
+          <span className="flex-1 h-px bg-primary-foreground/10 relative" />
+          <p className="absolute top-0 right-0 bg-primary px-4 sm:text-lg sm:-mt-2">
+            {service.company}
+          </p>
         </div>
 
         {/* Title + company */}
@@ -240,18 +245,12 @@ const ExperienceCards = ({
           data-reveal
           className="relative flex flex-col lg:flex-row lg:items-end justify-between gap-3 lg:gap-10 mb-8 overflow-hidden"
         >
-          <h2 className="font-heading italic text-5xl lg:text-7xl leading-none text-primary-foreground relative z-10">
+          <h2 className="font-heading italic  text-2xl sm:text-5xl lg:text-7xl leading-none truncate text-primary-foreground relative z-10">
             {service.title}
           </h2>
-
-          <div className="relative z-10 shrink-0 flex flex-col items-start lg:items-end gap-1 lg:pb-2">
-            <span className="font-display text-2xl lg:text-3xl font-semibold text-primary-foreground/60 tracking-tight leading-none">
-              {service.company}
-            </span>
-          </div>
         </div>
 
-        <div data-reveal className="w-full h-px bg-secondary/40 mb-8" />
+        <div data-reveal className="w-full h-px bg-secondary/40 mb-4 sm:mb-8" />
 
         {/* Two-column body */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
@@ -273,13 +272,15 @@ const ExperienceCards = ({
                   <span className="shrink-0 font-mono text-[10px] tracking-widest text-primary-foreground/25">
                     0{i + 1}
                   </span>
-                  <span className="text-primary-foreground font-light text-base lg:text-lg transition-all duration-300 group-hover/row:italic group-hover/row:translate-x-1 truncate">
-                    {item.title}
-                  </span>
+                  <div className="flex flex-col">
+                    <p className="text-primary-foreground font-light text-base lg:text-lg transition-all duration-100 group-hover/row:italic group-hover/row:translate-x-1 truncate">
+                      {item.title}
+                    </p>
+                    <p className="hidden sm:block shrink-0 font-mono text-[11px] text-primary-foreground/35 opacity-0 translate-y-2 transition-all duration-300 group-hover/row:opacity-100 group-hover/row:translate-y-0 truncate">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
-                <span className="shrink-0 ml-6 font-mono text-[11px] text-primary-foreground/35 opacity-0 translate-y-2 transition-all duration-300 group-hover/row:opacity-100 group-hover/row:translate-y-0 text-right">
-                  {item.description}
-                </span>
               </div>
             ))}
           </div>

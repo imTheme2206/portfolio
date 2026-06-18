@@ -3,9 +3,10 @@
 import { AnimatedHeader } from "@/app/components/animated-header";
 import { Divider } from "@/app/components/divider";
 import { SplitText } from "@/app/components/split-text";
-import { projects } from "@/app/constants";
+import { projects, projectsHeader } from "@/app/constants";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import Image from "next/image";
 import { useRef } from "react";
 
 export const Projects = () => {
@@ -14,7 +15,6 @@ export const Projects = () => {
     projects.map(() => []),
   );
   const arrowRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const projectDesc = "This is what a free time gets me";
 
   useGSAP(() => {
     projects.forEach((_, i) => {
@@ -91,8 +91,8 @@ export const Projects = () => {
   return (
     <section className="flex flex-col min-h-screen">
       <AnimatedHeader
-        title={"Projects"}
-        text={projectDesc}
+        title={projectsHeader.title}
+        text={projectsHeader.description}
         withScrollTrigger={true}
       />
       <div className="relative flex flex-col font-normal">
@@ -113,22 +113,15 @@ export const Projects = () => {
               className="absolute inset-0 hidden md:block duration-200 bg-accent-foreground -z-1 will-change-[clip-path] clip-path"
             />
 
-            {/* Large background index watermark */}
             <span
               aria-hidden="true"
-              className="absolute right-6 top-1/2 -translate-y-1/2 font-heading leading-none select-none pointer-events-none text-primary/5 md:group-hover:text-primary-foreground/6 transition-colors duration-500"
-              style={{ fontSize: "clamp(5rem, 12vw, 10rem)" }}
+              className="absolute hidden sm:block right-6 top-1/2 -translate-y-1/2 font-heading leading-none select-none pointer-events-none text-primary/5 z-20 md:group-hover:text-primary-foreground/6 transition-colors duration-500 text-[clamp(5rem,12vw,10rem)]"
             >
               {String(index + 1).padStart(2, "0")}
             </span>
 
             {/* Title row */}
             <div className="flex items-center gap-4 px-4 md:px-10 text-accent-foreground transition-all duration-500 md:group-hover:px-12 md:group-hover:text-primary-foreground">
-              {/* Small index */}
-              <span className="text-[11px] tracking-[0.4em] text-primary/30 md:group-hover:text-primary-foreground/50 transition-colors duration-500 font-display select-none shrink-0 tabular-nums w-8 hidden sm:block">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-
               {/* Project name */}
               <div className="flex-1 min-w-0">
                 <SplitText
@@ -192,11 +185,22 @@ export const Projects = () => {
               className="mx-6 mt-2 mb-1 md:hidden rounded-xl overflow-hidden relative"
               style={{ aspectRatio: "16/9" }}
             >
-              <img
-                src={project.image}
-                alt={project.name}
-                className="w-full h-full object-cover"
-              />
+              {project.image && (
+                <Image
+                  src={project.image}
+                  alt={project.name}
+                  className="w-full h-full object-cover relative"
+                  width={320}
+                  height={280}
+                  layout="responsive"
+                />
+              )}
+              <span
+                aria-hidden="true"
+                className="absolute block sm:hidden left-2 top-0 font-heading leading-none select-none pointer-events-none text-primary/30 z-20 md:group-hover:text-primary-foreground/6 transition-colors duration-500 text-[clamp(5rem,12vw,10rem)]"
+              >
+                {String(index + 1).padStart(2, "0")}
+              </span>
               <div className="absolute inset-0 bg-foreground/10 rounded-xl" />
             </div>
           </div>

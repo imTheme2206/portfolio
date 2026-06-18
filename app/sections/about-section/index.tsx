@@ -1,6 +1,7 @@
 "use client";
 
 import { Marquee } from "@/app/components/marquee";
+import { about, marqueeWords, skills } from "@/app/constants";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText as GSAPSplitText } from "gsap/all";
@@ -9,36 +10,6 @@ import Image from "next/image";
 import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger, GSAPSplitText);
-
-const skills = [
-  "TypeScript",
-  "React",
-  "Next.js",
-  "GSAP",
-  "Tailwind",
-  "Node.js",
-  "Three.js",
-  "WebGL",
-  "Lenis",
-  "Figma",
-  "Vue",
-  "Motion",
-];
-
-const marqueeWords = [
-  "Design",
-  "✦",
-  "Code",
-  "✦",
-  "Motion",
-  "✦",
-  "Craft",
-  "✦",
-  "Detail",
-  "✦",
-  "System",
-  "✦",
-];
 
 export function About() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -56,50 +27,35 @@ export function About() {
 
   useGSAP(
     () => {
-      // // ── Sticker infinite rotation (paused while section is off-screen) ──
-      // gsap.to(stickerRef.current, {
-      //   rotation: 360,
-      //   duration: 22,
-      //   ease: "none",
-      //   repeat: -1,
-      //   transformOrigin: "center center",
-      //   scrollTrigger: {
-      //     trigger: sectionRef.current,
-      //     start: "top bottom",
-      //     end: "bottom top",
-      //     toggleActions: "play pause resume pause",
-      //   },
-      // });
-
       // ── Mouse tilt on image ──
-      const tiltEl = tiltRef.current;
-      let onMove: ((e: MouseEvent) => void) | null = null;
-      let onLeave: (() => void) | null = null;
-      if (tiltEl) {
-        const tiltY = gsap.quickTo(tiltEl, "rotateY", {
-          duration: 0.7,
-          ease: "power3.out",
-        });
-        const tiltX = gsap.quickTo(tiltEl, "rotateX", {
-          duration: 0.7,
-          ease: "power3.out",
-        });
-        gsap.set(tiltEl, {
-          transformPerspective: 900,
-          transformOrigin: "center center",
-        });
-        onMove = (e: MouseEvent) => {
-          const r = tiltEl.getBoundingClientRect();
-          tiltY(((e.clientX - r.left - r.width / 2) / (r.width / 2)) * 7);
-          tiltX(-(((e.clientY - r.top - r.height / 2) / (r.height / 2)) * 7));
-        };
-        onLeave = () => {
-          tiltY(0);
-          tiltX(0);
-        };
-        tiltEl.addEventListener("mousemove", onMove);
-        tiltEl.addEventListener("mouseleave", onLeave);
-      }
+      // const tiltEl = tiltRef.current;
+      // let onMove: ((e: MouseEvent) => void) | null = null;
+      // let onLeave: (() => void) | null = null;
+      // if (tiltEl) {
+      //   const tiltY = gsap.quickTo(tiltEl, "rotateY", {
+      //     duration: 0.7,
+      //     ease: "power3.out",
+      //   });
+      //   const tiltX = gsap.quickTo(tiltEl, "rotateX", {
+      //     duration: 0.7,
+      //     ease: "power3.out",
+      //   });
+      //   gsap.set(tiltEl, {
+      //     transformPerspective: 900,
+      //     transformOrigin: "center center",
+      //   });
+      //   onMove = (e: MouseEvent) => {
+      //     const r = tiltEl.getBoundingClientRect();
+      //     tiltY(((e.clientX - r.left - r.width / 2) / (r.width / 2)) * 7);
+      //     tiltX(-(((e.clientY - r.top - r.height / 2) / (r.height / 2)) * 7));
+      //   };
+      //   onLeave = () => {
+      //     tiltY(0);
+      //     tiltX(0);
+      //   };
+      //   tiltEl.addEventListener("mousemove", onMove);
+      //   tiltEl.addEventListener("mouseleave", onLeave);
+      // }
 
       // ── SplitText heading for scrub control ──
       const split = headingRef.current
@@ -200,7 +156,7 @@ export function About() {
               ref={sectionNumRef}
               className="block text-[10px] tracking-[0.5em] uppercase text-muted-foreground mb-8 select-none"
             >
-              02 / About
+              {about.sectionLabel}
             </span>
 
             <h2
@@ -213,7 +169,7 @@ export function About() {
                 letterSpacing: "-0.025em",
               }}
             >
-              About Me
+              {about.heading}
             </h2>
 
             <div
@@ -227,7 +183,7 @@ export function About() {
               className="flex items-center gap-3 mb-5 text-[10px] tracking-[0.4em] uppercase text-muted-foreground"
             >
               <span className="inline-block w-6 h-px bg-muted-foreground" />
-              <span>The story behind the pixels</span>
+              <span>{about.bioLabel}</span>
             </div>
 
             {/* Paragraph 1 — 2 lines */}
@@ -239,10 +195,10 @@ export function About() {
               }}
             >
               <p ref={line1aRef} className="text-foreground/90 font-display">
-                I&apos;m a software developer obsessed with the intersection
+                {about.paragraphs[0][0]}
               </p>
               <p ref={line1bRef} className="text-foreground/90 font-display">
-                of engineering precision and design intention.
+                {about.paragraphs[0][1]}
               </p>
             </div>
 
@@ -255,10 +211,10 @@ export function About() {
               }}
             >
               <p ref={line2aRef} className="text-foreground/90 font-display">
-                My work spans startups, agencies, and open-source —
+                {about.paragraphs[1][0]}
               </p>
               <p ref={line2bRef} className="text-foreground/90 font-display">
-                craft, clarity, systems that scale without losing soul.
+                {about.paragraphs[1][1]}
               </p>
             </div>
 
@@ -285,8 +241,8 @@ export function About() {
                 fill
                 loading="lazy"
                 sizes="56vw"
-                src="/assets/images/hero-section/hero-4.webp"
-                alt="Portrait"
+                src={about.portrait.src}
+                alt={about.portrait.alt}
                 className="object-cover object-center"
               />
             </div>

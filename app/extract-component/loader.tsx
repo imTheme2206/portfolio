@@ -7,15 +7,15 @@ import { useRef, useState } from "react";
 type LoaderProps = {
   name?: string;
   label?: string;
-  onComplete?: () => void;
+  onCompleteAction?: () => void;
 };
 
-const ITALIC_FROM = 5;
+const ITALIC_FROM = 0;
 
 export function Loader({
   name = "imTheme",
   label = "PORTFOLIO",
-  onComplete,
+  onCompleteAction,
 }: LoaderProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
@@ -54,7 +54,7 @@ export function Loader({
             const exit = gsap.timeline({
               onComplete() {
                 setVisible(false);
-                onComplete?.();
+                onCompleteAction?.();
               },
             });
 
@@ -107,14 +107,14 @@ export function Loader({
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-8 overflow-hidden bg-secondary"
+      className="fixed inset-0 z-100 flex flex-col items-center justify-center gap-8 overflow-hidden bg-secondary"
     >
       {/* Curtains */}
-      <div className="loader-curtain-top absolute top-0 left-0 right-0 h-1/2 origin-top scale-y-0 bg-secondary z-[99]" />
-      <div className="loader-curtain-bot absolute bottom-0 left-0 right-0 h-1/2 origin-bottom scale-y-0 bg-secondary z-[99]" />
+      <div className="loader-curtain-top absolute top-0 left-0 right-0 h-1/2 origin-top scale-y-0 bg-secondary z-99" />
+      <div className="loader-curtain-bot absolute bottom-0 left-0 right-0 h-1/2 origin-bottom scale-y-0 bg-secondary z-99" />
 
       {/* Big name */}
-      <div className="flex gap-[0.05em] overflow-hidden font-heading font-extralight tracking-[-0.05em] leading-[0.85] text-[clamp(80px,18vw,280px)]">
+      <div className="flex gap-[0.05em] overflow-hidden w-full justify-center font-heading font-extralight tracking-tighter leading-[0.85] text-[clamp(80px,20vw,280px)]">
         {chars.map(({ ch, italic }, i) =>
           italic ? (
             <span

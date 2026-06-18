@@ -4,45 +4,13 @@ import { AnimatedHeader } from "@/app/components/animated-header";
 import { AnimatedHoverText } from "@/app/components/animated-hover-text";
 import { DocumentCard } from "@/app/components/document-card";
 import { Marquee } from "@/app/components/marquee";
+import { contact, documents, socials } from "@/app/constants";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import React, { useEffect, useRef, useState } from "react";
 
-const email = "pkk.theme@gmail.com";
-const socials = [
-  {
-    title: "facebook",
-    link: "",
-    textColor: "#4267B2",
-  },
-  {
-    title: "github",
-    link: "",
-    textColor: "#2dba4e",
-  },
-  {
-    title: "instagram",
-    link: "",
-    textColor: "#C13584",
-  },
-  {
-    title: "line",
-    link: "",
-    textColor: "#06c755",
-  },
-  {
-    title: "linkedin",
-    link: "",
-    textColor: "#0e76a8",
-  },
-  {
-    title: "",
-    link: "",
-  },
-];
-
-export const Contacts = (props: { ref?: HTMLDivElement }) => {
+export const Contacts = () => {
   const [isScrollToBottom, setIsScrollToBottom] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -68,8 +36,10 @@ export const Contacts = (props: { ref?: HTMLDivElement }) => {
       className={`min-h-screen inset-0 w-full bottom-0 sticky flex items-end ${isScrollToBottom ? "" : "-z-10"}`}
     >
       <div className="w-full">
-        <ContactSection {...props} />
+        <ContactSection />
         <div>
+          <div ref={sentinelRef} aria-hidden="true" />
+
           <Marquee speed={0.5}>
             {[...socials, ...socials, ...socials].map((l, index) => (
               <React.Fragment key={index}>
@@ -79,6 +49,7 @@ export const Contacts = (props: { ref?: HTMLDivElement }) => {
                       text={l.title}
                       fontSize="5rem"
                       textColor={l.textColor}
+                      href={l.link}
                     />
                   </div>
                 ) : (
@@ -88,17 +59,14 @@ export const Contacts = (props: { ref?: HTMLDivElement }) => {
             ))}
           </Marquee>
         </div>
-        <div ref={sentinelRef} aria-hidden="true" />
       </div>
     </div>
   );
 };
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
-export default function ContactSection(props: { ref?: HTMLDivElement }) {
+export default function ContactSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
   const docsLabelRef = useRef<HTMLParagraphElement>(null);
@@ -115,7 +83,6 @@ export default function ContactSection(props: { ref?: HTMLDivElement }) {
         },
       });
 
-      // ── Initial states ───────────────────────────────────────────────────
       gsap.set(
         [
           infoRef.current,
@@ -130,7 +97,6 @@ export default function ContactSection(props: { ref?: HTMLDivElement }) {
         opacity: 0,
       });
 
-      // ── Timeline ─────────────────────────────────────────────────────────
       tl.to(
         dividerRef.current,
         { scaleX: 1, opacity: 1, duration: 0.4, ease: "expo.out" },
@@ -164,7 +130,7 @@ export default function ContactSection(props: { ref?: HTMLDivElement }) {
         aria-label="Contact"
       >
         <div className="relative z-20 flex flex-col mb-8 md:mb-10">
-          <AnimatedHeader title="Contact" />
+          <AnimatedHeader title={contact.title} />
         </div>
 
         <div className="relative z-20 flex flex-col gap-5">
@@ -172,7 +138,7 @@ export default function ContactSection(props: { ref?: HTMLDivElement }) {
             ref={docsLabelRef}
             className="text-paragraph leading-relaxed uppercase tracking-[0.3em] text-primary px-4"
           >
-            Documents
+            {contact.docsLabel}
           </p>
 
           {/* Cards row — horizontal scroll on mobile, flex on desktop */}
@@ -186,16 +152,14 @@ export default function ContactSection(props: { ref?: HTMLDivElement }) {
             }}
           >
             <div className="flex gap-4 md:gap-10 px-4">
-              <DocumentCard
-                type="CV"
-                label="Curriculum Vitae · PDF"
-                href="/cv.pdf"
-              />
-              <DocumentCard
-                type="Resume"
-                label="Resume · PDF"
-                href="/resume.pdf"
-              />
+              {documents.map((doc) => (
+                <DocumentCard
+                  key={doc.type}
+                  type={doc.type}
+                  label={doc.label}
+                  href={doc.href}
+                />
+              ))}
             </div>
           </div>
 
@@ -208,22 +172,22 @@ export default function ContactSection(props: { ref?: HTMLDivElement }) {
                 Email
               </span>
               <a
-                href={`mailto:${email}`}
+                href={`mailto:${contact.email}`}
                 className="contact-email text-primary/40 transition-colors duration-300 hover:text-primary text-paragraph"
                 style={{
                   letterSpacing: "-0.01em",
                 }}
               >
-                {email}
+                {contact.email}
               </a>
             </div>
           </div>
           <div className="relative z-20 flex items-start justify-between px-4">
             <span className="text-xs uppercase tracking-[0.25em] text-primary">
-              Portfolio · 2026
+              {contact.footer.left}
             </span>
             <span className="text-xs uppercase tracking-[0.25em] text-primary">
-              Based in Bangkok
+              {contact.footer.right}
             </span>
           </div>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { Marquee } from "@/app/components/marquee";
+import { floatingLabels, heroImages, heroName } from "@/app/constants";
 import { useDetectScreen } from "@/app/hook/use-detect-screen";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -11,65 +12,6 @@ import {
   ParallaxImageComponent,
   useParallaxEngine,
 } from "../../components/parallax-gallery";
-import { heroImages } from "./constants";
-
-type FloatLabel = {
-  text: string;
-  className: string;
-  rotation: number;
-  size?: "sm" | "md";
-};
-
-const floatingLabels: FloatLabel[] = [
-  {
-    text: "✦ Software Engineer",
-    className: "top-[6%] left-[5%] opacity-95",
-    rotation: -2,
-  },
-  {
-    text: "Coffee Enjoyer",
-    className: "top-[5%] right-[10%] opacity-90",
-    rotation: 3,
-  },
-  {
-    text: "(Frontend ／ Motion)",
-    className: "top-[20%] left-[8%] opacity-85",
-    rotation: 0,
-    size: "sm",
-  },
-  {
-    text: "Bangkok — TH",
-    className: "top-[30%] right-[5%] opacity-90 origin-right",
-    rotation: 90,
-  },
-  {
-    text: "Quietly Crafting",
-    className: "top-[33%] left-[4%] opacity-85",
-    rotation: -1,
-  },
-  // {
-  //   text: "Available — 2026",
-  //   className: "top-[36%] right-[8%] opacity-90",
-  //   rotation: 2,
-  // },
-  {
-    text: "Design × Code",
-    className: "top-[68%] left-[8%] opacity-80",
-    rotation: 1,
-  },
-  // {
-  //   text: "Late Night Builds",
-  //   className: "top-[52%] right-[14%] opacity-80",
-  //   rotation: -2,
-  //   size: "sm",
-  // },
-  {
-    text: "Scroll ↓",
-    className: "bottom-[3%] right-[4%] opacity-85",
-    rotation: 0,
-    size: "sm",
-  },
-];
 
 export const HeroIndex = () => {
   const { isMobile } = useDetectScreen();
@@ -93,7 +35,7 @@ export const HeroIndex = () => {
 
       gsap.to(labels, {
         y: 0,
-        opacity: (i, target) =>
+        opacity: (_, target) =>
           parseFloat((target as HTMLElement).dataset.targetOpacity ?? "0.5"),
         duration: 1.1,
         ease: "power3.out",
@@ -203,14 +145,7 @@ export const HeroIndex = () => {
       <div className="absolute inset-0 -bottom-[70%] z-999 flex justify-center items-center px-20 font-bold pointer-events-none">
         <div className="justify-center">
           <Marquee>
-            {[
-              "Worrachit",
-              "Pongkatekarm",
-              "—",
-              "Worrachit",
-              "Pongkatekarm",
-              "—",
-            ].map((text, index) => (
+            {[...heroName, "—", ...heroName, "—"].map((text, index) => (
               <h1
                 key={index}
                 className={`whitespace-nowrap leading-none text-secondary dark:text-primary flex text-[120px] md:text-[200px] mr-24`}

@@ -1,0 +1,54 @@
+{
+  "contact": {
+    "title": "Contact",
+    "email": "pkk.theme@gmail.com",
+    "docsLabel": "Documents",
+    "footer": {
+      "left": "Portfolio · 2026",
+      "right": "Based in Bangkok"
+    }
+  },
+  "socials": [
+    {
+      "title": "facebook",
+      "link": "https://www.facebook.com/pkktheme",
+      "textColor": "#4267B2"
+    },
+    {
+      "title": "github",
+      "link": "https://github.com/imTheme2206",
+      "textColor": "#2dba4e"
+    },
+    {
+      "title": "instagram",
+      "link": "https://www.instagram.com/imtheme_",
+      "textColor": "#C13584"
+    },
+    {
+      "title": "line",
+      "link": "",
+      "textColor": "#06c755"
+    },
+    {
+      "title": "linkedin",
+      "link": "https://www.linkedin.com/in/pkk-worrachit",
+      "textColor": "#0e76a8"
+    },
+    {
+      "title": "",
+      "link": ""
+    }
+  ],
+  "documents": [
+    {
+      "type": "CV",
+      "label": "Curriculum Vitae · PDF",
+      "href": "/cv.pdf"
+    },
+    {
+      "type": "Resume",
+      "label": "Resume · PDF",
+      "href": "/resume.pdf"
+    }
+  ]
+}
