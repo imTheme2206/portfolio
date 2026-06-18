@@ -91,7 +91,6 @@ export const Projects = () => {
             data-cursor="thumbnail"
             data-image={project.image}
           >
-            {/* Hover fill overlay */}
             <div
               ref={(el) => {
                 overlayRefs.current[index] = el as HTMLDivElement;
@@ -106,9 +105,7 @@ export const Projects = () => {
               {String(index + 1).padStart(2, "0")}
             </span>
 
-            {/* Title row */}
             <div className="flex items-center gap-4 px-4 md:px-10 text-accent-foreground transition-all duration-500 md:group-hover:px-12 md:group-hover:text-primary-foreground">
-              {/* Project name */}
               <div className="flex-1 min-w-0">
                 <SplitText
                   component="h4"
@@ -120,7 +117,6 @@ export const Projects = () => {
                 </SplitText>
               </div>
 
-              {/* Links */}
               <div className="shrink-0 hidden md:flex items-center gap-6">
                 {project.github && (
                   <a
@@ -157,7 +153,6 @@ export const Projects = () => {
               disableReverse
             />
 
-            {/* Frameworks */}
             <div
               className="flex px-10 gap-x-4 uppercase transition-all duration-500 md:group-hover:px-12 py-1 pl-6 md:pl-18 overflow-scroll"
               style={{ scrollbarWidth: "none" }}
@@ -175,7 +170,6 @@ export const Projects = () => {
               ))}
             </div>
 
-            {/* Description */}
             <div className="flex px-10 leading-loose transition-all duration-500 py-3 md:group-hover:px-12 pl-18">
               <SplitText
                 component="p"
@@ -187,7 +181,6 @@ export const Projects = () => {
               </SplitText>
             </div>
 
-            {/* Mobile image */}
             <div
               className="mx-6 mt-2 mb-1 md:hidden rounded-xl overflow-hidden relative"
               style={{ aspectRatio: "16/9" }}
@@ -209,7 +202,6 @@ export const Projects = () => {
               <div className="absolute inset-0 bg-foreground/10 rounded-xl" />
             </div>
 
-            {/* Mobile links */}
             {(project.github || project.href) && (
               <div className="flex md:hidden items-center gap-4 px-6 py-2">
                 {project.github && (

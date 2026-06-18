@@ -132,20 +132,17 @@ export const DocumentCard = ({
         transformStyle: "preserve-3d",
       }}
     >
-      {/* Glow blob */}
       <div
         ref={glowRef}
         className="pointer-events-none absolute h-40 w-40 rounded-full bg-primary opacity-0 blur-3xl will-change-transform"
       />
 
-      {/* Shimmer stripe */}
       <div
         ref={shimmerRef}
         className="pointer-events-none absolute inset-y-0 z-20 w-[140px] -skew-x-[15deg] bg-gradient-to-r from-transparent via-white/20 to-transparent"
         style={{ left: 0 }}
       />
 
-      {/* Top bar */}
       <div className="relative z-10 flex items-center justify-between border-b border-white/[0.07] px-5 py-2">
         <div className="flex gap-1.5">
           {["bg-red-400/70", "bg-yellow-400/70", "bg-green-400/70"].map(
@@ -170,11 +167,9 @@ export const DocumentCard = ({
           alt={label}
           priority
         />
-        {/* Overlay that lifts on hover */}
         <div className="absolute inset-0 bg-black/25 transition-opacity duration-500 group-hover:opacity-0" />
       </div>
 
-      {/* Footer */}
       <div className="relative z-10 flex items-center justify-between border-t border-white/[0.07] px-5 py-3">
         <span className="text-paragraph text-white/30 transition-colors duration-500 group-hover:text-white/60">
           {label}

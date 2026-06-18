@@ -127,6 +127,7 @@ export const Experiences = () => {
               src={experiencesHeader.image.src}
               alt={experiencesHeader.image.alt}
               fill
+              sizes="100vw"
               className="object-cover object-center opacity-0"
               style={{
                 filter: "grayscale(100%)",
@@ -251,7 +252,6 @@ const ExperienceCards = ({
 
         <div data-reveal className="w-full h-px bg-secondary/40 mb-4 sm:mb-8" />
 
-        {/* Two-column body */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
           <p
             data-reveal

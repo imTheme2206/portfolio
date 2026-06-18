@@ -70,44 +70,27 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 export default function ContactSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
-  const dividerRef = useRef<HTMLDivElement>(null);
-  const docsLabelRef = useRef<HTMLParagraphElement>(null);
   const docsRowRef = useRef<HTMLDivElement>(null);
-  const footerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const lastSection = document.getElementById("last-section");
     const ctx = gsap.context(() => {
+      const docCards = docsRowRef.current?.querySelectorAll(".doc-card") ?? [];
+
+      gsap.set([infoRef.current], { y: 28, opacity: 0 });
+      gsap.set(docCards, { y: 40, opacity: 0 });
+
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: "#last-section",
+          trigger: lastSection,
           start: "bottom bottom",
           toggleActions: "play none none reverse",
         },
       });
 
-      gsap.set(
-        [
-          infoRef.current,
-          dividerRef.current,
-          docsLabelRef.current,
-          footerRef.current,
-        ],
-        { y: 28, opacity: 0 },
-      );
-      gsap.set(docsRowRef.current?.querySelectorAll(".doc-card") ?? [], {
-        y: 40,
-        opacity: 0,
-      });
-
-      tl.to(
-        dividerRef.current,
-        { scaleX: 1, opacity: 1, duration: 0.4, ease: "expo.out" },
-        "-=0.3",
-      )
-        .to(infoRef.current, { y: 0, opacity: 1, duration: 0.3 }, "-=0.4")
-        .to(docsLabelRef.current, { y: 0, opacity: 1, duration: 0.3 }, "-=0.3")
+      tl.to(infoRef.current, { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" })
         .to(
-          docsRowRef.current?.querySelectorAll(".doc-card") ?? [],
+          docCards,
           {
             y: 0,
             opacity: 1,
@@ -115,9 +98,8 @@ export default function ContactSection() {
             stagger: 0.14,
             ease: "expo.out",
           },
-          "-=0.3",
-        )
-        .to(footerRef.current, { y: 0, opacity: 1, duration: 0.6 }, "-=0.4");
+          "-=0.2",
+        );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -143,7 +125,6 @@ export default function ContactSection() {
             {contact.docsLabel}
           </p>*/}
 
-          {/* Cards row — horizontal scroll on mobile, flex on desktop */}
           <div
             ref={docsRowRef}
             className="docs-scroll overflow-x-auto pb-1 mb-6 md:overflow-visible grid place-items-center"
