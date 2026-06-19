@@ -14,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 export default function Home() {
   return (
     <>
-      <main className="h-full relative bg-background z-20">
+      <main className="h-full relative bg-background z-20 rounded-b-4xl">
         <HeroIndex />
         <Skills />
         <About />
@@ -22,7 +22,6 @@ export default function Home() {
         <Projects />
         <Gap size="xl" />
         <Experiences />
-        <div />
       </main>
       <Contacts />
     </>

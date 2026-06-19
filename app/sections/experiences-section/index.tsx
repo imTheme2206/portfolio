@@ -3,87 +3,21 @@
 import { AnimatedHeader } from "@/app/components/animated-header";
 import { experiencesHeader, workExperiences } from "@/app/constants";
 import { useDetectScreen } from "@/app/hook/use-detect-screen";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
+import { useScrollReveal } from "@/app/hook/use-scroll-reveal";
+import { useTextReveal } from "@/app/hook/use-text-reveal";
 import Image from "next/image";
-import { useRef } from "react";
+import { useExperiencesAnimation } from "./use-experiences-animation";
 
 export const Experiences = () => {
-  const spacerRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
-  const circleTextRef = useRef<HTMLDivElement>(null);
-  const pillTextRef = useRef<HTMLDivElement>(null);
   const { isDesktop } = useDetectScreen();
-
-  useGSAP(() => {
-    if (!isDesktop) return;
-
-    gsap.set(contentRef.current, { autoAlpha: 0, y: 24 });
-    gsap.set(cardRef.current, { rotate: -8, transformOrigin: "center center" });
-    gsap.set(pillTextRef.current, { opacity: 0, y: 12 });
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: spacerRef.current,
-        start: "top top",
-        end: "+=200%",
-        scrub: 1.2,
-      },
-    });
-
-    tl.to(cardRef.current, {
-      rotate: 0,
-      width: "55vw",
-      height: "55vw",
-      borderRadius: "50%",
-      ease: "power1.inOut",
-      duration: 0.25,
-    })
-      .to(
-        imageRef.current,
-        { opacity: 1, filter: "grayscale(0%)", ease: "none", duration: 0.25 },
-        "<",
-      )
-      .to(
-        circleTextRef.current,
-        { scale: 1.25, opacity: 0, ease: "power1.in", duration: 0.25 },
-        "<",
-      )
-      .to(cardRef.current, {
-        width: "82vw",
-        height: "22rem",
-        borderRadius: "999px",
-        ease: "power2.inOut",
-        duration: 0.25,
-      })
-      .to(
-        pillTextRef.current,
-        { opacity: 1, y: 0, ease: "power2.out", duration: 0.2 },
-        "<0.1",
-      )
-      .to(imageRef.current, { scale: 1.08, ease: "none", duration: 0.25 }, "<")
-      .to(cardRef.current, {
-        width: "100%",
-        height: "100%",
-        borderRadius: 0,
-        ease: "power1.in",
-        duration: 0.25,
-      })
-      .to(
-        pillTextRef.current,
-        { opacity: 0, y: -10, ease: "power1.in", duration: 0.15 },
-        "<",
-      )
-      .to(imageRef.current, { scale: 1.18, ease: "none", duration: 0.25 }, "<")
-      .to(contentRef.current, {
-        autoAlpha: 1,
-        y: 0,
-        ease: "power1.out",
-        duration: 0.15,
-      });
-  }, [isDesktop]);
+  const {
+    spacerRef,
+    cardRef,
+    contentRef,
+    imageRef,
+    circleTextRef,
+    pillTextRef,
+  } = useExperiencesAnimation({ isDesktop });
 
   if (!isDesktop) {
     return (
@@ -168,7 +102,7 @@ export const Experiences = () => {
 
       <div
         ref={contentRef}
-        className="relative bg-secondary-foreground text-primary-foreground"
+        className="relative bg-secondary-foreground text-primary-foreground rounded-b-4xl"
         style={{ marginTop: "-90vh" }}
         data-cursor="invert"
       >
@@ -197,25 +131,23 @@ const ExperienceCards = ({
 }) => {
   const { isDesktop } = useDetectScreen();
   const total = workExperiences.length;
-  const innerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useScrollReveal<HTMLDivElement>({
+    y: 20,
+    stagger: 0.07,
+    start: "top 80%",
+  });
+  const highlightsRef = useScrollReveal<HTMLDivElement>({
+    y: 20,
+    stagger: 0.07,
+    start: "top 80%",
+  });
 
-  useGSAP(() => {
-    const els = innerRef.current?.querySelectorAll("[data-reveal]");
-    if (!els?.length) return;
-
-    gsap.from(els, {
-      scrollTrigger: {
-        trigger: innerRef.current,
-        start: "top 90%",
-        toggleActions: "play none none none",
-      },
-      opacity: 0,
-      y: 20,
-      stagger: 0.07,
-      duration: 0.6,
-      ease: "power2.out",
-    });
-  }, []);
+  const descRef = useTextReveal({
+    by: "lines",
+    duration: 0.25,
+    start: "top 80%",
+    stagger: 0.07,
+  });
 
   return (
     <div
@@ -229,11 +161,8 @@ const ExperienceCards = ({
           : { top: 0 }
       }
     >
-      <div ref={innerRef}>
-        <div
-          data-reveal
-          className="flex flex-col sm:flex-row sm:items-center justify-center sm:justify-baseline gap-4 mb-8 font-mono sm:tracking-[0.25em] uppercase text-primary-foreground/60 text-xs sm:text-sm"
-        >
+      <div ref={headerRef}>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-center sm:justify-baseline gap-4 mb-8 font-mono sm:tracking-[0.25em] uppercase text-primary-foreground/60 text-xs sm:text-sm">
           <p className="text-sm flex-1">{service.range}</p>
           <span className="hidden sm:block flex-1 h-px bg-primary-foreground/10 relative" />
           <p className="absolute top-0 right-0 bg-primary px-4 sm:text-lg mt-1/2 sm:-mt-2">
@@ -241,48 +170,44 @@ const ExperienceCards = ({
           </p>
         </div>
 
-        <div
-          data-reveal
-          className="relative flex flex-col lg:flex-row lg:items-end justify-between gap-3 lg:gap-10 mb-8 overflow-hidden"
-        >
-          <h2 className="font-heading italic  text-2xl sm:text-5xl lg:text-7xl leading-none truncate text-primary-foreground relative z-10">
+        <div className="relative flex flex-col lg:flex-row lg:items-end justify-between gap-3 lg:gap-10 mb-8 overflow-hidden">
+          <h2 className="font-heading italic text-2xl sm:text-5xl lg:text-7xl leading-none truncate text-primary-foreground relative z-10">
             {service.title}
           </h2>
         </div>
 
-        <div data-reveal className="w-full h-px bg-secondary/40 mb-4 sm:mb-8" />
+        <div className="w-full h-px bg-secondary/40 mb-4 sm:mb-8" />
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
-          <p
-            data-reveal
-            className="text-primary-foreground leading-relaxed text-base lg:text-xl text-pretty font-light"
-          >
-            {service.description}
-          </p>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+        <p
+          ref={descRef}
+          className="text-primary-foreground leading-relaxed text-base lg:text-xl text-pretty font-light"
+        >
+          {service.description}
+        </p>
 
-          <div className="flex flex-col">
-            {service.highlights.map((item, i) => (
-              <div
-                key={`${index}-${i}`}
-                data-reveal
-                className="group/row flex items-baseline justify-between py-3.5 border-b border-secondary/20 last:border-0 cursor-default overflow-hidden"
-              >
-                <div className="flex items-baseline gap-5 min-w-0">
-                  <span className="shrink-0 font-mono text-[10px] tracking-widest text-primary-foreground/25">
-                    0{i + 1}
-                  </span>
-                  <div className="flex flex-col">
-                    <p className="text-primary-foreground font-light text-lg lg:text-lg transition-all duration-100 group-hover/row:italic group-hover/row:translate-x-1 truncate">
-                      {item.title}
-                    </p>
-                    <p className="hidden sm:block shrink-0 font-mono text-sm text-primary-foreground/60 opacity-0 translate-y-2 transition-all duration-300 group-hover/row:opacity-100 group-hover/row:translate-y-0 truncate">
-                      {item.description}
-                    </p>
-                  </div>
+        <div ref={highlightsRef} className="flex flex-col">
+          {service.highlights.map((item, i) => (
+            <div
+              key={`${index}-${i}`}
+              className="group/row flex items-baseline justify-between py-3.5 border-b border-secondary/20 last:border-0 cursor-default overflow-hidden"
+            >
+              <div className="flex items-baseline gap-5 min-w-0">
+                <span className="shrink-0 font-mono text-[10px] tracking-widest text-primary-foreground/25">
+                  0{i + 1}
+                </span>
+                <div className="flex flex-col">
+                  <p className="text-primary-foreground font-light text-lg lg:text-lg transition-all duration-100 group-hover/row:italic group-hover/row:translate-x-1 truncate">
+                    {item.title}
+                  </p>
+                  <p className="hidden sm:block shrink-0 font-mono text-sm text-primary-foreground/60 opacity-0 translate-y-2 transition-all duration-300 group-hover/row:opacity-100 group-hover/row:translate-y-0 truncate">
+                    {item.description}
+                  </p>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

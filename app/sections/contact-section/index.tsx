@@ -6,8 +6,8 @@ import { DocumentCard } from "@/app/components/document-card";
 import { Marquee } from "@/app/components/marquee";
 import { contact, documents, socials } from "@/app/constants";
 import { useDetectScreen } from "@/app/hook/use-detect-screen";
-import gsap from "gsap";
 import React, { useEffect, useRef, useState } from "react";
+import { useContactAnimation } from "./use-contact-animation";
 
 export const Contacts = () => {
   const [isScrollToBottom, setIsScrollToBottom] = useState<boolean>(false);
@@ -65,46 +65,7 @@ export const Contacts = () => {
 };
 
 const ContactSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const infoRef = useRef<HTMLDivElement>(null);
-  const docsRowRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const lastSection = document.getElementById("last-section");
-    const ctx = gsap.context(() => {
-      const docCards = docsRowRef.current?.querySelectorAll(".doc-card") ?? [];
-
-      gsap.set([infoRef.current], { y: 28, opacity: 0 });
-      gsap.set(docCards, { y: 40, opacity: 0 });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: lastSection,
-          start: "bottom bottom",
-          toggleActions: "play none none reverse",
-        },
-      });
-
-      tl.to(infoRef.current, {
-        y: 0,
-        opacity: 1,
-        duration: 0.4,
-        ease: "power2.out",
-      }).to(
-        docCards,
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.4,
-          stagger: 0.14,
-          ease: "expo.out",
-        },
-        "-=0.2",
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  const { sectionRef, infoRef, docsRowRef } = useContactAnimation();
 
   return (
     <>
@@ -119,15 +80,7 @@ const ContactSection = () => {
         </div>
 
         <div className="relative z-20 flex flex-col gap-5">
-          {/*<p
-            ref={docsLabelRef}
-            className="text-paragraph leading-relaxed uppercase tracking-[0.3em] text-primary px-4"
-          >
-            {contact.docsLabel}
-          </p>*/}
-
           <div
-            ref={docsRowRef}
             className="docs-scroll overflow-x-auto pb-1 mb-6 md:overflow-visible grid place-items-center"
             style={{
               WebkitOverflowScrolling: "touch",
@@ -135,7 +88,10 @@ const ContactSection = () => {
               scrollbarWidth: "none",
             }}
           >
-            <div className="flex gap-4 md:gap-10 px-4">
+            <div
+              ref={docsRowRef}
+              className="flex w-full md:justify-center gap-4 md:gap-10 px-4"
+            >
               {documents.map((doc) => (
                 <DocumentCard
                   key={doc.type}

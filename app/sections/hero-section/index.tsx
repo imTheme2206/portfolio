@@ -3,121 +3,21 @@
 import { Marquee } from "@/app/components/marquee";
 import { floatingLabels, heroImages, heroName } from "@/app/constants";
 import { useDetectScreen } from "@/app/hook/use-detect-screen";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { useEffect, useRef } from "react";
 import {
   ParallaxContainer,
   ParallaxGalleryDelegate,
   ParallaxImageComponent,
   useParallaxEngine,
 } from "../../components/parallax-gallery";
+import { useHeroAnimation } from "./use-hero-animation";
 
 export const HeroIndex = () => {
   const { isMobile } = useDetectScreen();
-  const enableAutoPanOnDesktop = true;
   const { containerRef, delegate } = useParallaxEngine(
     (container: HTMLElement) => new ParallaxGalleryDelegate(container),
-    { autoPan: isMobile || enableAutoPanOnDesktop },
+    { autoPan: isMobile || true },
   );
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const floatTweensRef = useRef<gsap.core.Tween[]>([]);
-
-  useGSAP(
-    () => {
-      const labels = gsap.utils.toArray<HTMLElement>(".hero-float");
-      if (!labels.length) return;
-
-      labels.forEach((el) => {
-        const rot = parseFloat(el.dataset.rotation ?? "0");
-        gsap.set(el, { rotation: rot, y: 24, opacity: 0 });
-      });
-
-      gsap.to(labels, {
-        y: 0,
-        opacity: (_, target) =>
-          parseFloat((target as HTMLElement).dataset.targetOpacity ?? "0.5"),
-        duration: 1.1,
-        ease: "power3.out",
-        stagger: { amount: 0.9, from: "random" },
-        delay: 0.3,
-      });
-
-      const tweens: gsap.core.Tween[] = [];
-
-      labels.forEach((el, i) => {
-        const rot = parseFloat(el.dataset.rotation ?? "0");
-        const yAmp = gsap.utils.random(6, 14, 1);
-        const xAmp = gsap.utils.random(4, 10, 1);
-        const rotAmp = gsap.utils.random(0.6, 1.8, 0.1);
-        const dur = gsap.utils.random(3.4, 5.6, 0.1);
-
-        tweens.push(
-          gsap.to(el, {
-            y: `+=${yAmp}`,
-            x: `+=${xAmp}`,
-            rotation: rot + rotAmp,
-            duration: dur,
-            ease: "sine.inOut",
-            yoyo: true,
-            repeat: -1,
-            delay: 1.2 + (i % 5) * 0.18,
-          }),
-        );
-
-        tweens.push(
-          gsap.to(el, {
-            opacity: `+=${gsap.utils.random(-0.1, 0.1, 0.01)}`,
-            duration: gsap.utils.random(2.2, 3.8, 0.1),
-            ease: "sine.inOut",
-            yoyo: true,
-            repeat: -1,
-            delay: 1.4 + i * 0.07,
-          }),
-        );
-      });
-
-      const scrollEl =
-        overlayRef.current?.querySelector<HTMLElement>(".hero-float-scroll");
-      if (scrollEl) {
-        tweens.push(
-          gsap.to(scrollEl, {
-            y: 6,
-            duration: 1.1,
-            ease: "sine.inOut",
-            yoyo: true,
-            repeat: -1,
-            delay: 1.5,
-          }),
-        );
-      }
-
-      floatTweensRef.current = tweens;
-    },
-    { scope: overlayRef },
-  );
-
-  useEffect(() => {
-    const section = document.getElementById("hero-section");
-    if (!section) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries[0].isIntersecting;
-        floatTweensRef.current.forEach((t) => {
-          if (visible) {
-            t.resume();
-          } else {
-            t.pause();
-          }
-        });
-      },
-      { threshold: 0.1 },
-    );
-
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
+  const { overlayRef, scrollIndicatorRef } = useHeroAnimation();
 
   return (
     <div
@@ -176,6 +76,7 @@ export const HeroIndex = () => {
               key={i}
               data-rotation={label.rotation}
               data-target-opacity={targetOpacity}
+              ref={isScroll ? scrollIndicatorRef : undefined}
               className={`hero-float hero-float-halo ${
                 isScroll ? "hero-float-scroll" : ""
               } absolute italic uppercase ${sizeClass} ${label.className}`}

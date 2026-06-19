@@ -2,6 +2,7 @@
 
 import gsap from "gsap";
 import Image from "next/image";
+import Link from "next/link";
 import { useRef } from "react";
 
 type DocumentCardProps = {
@@ -107,7 +108,7 @@ export const DocumentCard = ({
   };
 
   return (
-    <a
+    <Link
       ref={cardRef}
       href={href}
       target="_blank"
@@ -116,13 +117,7 @@ export const DocumentCard = ({
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="doc-card group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-primary not-dark:shadow-2xl dark:bg-secondary backdrop-blur-sm transition-colors duration-500 hover:border-white/20 dark:hover:bg-secondary/30"
-      style={{
-        minWidth: "220px",
-        aspectRatio: "5/7",
-        flexShrink: 0,
-        transformStyle: "preserve-3d",
-      }}
+      className="doc-card group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-primary not-dark:shadow-2xl dark:bg-secondary backdrop-blur-sm transition-colors duration-500 hover:border-white/20 dark:hover:bg-secondary/30 transform-3d shrink-0 aspect-5/7 min-w-56 w-full max-w-102"
     >
       <div
         ref={glowRef}
@@ -172,6 +167,6 @@ export const DocumentCard = ({
           ↗
         </span>
       </div>
-    </a>
+    </Link>
   );
 };
