@@ -1,6 +1,6 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useRef } from "react";
+import { RefObject, useRef } from "react";
 
 interface ScrollRevealOptions {
   y?: number;
@@ -8,6 +8,7 @@ interface ScrollRevealOptions {
   stagger?: number;
   ease?: string;
   start?: string;
+  triggerRef?: RefObject<HTMLElement | null>;
 }
 
 export const useScrollReveal = <T extends HTMLElement = HTMLDivElement>(
@@ -19,6 +20,7 @@ export const useScrollReveal = <T extends HTMLElement = HTMLDivElement>(
     stagger = 0.07,
     ease = "power2.out",
     start = "top 88%",
+    triggerRef,
   } = options;
 
   const containerRef = useRef<T>(null);
@@ -30,7 +32,7 @@ export const useScrollReveal = <T extends HTMLElement = HTMLDivElement>(
 
       gsap.from(children, {
         scrollTrigger: {
-          trigger: containerRef.current,
+          trigger: triggerRef?.current ?? containerRef.current,
           start,
           toggleActions: "play none none none",
         },

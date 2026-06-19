@@ -22,7 +22,7 @@ export const About = () => {
   return (
     <div>
       <section ref={sectionRef} className="h-screen relative">
-        <div className="h-full grid grid-rows-[45%_55%] lg:grid-rows-none grid-cols-1 lg:grid-cols-[44fr_56fr]">
+        <div className="h-full grid grid-rows-[40%_60%] lg:grid-rows-none grid-cols-1 lg:grid-cols-[44fr_56fr]">
           <div className="relative flex flex-col sm:justify-center px-6 md:px-14 lg:px-16 pt-10 pb-4 lg:pt-12 lg:pb-10 overflow-hidden order-2 lg:order-1">
             <span
               ref={sectionNumRef}
@@ -100,7 +100,7 @@ export const About = () => {
                 sizes="56vw"
                 src={about.portrait.src}
                 alt={about.portrait.alt}
-                className="object-cover object-center"
+                className="object-cover object-center grayscale-50"
               />
             </div>
           </div>

@@ -1,6 +1,6 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useRef } from "react";
+import { RefObject, useRef } from "react";
 import { useSplitText } from "./use-split-text";
 
 interface TextRevealOptions {
@@ -10,6 +10,7 @@ interface TextRevealOptions {
   stagger?: number;
   duration?: number;
   ease?: string;
+  triggerRef?: RefObject<HTMLElement | null>;
 }
 
 export const useTextReveal = <T extends HTMLElement = HTMLElement>(
@@ -22,6 +23,7 @@ export const useTextReveal = <T extends HTMLElement = HTMLElement>(
     stagger = 0.03,
     duration = 0.7,
     ease = "power2.out",
+    triggerRef,
   } = options;
 
   const ref = useRef<T>(null);
@@ -46,7 +48,7 @@ export const useTextReveal = <T extends HTMLElement = HTMLElement>(
 
       gsap.from(targets, {
         scrollTrigger: {
-          trigger: ref.current,
+          trigger: triggerRef?.current ?? ref.current,
           start,
           toggleActions: "play none none none",
         },

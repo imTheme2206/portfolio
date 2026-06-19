@@ -16,19 +16,19 @@ h6 {
     font-family: "Syne";
 
     /* Husky-tone palette — light mode (Soft Ivory + Espresso Ink + Husky Blue/Muted Bronze) */
-    --background: #f6f1eb; /* Soft Ivory */
+    --background: #fcfbfa; /* Soft Ivory */
     --foreground: #2b2622; /* Espresso Ink */
-    --secondary: #f6f1eb;
+    --secondary: #fcfbfa;
     --primary: #2b2622;
     --secondary-foreground: #2b2622;
-    --primary-foreground: #f6f1eb;
+    --primary-foreground: #fcfbfa;
     --accent-foreground: #2b2622;
-    --accent: #f6f1eb;
+    --accent: #fcfbfa;
     --card-foreground: #2b2622;
     --card: #e5ddd3; /* Pale Linen */
 
-    --theme-switcher-dark: #2b2622;
-    --theme-switcher-light: #f6f1eb;
+    --theme-switcher-dark: #17191c;
+    --theme-switcher-light: #fcfbfa;
 
     --animation-time: 25ms;
     --muted: #2b2622;
@@ -41,14 +41,15 @@ h6 {
 
 html.dark {
     --background: #17191c; /* Deep Husk */
-    --foreground: #ece7e1; /* Warm Snow */
-    --primary: #ece7e1;
+    --foreground: #f8f6f3; /* Warm Snow */
+    --primary: #f8f6f3;
+    /*--primary: #f8f6f3;*/
     --secondary: #17191c;
-    --secondary-foreground: #ece7e1;
+    --secondary-foreground: #f8f6f3;
     --primary-foreground: #17191c;
-    --accent-foreground: #ece7e1;
+    --accent-foreground: #f8f6f3;
     --accent: #17191c;
-    --card-foreground: #ece7e1;
+    --card-foreground: #f8f6f3;
     --card: #262c33; /* Ash Stone */
 
     --muted-foreground: #8b8f95; /* Fog Ash */
@@ -85,6 +86,14 @@ body {
     overflow-x: hidden;
     background: var(--background);
     color: var(--foreground);
+}
+
+/* Hide native scrollbar — replaced by ScrollTrack component */
+::-webkit-scrollbar {
+    display: none;
+}
+* {
+    scrollbar-width: none;
 }
 
 .contact-email::after {

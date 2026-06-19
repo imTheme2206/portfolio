@@ -1,6 +1,7 @@
 import ReactLenis from "lenis/react";
 import type { Metadata } from "next";
 import { MouseTracker } from "./components/cursor-follower";
+import { ScrollTrack } from "./components/scroll-track";
 import { ThemeSwitcher } from "./components/theme-switcher";
 import { Loader } from "./extract-component/loader";
 import "./globals.css";
@@ -23,6 +24,7 @@ export default function RootLayout({
           <body className={`antialiased overflow-x-hidden`}>
             <Loader />
             <MouseTracker />
+            <ScrollTrack />
             {children}
             <ThemeSwitcher />
           </body>

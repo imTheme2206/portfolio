@@ -27,7 +27,7 @@ export const AnimatedHeader = ({
       scrollTrigger: props.withScrollTrigger
         ? {
             trigger: contextRef.current,
-            start: "top bottom",
+            start: "bottom top",
           }
         : undefined,
     });

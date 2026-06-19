@@ -21,7 +21,6 @@ export const DocumentCard = ({
   const cardRef = useRef<HTMLAnchorElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
-  const arrowRef = useRef<HTMLSpanElement>(null);
 
   const handleMouseEnter = () => {
     // Card lifts up
@@ -38,25 +37,6 @@ export const DocumentCard = ({
       duration: 0.7,
       ease: "power2.out",
     });
-
-    // Arrow shoots out then returns
-    gsap
-      .timeline()
-      .to(arrowRef.current, {
-        x: 4,
-        y: -4,
-        opacity: 0,
-        duration: 0.2,
-        ease: "power2.in",
-      })
-      .set(arrowRef.current, { x: -4, y: 4 })
-      .to(arrowRef.current, {
-        x: 0,
-        y: 0,
-        opacity: 1,
-        duration: 0.25,
-        ease: "power2.out",
-      });
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -112,24 +92,19 @@ export const DocumentCard = ({
       ref={cardRef}
       href={href}
       target="_blank"
-      data-cursor="invert"
+      data-cursor="clickable"
       rel="noopener noreferrer"
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="doc-card group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-primary not-dark:shadow-2xl dark:bg-secondary backdrop-blur-sm transition-colors duration-500 hover:border-white/20 dark:hover:bg-secondary/30 transform-3d shrink-0 aspect-5/7 min-w-56 w-full max-w-102"
+      className="doc-card group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-primary not-dark:shadow-2xl dark:bg-secondary backdrop-blur-sm transition-colors duration-500 hover:border-white/20 dark:hover:bg-secondary/30 transform-3d shrink-0 aspect-5/7 min-w-42 w-full max-w-102"
     >
       <div
         ref={glowRef}
         className="pointer-events-none absolute h-40 w-40 rounded-full bg-primary opacity-0 blur-3xl will-change-transform"
       />
 
-      <div
-        className="pointer-events-none absolute inset-y-0 z-20 w-[140px] -skew-x-[15deg] bg-gradient-to-r from-transparent via-white/20 to-transparent"
-        style={{ left: 0 }}
-      />
-
-      <div className="relative z-10 flex items-center justify-between border-b border-white/[0.07] px-5 py-2">
+      <div className="relative z-10 flex items-center justify-between border-b border-accent px-5 py-2">
         <div className="flex gap-1.5">
           {["bg-red-400/70", "bg-yellow-400/70", "bg-green-400/70"].map(
             (c, i) => (
@@ -147,8 +122,7 @@ export const DocumentCard = ({
           ref={imageRef}
           width={320}
           height={420}
-          className="h-full w-full object-cover"
-          style={{ filter: "grayscale(50%)" }}
+          className="h-full w-full object-cover grayscale-75"
           src={preview}
           alt={label}
           priority
@@ -156,15 +130,9 @@ export const DocumentCard = ({
         <div className="absolute inset-0 bg-black/25 transition-opacity duration-500 group-hover:opacity-0" />
       </div>
 
-      <div className="relative z-10 flex items-center justify-between border-t border-white/[0.07] px-5 py-3">
+      <div className="relative z-10 flex items-center justify-between border-t border-accent/7 px-5 py-3">
         <span className="text-paragraph text-white/30 transition-colors duration-500 group-hover:text-white/60">
           {label}
-        </span>
-        <span
-          ref={arrowRef}
-          className="inline-block text-white/20 transition-colors duration-500 group-hover:text-white/60"
-        >
-          ↗
         </span>
       </div>
     </Link>
