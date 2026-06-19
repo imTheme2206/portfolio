@@ -118,7 +118,7 @@ export const DocumentCard = ({
       onMouseLeave={handleMouseLeave}
       className="doc-card group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-primary not-dark:shadow-2xl dark:bg-secondary backdrop-blur-sm transition-colors duration-500 hover:border-white/20 dark:hover:bg-secondary/30"
       style={{
-        minWidth: "280px",
+        minWidth: "220px",
         aspectRatio: "5/7",
         flexShrink: 0,
         transformStyle: "preserve-3d",
