@@ -19,18 +19,10 @@ export const DocumentCard = ({
 }: DocumentCardProps) => {
   const cardRef = useRef<HTMLAnchorElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
-  const shimmerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
   const arrowRef = useRef<HTMLSpanElement>(null);
 
   const handleMouseEnter = () => {
-    // Shimmer sweep across the card
-    gsap.fromTo(
-      shimmerRef.current,
-      { x: -180, opacity: 1 },
-      { x: 580, opacity: 1, duration: 0.65, ease: "power2.inOut" },
-    );
-
     // Card lifts up
     gsap.to(cardRef.current, {
       y: -8,
@@ -126,7 +118,7 @@ export const DocumentCard = ({
       onMouseLeave={handleMouseLeave}
       className="doc-card group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-primary not-dark:shadow-2xl dark:bg-secondary backdrop-blur-sm transition-colors duration-500 hover:border-white/20 dark:hover:bg-secondary/30"
       style={{
-        minWidth: "400px",
+        minWidth: "280px",
         aspectRatio: "5/7",
         flexShrink: 0,
         transformStyle: "preserve-3d",
@@ -138,7 +130,6 @@ export const DocumentCard = ({
       />
 
       <div
-        ref={shimmerRef}
         className="pointer-events-none absolute inset-y-0 z-20 w-[140px] -skew-x-[15deg] bg-gradient-to-r from-transparent via-white/20 to-transparent"
         style={{ left: 0 }}
       />

@@ -7,8 +7,6 @@ import { Marquee } from "@/app/components/marquee";
 import { contact, documents, socials } from "@/app/constants";
 import { useDetectScreen } from "@/app/hook/use-detect-screen";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "gsap/SplitText";
 import React, { useEffect, useRef, useState } from "react";
 
 export const Contacts = () => {
@@ -66,8 +64,7 @@ export const Contacts = () => {
   );
 };
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
-export default function ContactSection() {
+const ContactSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
   const docsRowRef = useRef<HTMLDivElement>(null);
@@ -88,18 +85,22 @@ export default function ContactSection() {
         },
       });
 
-      tl.to(infoRef.current, { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" })
-        .to(
-          docCards,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.4,
-            stagger: 0.14,
-            ease: "expo.out",
-          },
-          "-=0.2",
-        );
+      tl.to(infoRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 0.4,
+        ease: "power2.out",
+      }).to(
+        docCards,
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.4,
+          stagger: 0.14,
+          ease: "expo.out",
+        },
+        "-=0.2",
+      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -192,4 +193,4 @@ export default function ContactSection() {
       </section>
     </>
   );
-}
+};
