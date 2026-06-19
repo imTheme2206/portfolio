@@ -2,6 +2,7 @@
 
 import { AnimatedHeader } from "@/app/components/animated-header";
 import { AnimatedHoverText } from "@/app/components/animated-hover-text";
+import { ContactLink } from "@/app/components/contact-link";
 import { DocumentCard } from "@/app/components/document-card";
 import { Marquee } from "@/app/components/marquee";
 import { contact, documents, socials } from "@/app/constants";
@@ -108,34 +109,8 @@ const ContactSection = () => {
             ref={infoRef}
             className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-2"
           >
-            <div className="flex gap-2 px-4 items-center">
-              <span className="text-base sm:text-2xl uppercase tracking-[0.25em] text-primary">
-                Email
-              </span>
-              <a
-                href={`mailto:${contact.email}`}
-                className="contact-email text-primary/40 transition-colors duration-300 hover:text-primary text-sm sm:text-xl"
-                style={{
-                  letterSpacing: "-0.01em",
-                }}
-              >
-                {contact.email}
-              </a>
-            </div>
-            <div className="flex gap-2 px-4 items-center">
-              <span className=" text-base sm:text-2xl uppercase tracking-[0.25em] text-primary">
-                Tel
-              </span>
-              <a
-                href={`tel:${contact.tel}`}
-                className="contact-email text-primary/40 transition-colors duration-300 hover:text-primary text-sm sm:text-xl"
-                style={{
-                  letterSpacing: "-0.01em",
-                }}
-              >
-                {contact.tel}
-              </a>
-            </div>
+            <ContactLink label="Email" mode="mailto" link={contact.email} />
+            <ContactLink label="Tel" mode="tel" link={contact.tel} />
           </div>
           <div className="relative z-20 flex items-start justify-between px-4">
             <span className=" text-[10px] sm:text-base uppercase tracking-[0.25em] text-primary">

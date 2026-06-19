@@ -58,4 +58,17 @@ export const variantConfig: Record<CursorVariant, CursorProps> = {
     ],
     text: "CLICK",
   },
+  clicked: {
+    classNames: [
+      "w-14",
+      "h-14",
+      "text-primary-foreground",
+      "bg-primary",
+      "flex",
+      "items-center",
+      "justify-center",
+      "rounded-full",
+    ],
+    text: "CLICK",
+  },
 };

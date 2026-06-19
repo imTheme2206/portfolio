@@ -92,6 +92,10 @@ body {
 ::-webkit-scrollbar {
     display: none;
 }
+
+::-webkit-scrollbar-thumb {
+    display: none;
+}
 * {
     scrollbar-width: none;
 }

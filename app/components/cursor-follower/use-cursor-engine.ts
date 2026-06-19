@@ -42,10 +42,13 @@ export const useCursorEngine = () => {
       return promise;
     };
 
+    let currentVariant: CursorVariant = "default";
+
     const updateCursor = (variant: CursorVariant, image?: string) => {
       if (!tracker || !textContainer) {
         return;
       }
+      currentVariant = variant;
 
       const config = variantConfig[variant] || variantConfig.default;
 
@@ -115,6 +118,28 @@ export const useCursorEngine = () => {
       }
     };
 
+    const onClick = (e: MouseEvent) => {
+      if (currentVariant !== "clickable") {
+        return;
+      }
+      updateCursor("clicked");
+
+      if (rafId === null) {
+        rafId = requestAnimationFrame(animate);
+      }
+    };
+
+    const onReleaseClick = (e: MouseEvent) => {
+      if (currentVariant !== "clicked") {
+        return;
+      }
+      updateCursor("clickable");
+
+      if (rafId === null) {
+        rafId = requestAnimationFrame(animate);
+      }
+    };
+
     let hoverTimeout: ReturnType<typeof setTimeout> | undefined;
     const onHover = (e: MouseEvent) => {
       const el = (e.target as HTMLElement).closest("[data-cursor]");
@@ -131,10 +156,14 @@ export const useCursorEngine = () => {
     updateCursor("default");
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseover", onHover);
+    window.addEventListener("mousedown", onClick);
+    window.addEventListener("mouseup", onReleaseClick);
 
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseover", onHover);
+      window.removeEventListener("mousedown", onClick);
+      window.removeEventListener("mouseup", onReleaseClick);
       if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, [isMobile]);

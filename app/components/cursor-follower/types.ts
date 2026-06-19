@@ -1,4 +1,9 @@
-export type CursorVariant = "default" | "invert" | "clickable" | "thumbnail";
+export type CursorVariant =
+  | "default"
+  | "invert"
+  | "clickable"
+  | "clicked"
+  | "thumbnail";
 
 export type CursorProps = {
   classNames: string[];
