@@ -1,8 +1,8 @@
 import { SplitText as GSAPSplitText } from "gsap/all";
-import { type RefObject, useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, type RefObject } from "react";
 
 interface SplitTextOptions {
-  type?: string;
+  type: string;
   linesClass?: string;
   wordsClass?: string;
   charsClass?: string;
@@ -10,7 +10,7 @@ interface SplitTextOptions {
 
 export const useSplitText = <T extends HTMLElement>(
   ref: RefObject<T | null>,
-  options: SplitTextOptions = {},
+  options: SplitTextOptions = { type: "" },
 ) => {
   const charsRef = useRef<HTMLElement[]>([]);
   const wordsRef = useRef<HTMLElement[]>([]);
