@@ -13,16 +13,20 @@ import { useRef } from "react";
 
 export const Projects = () => {
   return (
-    <section className="flex flex-col min-h-screen">
-      <AnimatedHeader
-        title={projectsHeader.title}
-        text={projectsHeader.description}
-        withScrollTrigger={true}
-      />
-      <div className="relative flex flex-col font-normal">
-        {projects.map((project, index) => (
-          <ProjectRow key={index} project={project} index={index} />
-        ))}
+    <section className="flex flex-col gap-y-4 min-h-screen">
+      <div>
+        <AnimatedHeader
+          title={projectsHeader.title}
+          text={projectsHeader.description}
+          withScrollTrigger={true}
+        />
+      </div>
+      <div className="block">
+        <div className="relative flex flex-col font-normal">
+          {projects.map((project, index) => (
+            <ProjectRow key={index} project={project} index={index} />
+          ))}
+        </div>
       </div>
     </section>
   );

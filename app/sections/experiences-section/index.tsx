@@ -142,7 +142,7 @@ const ExperienceCards = ({
     start: "top 80%",
   });
 
-  const descRef = useTextReveal({
+  const descRef = useTextReveal<HTMLDivElement>({
     by: "lines",
     duration: 0.25,
     start: "top 80%",
@@ -163,7 +163,7 @@ const ExperienceCards = ({
     >
       <div ref={headerRef}>
         <div className="flex flex-col sm:flex-row sm:items-center justify-center sm:justify-baseline gap-4 mb-8 font-mono sm:tracking-[0.25em] uppercase text-primary-foreground/60 text-xs sm:text-sm">
-          <p className="text-sm flex-1">{service.range}</p>
+          <p className="text-[10px] sm:text-sm flex-1">{service.range}</p>
           <span className="hidden sm:block flex-1 h-px bg-primary-foreground/10 relative" />
           <p className="absolute top-0 right-0 bg-primary px-4 sm:text-lg mt-1/2 sm:-mt-2">
             {service.company}

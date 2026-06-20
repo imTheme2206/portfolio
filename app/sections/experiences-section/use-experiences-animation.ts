@@ -82,5 +82,12 @@ export const useExperiencesAnimation = ({
       });
   }, [isDesktop]);
 
-  return { spacerRef, cardRef, contentRef, imageRef, circleTextRef, pillTextRef };
+  return {
+    spacerRef,
+    cardRef,
+    contentRef,
+    imageRef,
+    circleTextRef,
+    pillTextRef,
+  };
 };
