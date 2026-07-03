@@ -10,6 +10,17 @@ import { ThemeProvider } from "./hook/use-theme-provider";
 export const metadata: Metadata = {
   title: "Worrachit Pongkatekarm • Software Engineer",
   description: "My humble little portfoilio",
+  openGraph: {
+    title: "Worrachit Pongkatekarm • Software Engineer",
+    description: "My humble little portfoilio",
+    images: ["/assets/images/share-meta.avif"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Worrachit Pongkatekarm • Software Engineer",
+    description: "My humble little portfoilio",
+    images: ["/assets/images/share-meta.avif"],
+  },
 };
 
 export default function RootLayout({
