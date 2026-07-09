@@ -8,6 +8,10 @@ import { useTextReveal } from "@/app/hook/use-text-reveal";
 import Image from "next/image";
 import { useExperiencesAnimation } from "./use-experiences-animation";
 
+type ExperienceLayout = "timeline" | "stacked";
+
+const getExperienceLayout = (): ExperienceLayout => "timeline";
+
 export const Experiences = () => {
   const { isDesktop } = useDetectScreen();
   const {
@@ -35,7 +39,7 @@ export const Experiences = () => {
           />
           <div className="mt-12">
             {workExperiences.map((service, index) => (
-              <ExperienceCards service={service} index={index} key={index} />
+              <ExperienceCard service={service} index={index} key={index} />
             ))}
           </div>
         </div>
@@ -112,17 +116,125 @@ export const Experiences = () => {
           withScrollTrigger={false}
           dividerColor="light"
         />
-        <div className="mt-12">
-          {workExperiences.map((service, index) => (
-            <ExperienceCards service={service} index={index} key={index} />
-          ))}
-        </div>
+        <ExperienceList />
       </div>
     </section>
   );
 };
 
-const ExperienceCards = ({
+const ExperienceList = () => {
+  if (getExperienceLayout() === "stacked") {
+    return (
+      <div className="mt-12">
+        {workExperiences.map((service, index) => (
+          <ExperienceStackedCard service={service} index={index} key={index} />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-12">
+      {workExperiences.map((service, index) => (
+        <ExperienceCard service={service} index={index} key={index} />
+      ))}
+    </div>
+  );
+};
+
+const ExperienceCard = ({
+  service,
+  index,
+}: {
+  service: (typeof workExperiences)[number];
+  index: number;
+}) => {
+  const metaRef = useScrollReveal<HTMLElement>({
+    y: 20,
+    stagger: 0.07,
+    start: "top 80%",
+  });
+  const titleRef = useScrollReveal<HTMLDivElement>({
+    y: 20,
+    stagger: 0.07,
+    start: "top 80%",
+  });
+  const highlightsRef = useScrollReveal<HTMLDivElement>({
+    y: 20,
+    stagger: 0.06,
+    start: "top 80%",
+  });
+
+  const descRef = useTextReveal<HTMLParagraphElement>({
+    by: "lines",
+    duration: 0.25,
+    start: "top 80%",
+    stagger: 0.07,
+  });
+
+  return (
+    <article className="relative border-t border-secondary/35 px-4 py-10 sm:px-10 sm:py-14">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(13rem,18rem)_1fr] lg:gap-14">
+        <aside ref={metaRef} className="lg:sticky lg:top-28 lg:self-start">
+          <div className="flex items-start justify-between gap-4 lg:block">
+            <div>
+              <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-primary-foreground/35">
+                0{index + 1}
+              </span>
+              <p className="mt-3 font-mono text-xs uppercase tracking-[0.24em] text-primary-foreground/55 sm:text-sm">
+                {service.range}
+              </p>
+            </div>
+
+            <span className="rounded-full border border-secondary/25 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-primary-foreground/65 lg:mt-6 lg:inline-flex">
+              {service.company}
+            </span>
+          </div>
+        </aside>
+
+        <div>
+          <div ref={titleRef} className="mb-8">
+            <h2 className="font-heading text-4xl italic leading-[0.95] text-primary-foreground text-balance sm:text-6xl lg:text-8xl">
+              {service.title}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(18rem,1fr)] lg:gap-12">
+            <p
+              ref={descRef}
+              className="max-w-3xl text-pretty text-base font-light leading-relaxed text-primary-foreground/85 lg:text-xl"
+            >
+              {service.description}
+            </p>
+
+            <div ref={highlightsRef} className="flex flex-col">
+              {service.highlights.map((item, i) => (
+                <div
+                  key={`${index}-${i}`}
+                  className="group/row grid grid-cols-[2.5rem_1fr] gap-4 border-b border-secondary/20 py-4 last:border-0"
+                >
+                  <span className="font-mono text-[10px] tracking-widest text-primary-foreground/25">
+                    0{i + 1}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-lg font-light leading-snug text-primary-foreground transition-all duration-200 group-hover/row:translate-x-1 group-hover/row:italic">
+                      {item.title}
+                    </p>
+                    <p className="mt-1 text-sm leading-relaxed text-primary-foreground/55">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+};
+
+const ExperienceStackedCard = ({
   service,
   index,
 }: {
