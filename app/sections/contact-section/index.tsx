@@ -65,7 +65,7 @@ export const Contacts = () => {
 };
 
 const ContactSection = () => {
-  const { sectionRef, statusRef, headlineRef, infoRef, docsRowRef, footerRef } =
+  const { sectionRef, statusRef, infoRef, docsRowRef, footerRef } =
     useContactAnimation();
 
   return (

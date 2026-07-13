@@ -2,18 +2,12 @@
 
 import { AnimatedHeader } from "@/app/components/animated-header";
 import { experiencesHeader, workExperiences } from "@/app/constants";
-import { useDetectScreen } from "@/app/hook/use-detect-screen";
 import { useScrollReveal } from "@/app/hook/use-scroll-reveal";
 import { useTextReveal } from "@/app/hook/use-text-reveal";
 import Image from "next/image";
 import { useExperiencesAnimation } from "./use-experiences-animation";
 
-type ExperienceLayout = "timeline" | "stacked";
-
-const getExperienceLayout = (): ExperienceLayout => "timeline";
-
 export const Experiences = () => {
-  const { isDesktop } = useDetectScreen();
   const {
     spacerRef,
     cardRef,
@@ -21,31 +15,8 @@ export const Experiences = () => {
     imageRef,
     circleTextRef,
     pillTextRef,
-  } = useExperiencesAnimation({ isDesktop });
-
-  if (!isDesktop) {
-    return (
-      <section
-        data-cursor="invert"
-        id="last-section"
-        className="min-h-screen text-primary-foreground flex justify-center"
-      >
-        <div className="bg-secondary-foreground w-full rounded-4xl">
-          <AnimatedHeader
-            subtitle={experiencesHeader.subtitle}
-            title={experiencesHeader.title}
-            withScrollTrigger={false}
-            dividerColor="light"
-          />
-          <div className="mt-12">
-            {workExperiences.map((service, index) => (
-              <ExperienceCard service={service} index={index} key={index} />
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
+    progressRef,
+  } = useExperiencesAnimation();
 
   return (
     <section
@@ -71,7 +42,6 @@ export const Experiences = () => {
                 filter: "grayscale(100%)",
                 willChange: "transform, filter",
               }}
-              priority
             />
             <div className="absolute inset-0 bg-secondary-foreground/50 pointer-events-none" />
 
@@ -86,17 +56,17 @@ export const Experiences = () => {
 
             <div
               ref={pillTextRef}
-              className="absolute inset-0 flex items-center justify-between px-14 pointer-events-none"
+              className="absolute inset-0 flex items-center justify-between gap-4 px-5 pointer-events-none sm:px-14"
             >
               <div className="flex flex-col gap-1">
                 <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-primary-foreground/50">
                   {experiencesHeader.since}
                 </span>
-                <span className="font-heading italic text-3xl text-primary-foreground leading-none">
+                <span className="font-heading italic text-xl text-primary-foreground leading-none sm:text-3xl">
                   {workExperiences.length} roles
                 </span>
               </div>
-              <span className="font-heading italic text-3xl tracking-[0.15em] uppercase text-primary-foreground">
+              <span className="text-right font-heading italic text-xl tracking-[0.1em] uppercase text-primary-foreground sm:text-3xl sm:tracking-[0.15em]">
                 {experiencesHeader.pillText}
               </span>
             </div>
@@ -107,9 +77,17 @@ export const Experiences = () => {
       <div
         ref={contentRef}
         className="relative bg-secondary-foreground text-primary-foreground rounded-b-4xl"
-        style={{ marginTop: "-90vh" }}
         data-cursor="invert"
       >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-24 left-8 top-44 hidden w-px overflow-hidden bg-secondary/20 lg:block"
+        >
+          <span
+            ref={progressRef}
+            className="block h-full w-full origin-top scale-y-0 bg-primary-foreground/70"
+          />
+        </div>
         <AnimatedHeader
           subtitle={experiencesHeader.subtitle}
           title={experiencesHeader.title}
@@ -123,16 +101,6 @@ export const Experiences = () => {
 };
 
 const ExperienceList = () => {
-  if (getExperienceLayout() === "stacked") {
-    return (
-      <div className="mt-12">
-        {workExperiences.map((service, index) => (
-          <ExperienceStackedCard service={service} index={index} key={index} />
-        ))}
-      </div>
-    );
-  }
-
   return (
     <div className="mt-12">
       {workExperiences.map((service, index) => (
@@ -231,97 +199,5 @@ const ExperienceCard = ({
         </div>
       </div>
     </article>
-  );
-};
-
-const ExperienceStackedCard = ({
-  service,
-  index,
-}: {
-  service: (typeof workExperiences)[number];
-  index: number;
-}) => {
-  const { isDesktop } = useDetectScreen();
-  const total = workExperiences.length;
-  const headerRef = useScrollReveal<HTMLDivElement>({
-    y: 20,
-    stagger: 0.07,
-    start: "top 80%",
-  });
-  const highlightsRef = useScrollReveal<HTMLDivElement>({
-    y: 20,
-    stagger: 0.07,
-    start: "top 80%",
-  });
-
-  const descRef = useTextReveal<HTMLDivElement>({
-    by: "lines",
-    duration: 0.25,
-    start: "top 80%",
-    stagger: 0.07,
-  });
-
-  return (
-    <div
-      className="sticky px-4 sm:px-10 pt-8 pb-10 bg-secondary-foreground rounded-b-4xl border-t border-secondary/50"
-      style={
-        isDesktop
-          ? {
-              top: `calc(5vh + ${index * 5}rem)`,
-              marginBottom: `${(total - index - 1) * 5}rem`,
-            }
-          : { top: 0 }
-      }
-    >
-      <div ref={headerRef}>
-        <div className="flex flex-col sm:flex-row sm:items-center justify-center sm:justify-baseline gap-4 mb-8 font-mono sm:tracking-[0.25em] uppercase text-primary-foreground/60 text-xs sm:text-sm">
-          <p className="text-[10px] sm:text-sm flex-1">{service.range}</p>
-          <span className="hidden sm:block flex-1 h-px bg-primary-foreground/10 relative" />
-          <p className="absolute top-0 right-0 bg-primary px-4 sm:text-lg mt-1/2 sm:-mt-2">
-            {service.company}
-          </p>
-        </div>
-
-        <div className="relative flex flex-col lg:flex-row lg:items-end justify-between gap-3 lg:gap-10 mb-8 overflow-hidden">
-          <h2 className="font-heading italic text-2xl sm:text-5xl lg:text-7xl leading-none truncate text-primary-foreground relative z-10">
-            {service.title}
-          </h2>
-        </div>
-
-        <div className="w-full h-px bg-secondary/40 mb-4 sm:mb-8" />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
-        <p
-          ref={descRef}
-          className="text-primary-foreground leading-relaxed text-base lg:text-xl text-pretty font-light"
-        >
-          {service.description}
-        </p>
-
-        <div ref={highlightsRef} className="flex flex-col">
-          {service.highlights.map((item, i) => (
-            <div
-              key={`${index}-${i}`}
-              className="group/row flex items-baseline justify-between py-3.5 border-b border-secondary/20 last:border-0 cursor-default overflow-hidden"
-            >
-              <div className="flex items-baseline gap-5 min-w-0">
-                <span className="shrink-0 font-mono text-[10px] tracking-widest text-primary-foreground/25">
-                  0{i + 1}
-                </span>
-                <div className="flex flex-col">
-                  <p className="text-primary-foreground font-light text-lg lg:text-lg transition-all duration-100 group-hover/row:italic group-hover/row:translate-x-1 truncate">
-                    {item.title}
-                  </p>
-                  <p className="hidden sm:block shrink-0 font-mono text-sm text-primary-foreground/60 opacity-0 translate-y-2 transition-all duration-300 group-hover/row:opacity-100 group-hover/row:translate-y-0 truncate">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
   );
 };

@@ -5,7 +5,6 @@ import { useRef } from "react";
 export const useContactAnimation = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
-  const headlineRef = useRef<HTMLDivElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
   const docsRowRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
@@ -13,21 +12,23 @@ export const useContactAnimation = () => {
   useGSAP(
     () => {
       const lastSection = document.getElementById("last-section");
-      const docCards = Array.from(docsRowRef.current?.children ?? []);
+      if (!lastSection) return;
 
-      gsap.set(
-        [
-          statusRef.current,
-          headlineRef.current,
-          infoRef.current,
-          footerRef.current,
-        ],
-        {
-          y: 28,
-          opacity: 0,
-        },
-      );
-      gsap.set(docCards, { y: 40, opacity: 0 });
+      const docCards = Array.from(docsRowRef.current?.children ?? []);
+      const infoCards = Array.from(infoRef.current?.children ?? []);
+      const statusDot = statusRef.current?.querySelector("span") ?? null;
+
+      gsap.set([statusRef.current, footerRef.current], {
+        y: 28,
+        opacity: 0,
+      });
+      gsap.set([...docCards, ...infoCards], {
+        y: 44,
+        opacity: 0,
+        rotateX: -7,
+        transformPerspective: 900,
+        transformOrigin: "center top",
+      });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -42,37 +43,54 @@ export const useContactAnimation = () => {
         opacity: 1,
         duration: 0.35,
         ease: "power2.out",
-      })
-        .to(
-          headlineRef.current,
+      });
+
+      if (statusDot) {
+        tl.to(
+          statusDot,
           {
-            y: 0,
-            opacity: 1,
-            duration: 0.55,
-            ease: "circ.out",
+            scale: 1.8,
+            repeat: 1,
+            yoyo: true,
+            duration: 0.28,
+            ease: "power2.inOut",
           },
-          "-=0.12",
-        )
-        .to(
-          docCards,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.45,
-            stagger: 0.12,
-            ease: "expo.out",
-          },
-          "-=0.18",
-        )
+          "-=0.05",
+        );
+      }
+
+      tl.to(
+        docCards,
+        {
+          y: 0,
+          opacity: 1,
+          rotateX: 0,
+          duration: 0.62,
+          stagger: 0.12,
+          ease: "expo.out",
+        },
+        "-=0.18",
+      )
         .to(
           infoRef.current,
           {
             y: 0,
             opacity: 1,
-            duration: 0.4,
-            ease: "power2.out",
+            duration: 0.01,
           },
           "-=0.24",
+        )
+        .to(
+          infoCards,
+          {
+            y: 0,
+            opacity: 1,
+            rotateX: 0,
+            duration: 0.58,
+            stagger: 0.09,
+            ease: "expo.out",
+          },
+          "<",
         )
         .to(
           footerRef.current,
@@ -88,5 +106,5 @@ export const useContactAnimation = () => {
     { scope: sectionRef },
   );
 
-  return { sectionRef, statusRef, headlineRef, infoRef, docsRowRef, footerRef };
+  return { sectionRef, statusRef, infoRef, docsRowRef, footerRef };
 };

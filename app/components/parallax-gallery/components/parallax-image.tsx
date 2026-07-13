@@ -96,10 +96,11 @@ export const ParallaxImageComponent = ({
         <Image
           ref={imgRef}
           draggable={false}
-          alt={alt || "Gallery image"}
+          alt={alt ?? ""}
           onLoad={() => setLoaded(true)}
           className="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 ease-out"
           style={{
+            backfaceVisibility: "hidden",
             scale: 1.1,
             opacity: loaded ? 1 : 0,
           }}
@@ -112,7 +113,7 @@ export const ParallaxImageComponent = ({
           {alt}
         </div>
       )}
-      <div className="absolute inset-0 transition-opacity duration-300 dark:bg-black/55 dark:opacity-100 dark:group-hover:opacity-0 not-dark:opacity-0 pointer-events-none" />
+      <div className="absolute inset-0 transition-opacity duration-300 dark:bg-black/35 dark:opacity-100 dark:group-hover:opacity-0 not-dark:opacity-0 pointer-events-none" />
     </div>
   );
 };

@@ -9,15 +9,20 @@ import {
   ParallaxImageComponent,
   useParallaxEngine,
 } from "../../components/parallax-gallery";
+import { useRef } from "react";
 import { useHeroAnimation } from "./use-hero-animation";
 
 export const HeroIndex = () => {
   const { isMobile } = useDetectScreen();
+  const marqueeRef = useRef<HTMLDivElement>(null);
   const { containerRef, delegate } = useParallaxEngine(
     (container: HTMLElement) => new ParallaxGalleryDelegate(container),
-    { autoPan: isMobile || true },
+    { autoPan: isMobile },
   );
-  const { overlayRef, scrollIndicatorRef } = useHeroAnimation();
+  const { overlayRef, scrollIndicatorRef } = useHeroAnimation({
+    galleryRef: containerRef,
+    marqueeRef,
+  });
 
   return (
     <div
@@ -42,13 +47,16 @@ export const HeroIndex = () => {
           ))}
         </div>
       </ParallaxContainer>
-      <div className="absolute inset-0 -bottom-[70%] z-999 flex justify-center items-center px-20 font-bold pointer-events-none">
+      <div
+        ref={marqueeRef}
+        className="absolute inset-x-0 bottom-[7vh] z-999 flex justify-center px-6 font-bold pointer-events-none md:bottom-[4vh]"
+      >
         <div className="justify-center">
           <Marquee>
             {[...heroName, "—", ...heroName, "—"].map((text, index) => (
               <h1
                 key={index}
-                className={`whitespace-nowrap leading-none text-secondary dark:text-primary flex text-[120px] md:text-[200px] mr-24`}
+                className="mr-16 flex whitespace-nowrap text-[120px] leading-none text-secondary dark:text-primary md:mr-24 md:text-[200px]"
               >
                 {text}
               </h1>

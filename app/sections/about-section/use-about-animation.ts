@@ -15,13 +15,14 @@ export const useAboutAnimation = () => {
   const line2bRef = useRef<HTMLParagraphElement>(null);
   const bioLabelRef = useRef<HTMLDivElement>(null);
   const sectionNumRef = useRef<HTMLSpanElement>(null);
+  const portraitRef = useRef<HTMLImageElement>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
 
   const screen = useDetectScreen();
 
-  // runs first (useLayoutEffect): populates charsRef before useGSAP fires
-  const { charsRef } = useSplitText(headingRef, {
-    type: "lines,chars",
+  // runs first (useLayoutEffect): populates wordsRef before useGSAP fires
+  const { wordsRef } = useSplitText(headingRef, {
+    type: "lines,words",
     linesClass: "overflow-hidden",
   });
 
@@ -42,11 +43,36 @@ export const useAboutAnimation = () => {
 
       tl.from(sectionNumRef.current, { opacity: 0, y: 16, duration: 0.4 }, 0);
 
-      const chars = charsRef.current;
-      if (chars.length) {
+      if (portraitRef.current) {
+        tl.fromTo(
+          portraitRef.current,
+          {
+            scale: 1.18,
+            yPercent: 4,
+          },
+          {
+            scale: 1.03,
+            yPercent: 0,
+            duration: 1.4,
+            ease: "none",
+          },
+          0,
+        );
+      }
+
+      const words = wordsRef.current;
+      if (words.length) {
+        gsap.set(words, { display: "inline-block" });
         tl.from(
-          chars,
-          { yPercent: 110, opacity: 0, stagger: 0.035, duration: 0.8 },
+          words,
+          {
+            yPercent: 112,
+            rotateX: -28,
+            opacity: 0,
+            stagger: 0.045,
+            duration: 0.75,
+            ease: "expo.out",
+          },
           0,
         );
       }
@@ -68,6 +94,15 @@ export const useAboutAnimation = () => {
       tl.from(line1bRef.current, { y: 48, opacity: 0, duration: 0.4 }, 1.02);
       tl.from(line2aRef.current, { y: 48, opacity: 0, duration: 0.4 }, 1.2);
       tl.from(line2bRef.current, { y: 48, opacity: 0, duration: 0.4 }, 1.3);
+      tl.to(
+        portraitRef.current,
+        {
+          scale: 1,
+          duration: 0.5,
+          ease: "none",
+        },
+        1.25,
+      );
     },
     { scope: sectionRef },
   );
@@ -92,5 +127,6 @@ export const useAboutAnimation = () => {
     line2bRef,
     bioLabelRef,
     sectionNumRef,
+    portraitRef,
   };
 };

@@ -10,6 +10,8 @@ export const registerImageElement = (): HTMLImageElement => {
   imgElement.style.pointerEvents = "none";
   imgElement.style.willChange = "opacity, transform";
   imgElement.style.transform = "translateZ(0)";
+  imgElement.style.transition = "opacity 180ms ease";
+  imgElement.style.opacity = "0";
   imgElement.decoding = "async";
   imgElement.width = 500;
   imgElement.height = 350;

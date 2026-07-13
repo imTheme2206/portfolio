@@ -17,14 +17,14 @@ export const useCursorEngine = () => {
 
   useLayoutEffect(() => {
     const tracker = trackerRef.current;
-    const thunbnailContainer = imageRef.current;
+    const thumbnailContainer = imageRef.current;
     const textContainer = textRef.current;
     let rafId: number | null = null;
-    if (!tracker || !thunbnailContainer || isMobile) {
+    if (!tracker || !thumbnailContainer || isMobile) {
       return;
     }
 
-    thunbnailContainer.appendChild(registerImageElement());
+    thumbnailContainer.appendChild(registerImageElement());
     let hasMoved = false;
 
     let requestId = 0;
@@ -53,28 +53,36 @@ export const useCursorEngine = () => {
       const config = variantConfig[variant] || variantConfig.default;
 
       const thumbnailElement =
-        thunbnailContainer.firstChild as HTMLImageElement;
+        thumbnailContainer.firstChild as HTMLImageElement;
 
       tracker.className = defaultTrackerClassName;
 
       tracker.classList.add(...config.classNames);
       textContainer.textContent = config.text || "";
 
-      if (thumbnailElement) {
-        thumbnailElement.style.opacity = config.showThumbnail ? "1" : "0";
-      }
-
       if (config.showThumbnail && image && thumbnailElement) {
         const id = ++requestId;
+        thumbnailElement.style.opacity = "0";
 
         preloadImage(image).then(() => {
           if (id !== requestId || currentImage === image) {
+            if (currentImage === image) {
+              thumbnailElement.style.opacity = "1";
+            }
             return;
           }
 
           currentImage = image;
           thumbnailElement.src = image;
+          requestAnimationFrame(() => {
+            if (id === requestId) {
+              thumbnailElement.style.opacity = "1";
+            }
+          });
         });
+      } else if (thumbnailElement) {
+        requestId += 1;
+        thumbnailElement.style.opacity = "0";
       }
     };
 
@@ -85,6 +93,8 @@ export const useCursorEngine = () => {
     let currentY = 0;
 
     const ease = 0.15;
+    const clamp = (min: number, max: number, value: number) =>
+      Math.max(min, Math.min(max, value));
 
     const animate = () => {
       currentX += (targetX - currentX) * ease;
@@ -93,9 +103,15 @@ export const useCursorEngine = () => {
       if (Math.abs(targetX - currentX) < 0.1) currentX = targetX;
       if (Math.abs(targetY - currentY) < 0.1) currentY = targetY;
 
-      tracker.style.transform = `
-        translate3d(${currentX}px, ${currentY}px, 0)
-      `;
+      const tilt =
+        currentVariant === "thumbnail"
+          ? clamp(-7, 7, (targetX - currentX) * 0.035)
+          : 0;
+      const lift = currentVariant === "thumbnail" ? -8 : 0;
+
+      tracker.style.transform = `translate3d(${currentX}px, ${
+        currentY + lift
+      }px, 0) rotate(${tilt}deg)`;
 
       if (currentX === targetX && currentY === targetY) {
         rafId = null;
@@ -118,7 +134,7 @@ export const useCursorEngine = () => {
       }
     };
 
-    const onClick = (e: MouseEvent) => {
+    const onClick = () => {
       if (currentVariant !== "clickable") {
         return;
       }
@@ -129,7 +145,7 @@ export const useCursorEngine = () => {
       }
     };
 
-    const onReleaseClick = (e: MouseEvent) => {
+    const onReleaseClick = () => {
       if (currentVariant !== "clicked") {
         return;
       }
@@ -164,6 +180,7 @@ export const useCursorEngine = () => {
       window.removeEventListener("mouseover", onHover);
       window.removeEventListener("mousedown", onClick);
       window.removeEventListener("mouseup", onReleaseClick);
+      clearTimeout(hoverTimeout);
       if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, [isMobile]);

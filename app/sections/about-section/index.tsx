@@ -17,6 +17,7 @@ export const About = () => {
     line2bRef,
     bioLabelRef,
     sectionNumRef,
+    portraitRef,
   } = useAboutAnimation();
 
   return (
@@ -95,12 +96,17 @@ export const About = () => {
           >
             <div ref={imgWrapRef} className="absolute inset-0 overflow-hidden">
               <Image
+                ref={portraitRef}
                 fill
                 priority
                 sizes="56vw"
                 src={about.portrait.src}
                 alt={about.portrait.alt}
                 className="object-cover object-center grayscale-50"
+                style={{
+                  backfaceVisibility: "hidden",
+                  willChange: "transform",
+                }}
               />
             </div>
           </div>

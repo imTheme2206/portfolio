@@ -1,33 +1,116 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import type { RefObject } from "react";
 import { useEffect, useRef } from "react";
 
-export const useHeroAnimation = () => {
+export const useHeroAnimation = ({
+  galleryRef,
+  marqueeRef,
+}: {
+  galleryRef: RefObject<HTMLDivElement | null>;
+  marqueeRef: RefObject<HTMLDivElement | null>;
+}) => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const scrollIndicatorRef = useRef<HTMLSpanElement>(null);
   const floatTweensRef = useRef<gsap.core.Tween[]>([]);
 
   useGSAP(
     () => {
+      const section = document.getElementById("hero-section");
+      const tiles = Array.from(galleryRef.current?.children ?? []);
       const labels = Array.from(
         overlayRef.current?.children ?? [],
       ) as HTMLElement[];
-      if (!labels.length) return;
+      const marquee = marqueeRef.current;
+      if (!section || !labels.length) return;
+
+      if (tiles.length) {
+        gsap.set(tiles, {
+          autoAlpha: 0,
+          y: () => gsap.utils.random(22, 80, 1),
+          scale: 0.94,
+          clipPath: "inset(18% 0% 18% 0%)",
+        });
+      }
+
+      if (marquee) {
+        gsap.set(marquee, { autoAlpha: 0, yPercent: 90 });
+      }
 
       labels.forEach((el) => {
         const rot = parseFloat(el.dataset.rotation ?? "0");
         gsap.set(el, { rotation: rot, y: 24, opacity: 0 });
       });
 
-      gsap.to(labels, {
+      const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      intro.to(tiles, {
+        autoAlpha: 1,
         y: 0,
-        opacity: (_, target) =>
-          parseFloat((target as HTMLElement).dataset.targetOpacity ?? "0.5"),
+        scale: 1,
+        clipPath: "inset(0% 0% 0% 0%)",
         duration: 1.1,
-        ease: "power3.out",
-        stagger: { amount: 0.9, from: "random" },
-        delay: 0.3,
+        stagger: { amount: 0.65, from: "random" },
       });
+
+      intro.to(
+        labels,
+        {
+          y: 0,
+          opacity: (_, target) =>
+            parseFloat((target as HTMLElement).dataset.targetOpacity ?? "0.5"),
+          duration: 0.9,
+          stagger: { amount: 0.55, from: "random" },
+        },
+        "-=0.45",
+      );
+
+      intro.to(
+        marquee,
+        {
+          autoAlpha: 1,
+          yPercent: 0,
+          duration: 1.05,
+          ease: "expo.out",
+        },
+        "-=0.35",
+      );
+
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.15,
+          },
+        })
+        .to(
+          galleryRef.current,
+          {
+            scale: 0.96,
+            ease: "none",
+          },
+          0,
+        )
+        .to(
+          marquee,
+          {
+            yPercent: -34,
+            autoAlpha: 0.38,
+            ease: "none",
+          },
+          0,
+        )
+        .to(
+          overlayRef.current,
+          {
+            yPercent: -8,
+            autoAlpha: 0.25,
+            ease: "none",
+          },
+          0,
+        );
 
       const tweens: gsap.core.Tween[] = [];
 
