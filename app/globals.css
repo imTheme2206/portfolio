@@ -14,7 +14,6 @@ h6 {
 
 :root {
     font-family: "Syne";
-
     /* Husky-tone palette — light mode (Soft Ivory + Espresso Ink + Husky Blue/Muted Bronze) */
     --background: #fcfbfa; /* Soft Ivory */
     --foreground: #2b2622; /* Espresso Ink */
@@ -91,6 +90,12 @@ body {
 html {
     scroll-behavior: auto;
     scroll-padding-top: 6rem;
+    /* Clip horizontal overflow at the viewport-level scroller so mobile can't
+       drag right into the blank gap beside oversized decorative elements
+       (e.g. the experiences year numbers). `clip` (not `hidden`) avoids
+       creating a scroll container, so Lenis and sticky/pinned sections
+       keep working. body's overflow-x:hidden only covers desktop. */
+    overflow-x: clip;
 }
 
 ::selection {
