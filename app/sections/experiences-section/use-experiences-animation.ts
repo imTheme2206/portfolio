@@ -1,3 +1,6 @@
+import { prefersReducedMotion } from "@/app/hook/use-reduced-motion";
+import { attachPointerParallax } from "@/app/lib/pointer-parallax";
+import { revealOnScroll, scrubProgress } from "@/app/lib/scroll-animations";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
@@ -14,9 +17,7 @@ export const useExperiencesAnimation = () => {
 
   useGSAP(
     () => {
-      const reduceMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
+      const reduceMotion = prefersReducedMotion();
 
       const roles = Array.from(
         listRef.current?.querySelectorAll<HTMLElement>(".experience-role") ?? [],
@@ -41,16 +42,10 @@ export const useExperiencesAnimation = () => {
 
       const media = gsap.matchMedia();
 
-      gsap.from(".experience-intro", {
+      revealOnScroll(".experience-intro", sectionRef.current, {
         y: 42,
-        autoAlpha: 0,
         stagger: 0.1,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-        },
+        start: "top 70%",
       });
 
       roles.forEach((role) => {
@@ -58,39 +53,20 @@ export const useExperiencesAnimation = () => {
         const year = role.querySelector(".experience-year");
         const highlights = role.querySelectorAll(".experience-highlight");
 
-        gsap.from(content, {
-          y: 48,
-          autoAlpha: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: role,
-            start: "top 76%",
-          },
-        });
+        revealOnScroll(content, role, { y: 48, start: "top 76%" });
 
-        gsap.from(highlights, {
+        revealOnScroll(highlights, highlights[0] ?? role, {
           x: 30,
-          autoAlpha: 0,
           stagger: 0.08,
           duration: 0.62,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: highlights[0] ?? role,
-            start: "top 82%",
-          },
+          start: "top 82%",
         });
 
         media.add("(min-width: 1024px)", () => {
-          gsap.from(year, {
+          revealOnScroll(year, role, {
             xPercent: 24,
-            autoAlpha: 0,
             duration: 1,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: role,
-              start: "top 80%",
-            },
+            start: "top 80%",
           });
         });
 
@@ -123,74 +99,17 @@ export const useExperiencesAnimation = () => {
 
           if (!content || !year) return () => undefined;
 
-          const contentX = gsap.quickTo(content, "x", {
-            duration: 0.55,
-            ease: "power3.out",
-          });
-          const contentY = gsap.quickTo(content, "y", {
-            duration: 0.55,
-            ease: "power3.out",
-          });
-          const yearX = gsap.quickTo(year, "x", {
-            duration: 0.75,
-            ease: "power3.out",
-          });
-          const yearY = gsap.quickTo(year, "y", {
-            duration: 0.75,
-            ease: "power3.out",
-          });
-
-          const handlePointerMove = (event: PointerEvent) => {
-            const bounds = role.getBoundingClientRect();
-            const x = event.clientX - (bounds.left + bounds.width / 2);
-            const y = event.clientY - (bounds.top + bounds.height / 2);
-
-            contentX(x * 0.035);
-            contentY(y * 0.025);
-            yearX(x * -0.05);
-            yearY(y * -0.035);
-          };
-
-          const resetPosition = () => {
-            contentX(0);
-            contentY(0);
-            yearX(0);
-            yearY(0);
-          };
-
-          role.addEventListener("pointermove", handlePointerMove);
-          role.addEventListener("pointerleave", resetPosition);
-
-          return () => {
-            role.removeEventListener("pointermove", handlePointerMove);
-            role.removeEventListener("pointerleave", resetPosition);
-          };
+          return attachPointerParallax(role, [
+            { el: content, strengthX: 0.035, strengthY: 0.025 },
+            { el: year, strengthX: -0.05, strengthY: -0.035, duration: 0.75 },
+          ]);
         });
 
         return () => cleanups.forEach((cleanup) => cleanup());
       });
 
-      gsap.to(progressRef.current, {
-        scaleY: 1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: listRef.current,
-          start: "top 52%",
-          end: "bottom 48%",
-          scrub: true,
-        },
-      });
-
-      gsap.to(mobileProgressRef.current, {
-        scaleX: 1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: listRef.current,
-          start: "top 52%",
-          end: "bottom 48%",
-          scrub: true,
-        },
-      });
+      scrubProgress(progressRef.current, listRef.current, { axis: "y" });
+      scrubProgress(mobileProgressRef.current, listRef.current, { axis: "x" });
 
       return () => media.revert();
     },
@@ -199,7 +118,7 @@ export const useExperiencesAnimation = () => {
 
   useGSAP(
     () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (prefersReducedMotion()) return;
 
       const activeDisplays = [
         ...(activeRoleRef.current?.children ?? []),

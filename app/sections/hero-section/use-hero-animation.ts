@@ -1,3 +1,4 @@
+import { prefersReducedMotion } from "@/app/hook/use-reduced-motion";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import type { RefObject } from "react";
@@ -18,11 +19,7 @@ export const useHeroAnimation = ({
       const nameMarquee = sectionRef.current?.querySelector(
         ".hero-name-marquee",
       );
-      const reduceMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
-
-      if (reduceMotion) return;
+      if (prefersReducedMotion()) return;
 
       const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
       intro

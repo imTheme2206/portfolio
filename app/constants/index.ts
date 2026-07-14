@@ -3,7 +3,6 @@ import contactData from "./data/contact.json";
 import experiencesData from "./data/experiences.json";
 import heroData from "./data/hero.json";
 import projectsData from "./data/projects.json";
-import worksData from "./data/works.json";
 
 export type ImageData = {
   src?: string;
@@ -17,12 +16,6 @@ export type FloatLabel = {
   className: string;
   rotation: number;
   size?: "sm" | "md";
-};
-
-export type SkillFramework = {
-  text: string;
-  // Iconify "skill-icons:" id (lowercased at render). Empty string renders a gap.
-  icon: string;
 };
 
 export type About = {
@@ -90,8 +83,6 @@ export const heroName: readonly string[] = heroData.heroName;
 // Floating text labels scattered over the hero. `className` controls position/opacity.
 export const floatingLabels = heroData.floatingLabels as FloatLabel[];
 export const heroImages = heroData.heroImages as ImageData[];
-
-export const skillFrameworks = worksData.skillFrameworks as SkillFramework[];
 
 export const about = aboutData.about as About;
 export const skills: string[] = aboutData.skills;

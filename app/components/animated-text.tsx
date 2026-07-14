@@ -14,7 +14,7 @@ export const AnimatedText = ({
 }: AnimatedTextProps) => {
   const containerRef = useRef(null);
   const lineRefs = useRef<HTMLSpanElement[]>([]);
-  const lines = props.text.split("\\n").filter((l) => l.trim() !== "");
+  const lines = props.text.split("\n").filter((l) => l.trim() !== "");
 
   useGSAP(() => {
     if (lineRefs.current.length > 0) {
@@ -30,20 +30,6 @@ export const AnimatedText = ({
         },
       });
     }
-    // if (lineRefs.current.length > 0) {
-    //   lineRefs.current.map((line, idx) => {
-    //     gsap.from(line, {
-    //       y: 100,
-    //       opacity: 0,
-    //       duration: 1,
-    //       stagger: 0.3,
-    //       ease: "back.out",
-    //       scrollTrigger: {
-    //         trigger: lineRefs.current[idx - 1],
-    //       },
-    //     });
-    //   });
-    // }
   });
 
   return (

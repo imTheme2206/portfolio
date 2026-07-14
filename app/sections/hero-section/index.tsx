@@ -60,7 +60,6 @@ export const HeroIndex = () => {
           <div className="hero-reveal flex items-center justify-between gap-6 font-mono text-[10px] uppercase tracking-[0.28em] text-primary/70">
             <span>Software engineer</span>
             <span className="hidden sm:inline">Bangkok · Thailand</span>
-            {/*<span>Available for selected work</span>*/}
           </div>
 
           <div className="hero-reveal ml-auto max-w-2xl text-right">
@@ -75,12 +74,6 @@ export const HeroIndex = () => {
 
           <div className="hero-reveal flex items-end justify-between gap-6">
             <div className="group relative inline-flex items-center font-mono text-xl uppercase tracking-[0.3em] [--animated-base-color:var(--primary)] [--hover-text-color:var(--animated-accent)]">
-              {/*<AnimatedHoverText
-                text="Explore projects"
-                fontSize="inherit"
-                textColor="var(--hover-text-color)"
-                href="#projects"
-              />*/}
               <span className="pointer-events-none ml-3 inline-block transition-transform duration-300 group-hover:translate-y-1">
                 ↓
               </span>

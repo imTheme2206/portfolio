@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatedHoverText } from "@/app/components/animated-hover-text";
+import { prefersReducedMotion } from "@/app/hook/use-reduced-motion";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
@@ -10,7 +11,7 @@ export const NavBar = () => {
 
   useGSAP(
     () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (prefersReducedMotion()) return;
 
       gsap.from(navRef.current, {
         y: -24,

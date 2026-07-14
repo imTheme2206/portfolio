@@ -93,12 +93,6 @@ const ContactSection = () => {
             <span className="hidden h-px w-10 bg-primary/20 sm:inline-flex" />
             <span>Bangkok · Remote friendly</span>
           </div>
-
-          {/*<div ref={headlineRef} className="max-w-6xl">
-            <h2 className="font-heading text-5xl italic leading-[0.92] text-primary text-balance sm:text-7xl lg:text-8xl">
-              Let&apos;s build something useful.
-            </h2>
-          </div>*/}
         </div>
 
         <div className="relative z-20 mt-6 flex flex-col gap-5">

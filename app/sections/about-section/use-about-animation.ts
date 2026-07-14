@@ -1,3 +1,5 @@
+import { prefersReducedMotion } from "@/app/hook/use-reduced-motion";
+import { revealOnScroll } from "@/app/lib/scroll-animations";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
@@ -11,9 +13,7 @@ export const useAboutAnimation = () => {
 
   useGSAP(
     () => {
-      const reduceMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
+      const reduceMotion = prefersReducedMotion();
       const media = gsap.matchMedia();
 
       media.add("(min-width: 1024px)", () => {
@@ -151,16 +151,11 @@ export const useAboutAnimation = () => {
       media.add("(max-width: 1023px)", () => {
         if (reduceMotion) return;
 
-        gsap.from(".about-mobile-reveal", {
+        revealOnScroll(".about-mobile-reveal", sectionRef.current, {
           y: 38,
-          autoAlpha: 0,
           stagger: 0.1,
           duration: 0.75,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-          },
+          start: "top 75%",
         });
       });
 

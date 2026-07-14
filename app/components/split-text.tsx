@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { SplitText as SplitTextPlugin } from "gsap/SplitText";
 import React, { useRef } from "react";
 
-gsap.registerPlugin(SplitTextPlugin);
+// SplitText plugin is registered once globally in app/page.tsx.
 export const SplitText = ({
   children,
   animation,
