@@ -1,6 +1,7 @@
 "use client";
 
 import { useDetectScreen } from "@/app/hook/use-detect-screen";
+import { useReducedMotion } from "@/app/hook/use-reduced-motion";
 import { useLayoutEffect, useRef } from "react";
 import {
   defaultTrackerClassName,
@@ -14,13 +15,14 @@ export const useCursorEngine = () => {
   const imageRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const { isMobile } = useDetectScreen();
+  const reducedMotion = useReducedMotion();
 
   useLayoutEffect(() => {
     const tracker = trackerRef.current;
     const thumbnailContainer = imageRef.current;
     const textContainer = textRef.current;
     let rafId: number | null = null;
-    if (!tracker || !thumbnailContainer || isMobile) {
+    if (!tracker || !thumbnailContainer || isMobile || reducedMotion) {
       return;
     }
 
@@ -183,7 +185,7 @@ export const useCursorEngine = () => {
       clearTimeout(hoverTimeout);
       if (rafId !== null) cancelAnimationFrame(rafId);
     };
-  }, [isMobile]);
+  }, [isMobile, reducedMotion]);
 
   return {
     trackerRef,

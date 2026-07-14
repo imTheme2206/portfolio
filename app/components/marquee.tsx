@@ -1,5 +1,6 @@
 "use client";
 
+import { useReducedMotion } from "@/app/hook/use-reduced-motion";
 import gsap from "gsap";
 import { Observer } from "gsap/all";
 import { useEffect, useRef } from "react";
@@ -119,8 +120,7 @@ const horizontalLoop = (
   tl.next = (vars: gsap.TweenVars) => toIndex(curIndex + 1, vars);
   tl.previous = (vars: gsap.TweenVars) => toIndex(curIndex - 1, vars);
   tl.current = () => curIndex;
-  tl.toIndex = (index: number, vars: gsap.TweenVars) =>
-    toIndex(index, vars);
+  tl.toIndex = (index: number, vars: gsap.TweenVars) => toIndex(index, vars);
   tl.times = times;
   tl.progress(1, true).progress(0, true); // pre-render for performance
   if (config.reversed) {
@@ -138,6 +138,7 @@ export const Marquee = ({
 }: MarqueeProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const railRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (!railRef.current) return;
@@ -155,6 +156,8 @@ export const Marquee = ({
         reversed: reverse,
       });
 
+      if (reducedMotion) tl.pause(0);
+
       const quickTimeScale = gsap.quickTo(tl, "timeScale", {
         duration: 0.4,
         ease: "power2",
@@ -163,11 +166,11 @@ export const Marquee = ({
       let storedDirection = reverse ? -1 : 1;
       let visible = true;
 
-      Observer.create({
+      const observer = Observer.create({
         target: window,
         type: "wheel,touch,pointer",
         onChangeY(self) {
-          if (!visible) return;
+          if (!visible || reducedMotion) return;
           const velocity = self.velocityY;
           const direction = velocity < 0 ? -1 : 1;
           const actualDirection = reverse ? direction * -1 : direction;
@@ -177,7 +180,7 @@ export const Marquee = ({
           quickTimeScale(actualDirection * boost);
         },
         onStop() {
-          if (!visible) return;
+          if (!visible || reducedMotion) return;
           quickTimeScale(storedDirection);
         },
       });
@@ -187,23 +190,29 @@ export const Marquee = ({
       const io = new IntersectionObserver(
         ([entry]) => {
           visible = entry.isIntersecting;
-          if (visible) tl.resume();
+          if (visible && !reducedMotion) tl.resume();
           else tl.pause();
         },
         { threshold: 0 },
       );
       io.observe(containerRef.current!);
-      cleanup = () => io.disconnect();
+      cleanup = () => {
+        io.disconnect();
+        observer.kill();
+      };
     }, containerRef);
 
     return () => {
       cleanup?.();
       ctx.revert();
     };
-  }, [speed, reverse]);
+  }, [speed, reverse, reducedMotion]);
 
   return (
-    <div ref={containerRef} className="w-full flex items-center overflow-x-hidden">
+    <div
+      ref={containerRef}
+      className="w-full flex items-center overflow-x-hidden h-72"
+    >
       <div ref={railRef} className="flex will-change-transform">
         {children}
       </div>

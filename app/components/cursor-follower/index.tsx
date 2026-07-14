@@ -1,12 +1,14 @@
 "use client";
 
 import { useDetectScreen } from "@/app/hook/use-detect-screen";
+import { useReducedMotion } from "@/app/hook/use-reduced-motion";
 import { useCursorEngine } from "./use-cursor-engine";
 
 export const MouseTracker = () => {
   const { trackerRef, imageRef, textRef } = useCursorEngine();
   const { isMobile } = useDetectScreen();
-  if (isMobile) {
+  const reducedMotion = useReducedMotion();
+  if (isMobile || reducedMotion) {
     return null;
   }
 

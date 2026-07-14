@@ -1,132 +1,179 @@
-import { useClipReveal } from "@/app/hook/use-clip-reveal";
-import { useDetectScreen } from "@/app/hook/use-detect-screen";
-import { useSplitText } from "@/app/hook/use-split-text";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
 
 export const useAboutAnimation = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const dividerRef = useRef<HTMLDivElement>(null);
-  const line1aRef = useRef<HTMLParagraphElement>(null);
-  const line1bRef = useRef<HTMLParagraphElement>(null);
-  const line2aRef = useRef<HTMLParagraphElement>(null);
-  const line2bRef = useRef<HTMLParagraphElement>(null);
-  const bioLabelRef = useRef<HTMLDivElement>(null);
-  const sectionNumRef = useRef<HTMLSpanElement>(null);
-  const portraitRef = useRef<HTMLImageElement>(null);
-  const tlRef = useRef<gsap.core.Timeline | null>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const portraitRef = useRef<HTMLElement>(null);
+  const storyRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLSpanElement>(null);
 
-  const screen = useDetectScreen();
-
-  // runs first (useLayoutEffect): populates wordsRef before useGSAP fires
-  const { wordsRef } = useSplitText(headingRef, {
-    type: "lines,words",
-    linesClass: "overflow-hidden",
-  });
-
-  // runs second: creates the scrubbed timeline, stores in tlRef, adds text animations
   useGSAP(
     () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "+=200%",
-          pin: true,
-          scrub: 1.2,
-          anticipatePin: 1,
-        },
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      const media = gsap.matchMedia();
+
+      media.add("(min-width: 1024px)", () => {
+        if (reduceMotion) {
+          gsap.set(portraitRef.current, {
+            xPercent: -112,
+            yPercent: -50,
+            scale: 0.82,
+            rotation: -3,
+          });
+          gsap.set(storyRef.current, { autoAlpha: 1 });
+          gsap.set([".about-title-back", ".about-title-front"], {
+            autoAlpha: 0.06,
+          });
+          gsap.set(progressRef.current, { scaleX: 1 });
+          return;
+        }
+
+        gsap.set(portraitRef.current, {
+          xPercent: -50,
+          yPercent: -50,
+          rotation: -5,
+          scale: 0.78,
+          clipPath: "polygon(10% 0%, 100% 7%, 91% 100%, 0% 92%)",
+        });
+
+        const timeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1.1,
+          },
+        });
+
+        timeline
+          .from(".about-meta", {
+            y: 18,
+            autoAlpha: 0,
+            stagger: 0.05,
+            duration: 0.12,
+          })
+          .from(
+            ".about-title-back",
+            { xPercent: -24, autoAlpha: 0, duration: 0.22 },
+            0,
+          )
+          .from(
+            ".about-title-front",
+            { xPercent: 24, autoAlpha: 0, duration: 0.22 },
+            0,
+          )
+          .fromTo(
+            portraitRef.current,
+            {
+              xPercent: -50,
+              yPercent: -50,
+              rotation: -5,
+              scale: 0.78,
+            },
+            {
+              rotation: 1.5,
+              scale: 1,
+              duration: 0.28,
+              ease: "power2.out",
+            },
+            0.04,
+          )
+          .from(
+            ".about-side-label",
+            { y: 28, autoAlpha: 0, duration: 0.12 },
+            0.12,
+          )
+          .to(
+            ".about-title-back",
+            { xPercent: 34, autoAlpha: 0, duration: 0.24 },
+            0.38,
+          )
+          .to(
+            ".about-title-front",
+            { xPercent: -28, autoAlpha: 0, duration: 0.24 },
+            0.38,
+          )
+          .to(
+            portraitRef.current,
+            {
+              xPercent: -116,
+              scale: 0.84,
+              rotation: -3,
+              clipPath: "polygon(4% 0%, 96% 0%, 100% 94%, 8% 100%)",
+              duration: 0.3,
+              ease: "power3.inOut",
+            },
+            0.38,
+          )
+          .to(
+            storyRef.current,
+            { autoAlpha: 1, duration: 0.18, ease: "power2.out" },
+            0.55,
+          )
+          .from(
+            ".about-story-item",
+            {
+              y: 36,
+              autoAlpha: 0,
+              stagger: 0.06,
+              duration: 0.18,
+              ease: "power3.out",
+            },
+            0.55,
+          )
+          .from(
+            ".about-principle",
+            {
+              x: 26,
+              autoAlpha: 0,
+              stagger: 0.055,
+              duration: 0.16,
+              ease: "power3.out",
+            },
+            0.68,
+          )
+          .to(
+            progressRef.current,
+            { scaleX: 1, duration: 0.9, ease: "none" },
+            0,
+          )
+          .to(
+            ".about-portrait-image",
+            { scale: 1.09, yPercent: 3, duration: 1, ease: "none" },
+            0,
+          );
       });
-      tlRef.current = tl;
 
-      tl.from(sectionNumRef.current, { opacity: 0, y: 16, duration: 0.4 }, 0);
+      media.add("(max-width: 1023px)", () => {
+        if (reduceMotion) return;
 
-      if (portraitRef.current) {
-        tl.fromTo(
-          portraitRef.current,
-          {
-            scale: 1.18,
-            yPercent: 4,
+        gsap.from(".about-mobile-reveal", {
+          y: 38,
+          autoAlpha: 0,
+          stagger: 0.1,
+          duration: 0.75,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
           },
-          {
-            scale: 1.03,
-            yPercent: 0,
-            duration: 1.4,
-            ease: "none",
-          },
-          0,
-        );
-      }
+        });
+      });
 
-      const words = wordsRef.current;
-      if (words.length) {
-        gsap.set(words, { display: "inline-block" });
-        tl.from(
-          words,
-          {
-            yPercent: 112,
-            rotateX: -28,
-            opacity: 0,
-            stagger: 0.045,
-            duration: 0.75,
-            ease: "expo.out",
-          },
-          0,
-        );
-      }
-
-      tl.fromTo(
-        dividerRef.current,
-        { scaleX: 0 },
-        {
-          scaleX: 1,
-          duration: 0.5,
-          ease: "expo.out",
-          transformOrigin: "left center",
-        },
-        0.7,
-      );
-
-      tl.from(bioLabelRef.current, { opacity: 0, y: 18, duration: 0.3 }, 0.85);
-      tl.from(line1aRef.current, { y: 48, opacity: 0, duration: 0.4 }, 0.92);
-      tl.from(line1bRef.current, { y: 48, opacity: 0, duration: 0.4 }, 1.02);
-      tl.from(line2aRef.current, { y: 48, opacity: 0, duration: 0.4 }, 1.2);
-      tl.from(line2bRef.current, { y: 48, opacity: 0, duration: 0.4 }, 1.3);
-      tl.to(
-        portraitRef.current,
-        {
-          scale: 1,
-          duration: 0.5,
-          ease: "none",
-        },
-        1.25,
-      );
+      return () => media.revert();
     },
     { scope: sectionRef },
   );
 
-  // declared after the timeline-creating useGSAP so its useLayoutEffect fires
-  // second — tlRef.current is guaranteed to be set at that point
-  const imgWrapRef = useClipReveal<HTMLDivElement>({
-    from: !screen.isMobile ? "bottom" : "top",
-    duration: 1,
-    tl: tlRef,
-    at: 0,
-  });
-
   return {
     sectionRef,
-    imgWrapRef,
-    headingRef,
-    dividerRef,
-    line1aRef,
-    line1bRef,
-    line2aRef,
-    line2bRef,
-    bioLabelRef,
-    sectionNumRef,
+    stageRef,
     portraitRef,
+    storyRef,
+    progressRef,
   };
 };

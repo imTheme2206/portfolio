@@ -1,203 +1,197 @@
 "use client";
 
-import { AnimatedHeader } from "@/app/components/animated-header";
-import { experiencesHeader, workExperiences } from "@/app/constants";
-import { useScrollReveal } from "@/app/hook/use-scroll-reveal";
-import { useTextReveal } from "@/app/hook/use-text-reveal";
-import Image from "next/image";
+import { workExperiences } from "@/app/constants";
 import { useExperiencesAnimation } from "./use-experiences-animation";
+
+const getStartYear = (range: string) => range.match(/\d{4}/)?.[0] ?? range;
 
 export const Experiences = () => {
   const {
-    spacerRef,
-    cardRef,
-    contentRef,
-    imageRef,
-    circleTextRef,
-    pillTextRef,
+    sectionRef,
+    listRef,
     progressRef,
+    activeRoleRef,
+    mobileActiveRoleRef,
+    mobileProgressRef,
+    activeIndex,
   } = useExperiencesAnimation();
+  const activeRole = workExperiences[activeIndex];
 
   return (
     <section
-      id="last-section"
-      className="relative bg-secondary-foreground rounded-b-3xl"
+      ref={sectionRef}
+      id="experience"
+      className="relative z-40 -mt-16 bg-secondary-foreground pb-28 pt-36 text-primary-foreground [clip-path:polygon(0_4rem,68%_0,100%_3rem,100%_100%,0_100%)] sm:-mt-24 sm:pb-40 sm:pt-48 sm:[clip-path:polygon(0_7rem,68%_0,100%_5rem,100%_100%,0_100%)]"
+      data-cursor="invert"
     >
-      <div ref={spacerRef} style={{ height: "300vh" }}>
-        <div className="sticky top-0 h-screen flex items-center justify-center bg-background">
-          <div
-            ref={cardRef}
-            className="absolute bg-secondary-foreground text-primary-foreground overflow-hidden"
-            style={{ width: "14rem", height: "14rem", borderRadius: "50%" }}
-            data-cursor="invert"
-          >
-            <Image
-              ref={imageRef}
-              src={experiencesHeader.image.src}
-              alt={experiencesHeader.image.alt}
-              fill
-              sizes="100vw"
-              className="object-cover object-center opacity-0"
-              style={{
-                filter: "grayscale(100%)",
-                willChange: "transform, filter",
-              }}
-            />
-            <div className="absolute inset-0 bg-secondary-foreground/50 pointer-events-none" />
-
-            <div
-              ref={circleTextRef}
-              className="absolute inset-0 flex flex-col items-center justify-center gap-2 pointer-events-none"
-            >
-              <span className="font-heading italic text-5xl text-primary-foreground leading-none">
-                {experiencesHeader.circleText}
-              </span>
-            </div>
-
-            <div
-              ref={pillTextRef}
-              className="absolute inset-0 flex items-center justify-between gap-4 px-5 pointer-events-none sm:px-14"
-            >
-              <div className="flex flex-col gap-1">
-                <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-primary-foreground/50">
-                  {experiencesHeader.since}
-                </span>
-                <span className="font-heading italic text-xl text-primary-foreground leading-none sm:text-3xl">
-                  {workExperiences.length} roles
-                </span>
-              </div>
-              <span className="text-right font-heading italic text-xl tracking-[0.1em] uppercase text-primary-foreground sm:text-3xl sm:tracking-[0.15em]">
-                {experiencesHeader.pillText}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div
-        ref={contentRef}
-        className="relative bg-secondary-foreground text-primary-foreground rounded-b-4xl"
-        data-cursor="invert"
-      >
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute bottom-24 left-8 top-44 hidden w-px overflow-hidden bg-secondary/20 lg:block"
-        >
-          <span
-            ref={progressRef}
-            className="block h-full w-full origin-top scale-y-0 bg-primary-foreground/70"
-          />
-        </div>
-        <AnimatedHeader
-          subtitle={experiencesHeader.subtitle}
-          title={experiencesHeader.title}
-          withScrollTrigger={false}
-          dividerColor="light"
-        />
-        <ExperienceList />
-      </div>
-    </section>
-  );
-};
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.035] [background-image:linear-gradient(to_right,currentColor_1px,transparent_1px)] [background-size:8.333vw_100%]"
+      />
 
-const ExperienceList = () => {
-  return (
-    <div className="mt-12">
-      {workExperiences.map((service, index) => (
-        <ExperienceCard service={service} index={index} key={index} />
-      ))}
-    </div>
-  );
-};
-
-const ExperienceCard = ({
-  service,
-  index,
-}: {
-  service: (typeof workExperiences)[number];
-  index: number;
-}) => {
-  const metaRef = useScrollReveal<HTMLElement>({
-    y: 20,
-    stagger: 0.07,
-    start: "top 80%",
-  });
-  const titleRef = useScrollReveal<HTMLDivElement>({
-    y: 20,
-    stagger: 0.07,
-    start: "top 80%",
-  });
-  const highlightsRef = useScrollReveal<HTMLDivElement>({
-    y: 20,
-    stagger: 0.06,
-    start: "top 80%",
-  });
-
-  const descRef = useTextReveal<HTMLParagraphElement>({
-    by: "lines",
-    duration: 0.25,
-    start: "top 80%",
-    stagger: 0.07,
-  });
-
-  return (
-    <article className="relative border-t border-secondary/35 px-4 py-10 sm:px-10 sm:py-14">
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(13rem,18rem)_1fr] lg:gap-14">
-        <aside ref={metaRef} className="lg:sticky lg:top-28 lg:self-start">
-          <div className="flex items-start justify-between gap-4 lg:block">
-            <div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-primary-foreground/35">
-                0{index + 1}
-              </span>
-              <p className="mt-3 font-mono text-xs uppercase tracking-[0.24em] text-primary-foreground/55 sm:text-sm">
-                {service.range}
-              </p>
-            </div>
-
-            <span className="rounded-full border border-secondary/25 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-primary-foreground/65 lg:mt-6 lg:inline-flex">
-              {service.company}
-            </span>
+      <div className="relative mx-auto max-w-[96rem] px-5 sm:px-10">
+        <header>
+          <div className="experience-intro flex items-center justify-between border-t border-secondary/20 pt-5 font-mono text-[9px] uppercase tracking-[0.32em] text-primary-foreground/42">
+            <span>03 / Experience</span>
+            <span>2022 — Present</span>
           </div>
-        </aside>
 
-        <div>
-          <div ref={titleRef} className="mb-8">
-            <h2 className="font-heading text-4xl italic leading-[0.95] text-primary-foreground text-balance sm:text-6xl lg:text-8xl">
-              {service.title}
+          <div className="mt-12 grid gap-10 lg:grid-cols-[0.27fr_1fr] lg:items-end lg:gap-16">
+            <p className="experience-intro max-w-xs text-sm leading-relaxed text-primary-foreground/48 lg:pb-4">
+              A career moving from production interfaces into the systems,
+              contracts, and delivery paths behind them.
+            </p>
+            <h2 className="experience-intro text-balance font-heading text-[clamp(5rem,11.5vw,12.5rem)] leading-[0.7] tracking-[-0.06em]">
+              From pixels
+              <span className="block pl-[10vw] italic text-primary-foreground/28">
+                to pipelines.
+              </span>
             </h2>
           </div>
+        </header>
 
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(18rem,1fr)] lg:gap-12">
-            <p
-              ref={descRef}
-              className="max-w-3xl text-pretty text-base font-light leading-relaxed text-primary-foreground/85 lg:text-xl"
+        <div className="relative mt-28 lg:mt-44 lg:grid lg:grid-cols-[minmax(17rem,0.31fr)_minmax(0,1fr)] lg:gap-16">
+          <div className="sticky top-4 z-30 -mx-4 mb-10 lg:hidden">
+            <div
+              ref={mobileActiveRoleRef}
+              className="relative border-y border-secondary/20 bg-secondary-foreground/95 px-3 py-4"
             >
-              {service.description}
-            </p>
+              <div className="flex items-start justify-between gap-6">
+                <div>
+                  <p className="font-mono text-[7px] uppercase tracking-[0.26em] text-primary-foreground/28">
+                    Active signal / {String(activeIndex + 1).padStart(2, "0")}
+                  </p>
+                  <p className="mt-2  font-heading text-xl italic leading-none sm:max-w-none sm:text-2xl">
+                    {activeRole.company}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="font-heading text-xl italic leading-[0.72] text-primary-foreground/28">
+                    {getStartYear(activeRole.range)}
+                  </p>
+                  <p className="mt-2 font-mono text-[7px] uppercase tracking-[0.18em] text-primary-foreground/32">
+                    {activeRole.range}
+                  </p>
+                </div>
+              </div>
+              <span
+                aria-hidden="true"
+                className="absolute inset-x-0 -bottom-px h-px bg-secondary/16"
+              >
+                <span
+                  ref={mobileProgressRef}
+                  className="block h-full w-full origin-left scale-x-0 bg-primary-foreground/72"
+                />
+              </span>
+            </div>
+          </div>
 
-            <div ref={highlightsRef} className="flex flex-col">
-              {service.highlights.map((item, i) => (
-                <div
-                  key={`${index}-${i}`}
-                  className="group/row grid grid-cols-[2.5rem_1fr] gap-4 border-b border-secondary/20 py-4 last:border-0"
-                >
-                  <span className="font-mono text-[10px] tracking-widest text-primary-foreground/25">
-                    0{i + 1}
+          <aside className="relative hidden lg:block">
+            <div className="sticky top-0 flex h-dvh flex-col justify-center py-24">
+              <div
+                ref={activeRoleRef}
+                className="relative min-h-[18rem] border-t border-secondary/20 pt-6"
+              >
+                <div className="flex items-start justify-between">
+                  <span className="font-mono text-[8px] uppercase tracking-[0.28em] text-primary-foreground/30">
+                    Active chapter
                   </span>
-                  <div className="min-w-0">
-                    <p className="text-lg font-light leading-snug text-primary-foreground transition-all duration-200 group-hover/row:translate-x-1 group-hover/row:italic">
-                      {item.title}
-                    </p>
-                    <p className="mt-1 text-sm leading-relaxed text-primary-foreground/55">
-                      {item.description}
-                    </p>
+                  <span className="font-mono text-[8px] tracking-[0.22em] text-primary-foreground/30">
+                    {String(activeIndex + 1).padStart(2, "0")} /{" "}
+                    {String(workExperiences.length).padStart(2, "0")}
+                  </span>
+                </div>
+
+                <p className="mt-6 font-heading text-[clamp(7rem,11vw,11rem)] italic leading-[0.72] tracking-[-0.06em] text-primary-foreground/12">
+                  {getStartYear(activeRole.range)}
+                </p>
+                <p className="mt-8 max-w-xs font-heading text-3xl italic leading-none">
+                  {activeRole.company}
+                </p>
+                <p className="mt-3 font-mono text-[8px] uppercase tracking-[0.23em] text-primary-foreground/36">
+                  {activeRole.range}
+                </p>
+              </div>
+
+              <div className="mt-10 flex items-center gap-5">
+                <div className="relative h-28 w-px bg-secondary/16">
+                  <span
+                    ref={progressRef}
+                    className="block h-full w-full origin-top scale-y-0 bg-primary-foreground/72"
+                  />
+                  {workExperiences.map((role, index) => (
+                    <span
+                      key={role.company}
+                      className={`absolute left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full border border-primary-foreground transition-colors duration-500 ${index <= activeIndex ? "bg-primary-foreground" : "bg-secondary-foreground"}`}
+                      style={{
+                        top: `${(index / (workExperiences.length - 1)) * 100}%`,
+                      }}
+                    />
+                  ))}
+                </div>
+                <div className="flex h-28 flex-col justify-between font-mono text-[8px] uppercase tracking-[0.22em] text-primary-foreground/28">
+                  <span>Now / systems</span>
+                  <span>Then / interface</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <div ref={listRef}>
+            {workExperiences.map((role, index) => (
+              <article
+                key={`${role.company}-${role.range}`}
+                className="experience-role relative flex min-h-dvh flex-col justify-center py-20 sm:py-24 lg:py-28"
+              >
+                <span
+                  aria-hidden="true"
+                  className="experience-year pointer-events-none absolute right-0 top-6 font-heading text-[clamp(8rem,19vw,19rem)] italic leading-none tracking-[-0.06em] text-primary-foreground/[0.045]"
+                >
+                  {getStartYear(role.range)}
+                </span>
+
+                <div className="experience-role-content relative z-10 will-change-transform">
+                  <div className="flex flex-wrap items-center justify-between gap-4 font-mono text-[8px] uppercase tracking-[0.25em] text-primary-foreground/34">
+                    <span>
+                      Chapter {String(index + 1).padStart(2, "0")} /{" "}
+                      {role.company}
+                    </span>
+                    <span>{role.range}</span>
+                  </div>
+
+                  <h3 className="mt-10 max-w-5xl text-balance font-heading text-[clamp(4rem,8vw,8.5rem)] italic leading-[0.78] tracking-[-0.045em]">
+                    {role.title}
+                  </h3>
+                  <p className="mt-8 max-w-3xl text-pretty text-sm leading-relaxed text-primary-foreground/58 sm:text-base lg:ml-[12%] lg:text-lg">
+                    {role.description}
+                  </p>
+
+                  <div className="mt-10 border-b border-secondary/20 sm:mt-12 lg:ml-[12%] lg:mt-16">
+                    {role.highlights
+                      .slice(0, 3)
+                      .map((highlight, highlightIndex) => (
+                        <div
+                          key={highlight.title}
+                          className="experience-highlight group grid gap-2 border-t border-secondary/20 py-4 transition-colors duration-500 hover:bg-secondary/5 sm:grid-cols-[3rem_0.72fr_1fr] sm:items-start sm:gap-6 sm:px-3 sm:py-5"
+                        >
+                          <span className="font-mono text-[8px] tracking-[0.22em] text-primary-foreground/24">
+                            {String(highlightIndex + 1).padStart(2, "0")}
+                          </span>
+                          <h4 className="font-heading text-xl italic leading-none transition-transform duration-500 group-hover:translate-x-2 sm:text-3xl">
+                            {highlight.title}
+                          </h4>
+                          <p className="max-w-lg text-[10px] leading-relaxed text-primary-foreground/42 sm:text-xs">
+                            {highlight.description.replace(/^\(|\)$/g, "")}
+                          </p>
+                        </div>
+                      ))}
                   </div>
                 </div>
-              ))}
-            </div>
+              </article>
+            ))}
           </div>
         </div>
       </div>
-    </article>
+    </section>
   );
 };

@@ -1,86 +1,63 @@
 "use client";
 
+import { AnimatedHoverText } from "@/app/components/animated-hover-text";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
 
-const commonAnimationEasing = {
-  duration: 0.25,
-  ease: "power1.inOut",
-};
-
 export const NavBar = () => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const nameBadgeRef = useRef<HTMLDivElement | null>(null);
-  const navRef = useRef<HTMLDivElement | null>(null);
+  const navRef = useRef<HTMLElement | null>(null);
 
-  useGSAP(() => {
-    const navTween = gsap.timeline({
-      scrollTrigger: {
-        trigger: "#hero-section",
-        start: "bottom top",
-        toggleActions: "reverse play play reverse",
-      },
-    });
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    navTween.fromTo(
-      navRef.current,
-      {
-        backgroundColor: "transparent",
-        pointerEvents: "none",
-      },
-      {
-        ...commonAnimationEasing,
-        // backgroundColor: "rgba(11,11,11,0.2)",
-        // backdropFilter: "blur(10px)",
-        pointerEvents: "auto",
-      },
-      0,
-    );
-
-    navTween.fromTo(
-      containerRef.current,
-      {
-        x: "0",
-      },
-      {
-        ...commonAnimationEasing,
-        x: "5vw 0",
-      },
-      0,
-    );
-
-    navTween.fromTo(
-      nameBadgeRef.current,
-      {
-        width: 0,
-        opacity: 0,
-      },
-      {
-        ...commonAnimationEasing,
-        width: "100%",
-        opacity: 1,
-      },
-      0,
-    );
-  });
+      gsap.from(navRef.current, {
+        y: -24,
+        autoAlpha: 0,
+        duration: 0.8,
+        delay: 0.25,
+        ease: "power3.out",
+      });
+    },
+    { scope: navRef },
+  );
 
   return (
-    <nav ref={navRef} className="fixed top-0 left-0 right-0 z-100">
-      <div
-        id="nav-contents"
-        className={`w-full h-20 px-6 text-2xl flex items-center`}
-      >
-        <div
-          ref={nameBadgeRef}
-          className="origin-left w-0 opacity-0 whitespace-nowrap"
-        >
-          imTheme
+    <nav
+      ref={navRef}
+      aria-label="Primary navigation"
+      className="fixed inset-x-0 top-0 z-100 px-5 pt-5 text-white mix-blend-difference sm:px-10 sm:pt-7"
+    >
+      <div className="mx-auto flex max-w-[96rem] items-center justify-between">
+        <div className="font-heading italic [--animated-base-color:white]">
+          <AnimatedHoverText
+            text="WP"
+            fontSize="1.25rem"
+            href="#hero-section"
+            textColor="white"
+          />
         </div>
-        <div
-          ref={containerRef}
-          className="flex gap-6 mx-auto uppercase align-middle font-semibold will-change-transform"
-        ></div>
+        <div className="flex items-center gap-4 font-mono text-[9px] uppercase tracking-[0.18em] sm:gap-7 sm:text-[10px] sm:tracking-[0.24em]">
+          {[
+            ["Projects", "#projects"],
+            ["About", "#about"],
+            ["Experience", "#experience"],
+            ["Contact", "#contact-section"],
+          ].map(([label, href]) => (
+            <div
+              key={href}
+              className="[--animated-base-color:rgba(255,255,255,0.6)]"
+            >
+              <AnimatedHoverText
+                text={label}
+                fontSize="inherit"
+                href={href}
+                textColor="white"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </nav>
   );

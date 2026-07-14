@@ -33,7 +33,7 @@ export const Contacts = () => {
   return (
     <div
       ref={containerRef}
-      className={`h-dvh min-h-dvh inset-0 w-full bottom-0 sticky flex items-end ${isScrollToBottom ? "" : "-z-10"}`}
+      className={`h-dvh min-h-dvh inset-0 w-full bottom-0 flex items-end ${isScrollToBottom ? "" : "-z-10"}`}
     >
       <div className="flex h-full w-full flex-col">
         <ContactSection />

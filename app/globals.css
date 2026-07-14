@@ -88,6 +88,31 @@ body {
     color: var(--foreground);
 }
 
+html {
+    scroll-behavior: auto;
+    scroll-padding-top: 6rem;
+}
+
+::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
 /* Hide native scrollbar — replaced by ScrollTrack component */
 ::-webkit-scrollbar {
     display: none;
@@ -121,37 +146,37 @@ body {
     width: 100%;
 }
 
-a.norris {
+.norris {
     text-decoration: none;
     font-size: var(--animated-font-size);
     overflow: hidden;
     line-height: var(--animated-font-size);
 }
-a.norris span {
+.norris span {
     position: relative;
     color: transparent;
 }
-a.norris span::before,
-a.norris span::after {
+.norris span::before,
+.norris span::after {
     position: absolute;
     left: 0;
     content: attr(data-char);
-    color: var(--color-primary);
+    color: var(--animated-base-color, var(--color-primary));
     transition: all ease-in-out calc(var(--animation-time) * 10);
     transition-delay: calc(var(--index) * var(--animation-time));
 }
-a.norris span::before {
+.norris span::before {
     transform: translateY(0);
 }
-a.norris span::after {
+.norris span::after {
     transform: translateY(var(--animated-font-size));
 }
-a.norris:hover {
+.norris:hover {
     cursor: pointer;
     color: var(--animated-accent);
 }
-a.norris:hover span::before,
-a.norris:hover span::after {
+.norris:hover span::before,
+.norris:hover span::after {
     color: var(--animated-accent);
 }
 a.norris:hover span::before {

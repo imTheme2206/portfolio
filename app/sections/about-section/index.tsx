@@ -1,136 +1,198 @@
 "use client";
 
-import { Marquee } from "@/app/components/marquee";
-import { about, marqueeWords } from "@/app/constants";
+import { about } from "@/app/constants";
 import Image from "next/image";
 import { useAboutAnimation } from "./use-about-animation";
 
+const principles = [
+  ["01", "Clarity", "Make complexity feel inevitable, not intimidating."],
+  ["02", "Character", "Keep the human fingerprints visible in the system."],
+  ["03", "Continuity", "Build foundations that welcome the next idea."],
+] as const;
+
 export const About = () => {
-  const {
-    sectionRef,
-    imgWrapRef,
-    headingRef,
-    dividerRef,
-    line1aRef,
-    line1bRef,
-    line2aRef,
-    line2bRef,
-    bioLabelRef,
-    sectionNumRef,
-    portraitRef,
-  } = useAboutAnimation();
+  const { sectionRef, stageRef, portraitRef, storyRef, progressRef } =
+    useAboutAnimation();
 
   return (
-    <div>
-      <section ref={sectionRef} className="h-screen relative">
-        <div className="h-full grid grid-rows-[40%_60%] lg:grid-rows-none grid-cols-1 lg:grid-cols-[44fr_56fr]">
-          <div className="relative flex flex-col sm:justify-center px-6 md:px-14 lg:px-16 pt-10 pb-4 lg:pt-12 lg:pb-10 overflow-hidden order-2 lg:order-1">
-            <span
-              ref={sectionNumRef}
-              className="block text-[10px] tracking-[0.5em] uppercase text-muted-foreground mb-8 select-none"
-            >
-              {about.sectionLabel}
-            </span>
+    <section
+      ref={sectionRef}
+      id="about"
+      className="relative z-30 -mt-10 bg-background sm:-mt-16"
+    >
+      <div className="hidden h-[280vh] motion-reduce:h-auto lg:block">
+        <div
+          ref={stageRef}
+          className="sticky top-0 h-dvh overflow-hidden motion-reduce:relative"
+        >
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] [background-size:8.333vw_8.333vw]"
+          />
 
-            <h2
-              ref={headingRef}
-              className="text-primary overflow-hidden"
-              style={{
-                fontSize: "clamp(3rem, 7vw, 8rem)",
-                fontWeight: 400,
-                lineHeight: 0.92,
-                letterSpacing: "-0.025em",
-              }}
-            >
-              {about.heading}
-            </h2>
-
-            <div
-              ref={dividerRef}
-              className="h-px bg-foreground my-8"
-              style={{ transformOrigin: "left center" }}
-            />
-
-            <div
-              ref={bioLabelRef}
-              className="flex items-center gap-3 mb-5 text-[10px] tracking-[0.4em] uppercase text-muted-foreground"
-            >
-              <span className="inline-block w-6 h-px bg-muted-foreground" />
-              <span>{about.bioLabel}</span>
-            </div>
-
-            <div
-              className="mb-7 overflow-hidden"
-              style={{
-                fontSize: "clamp(1rem, 1.15vw, 1.35rem)",
-                lineHeight: 1.55,
-              }}
-            >
-              <p ref={line1aRef} className="text-foreground/90 font-display">
-                {about.paragraphs[0][0]}
-              </p>
-              <p ref={line1bRef} className="text-foreground/90 font-display">
-                {about.paragraphs[0][1]}
-              </p>
-            </div>
-
-            <div
-              className="mb-10 overflow-hidden"
-              style={{
-                fontSize: "clamp(1rem, 1.15vw, 1.35rem)",
-                lineHeight: 1.55,
-              }}
-            >
-              <p ref={line2aRef} className="text-foreground/90 font-display">
-                {about.paragraphs[1][0]}
-              </p>
-              <p ref={line2bRef} className="text-foreground/90 font-display">
-                {about.paragraphs[1][1]}
-              </p>
-            </div>
+          <div className="about-meta absolute left-10 top-10 z-30 font-mono text-[9px] uppercase tracking-[0.3em] text-primary/45">
+            {about.sectionLabel}
           </div>
+          <div className="about-meta absolute right-10 top-10 z-30 text-right font-mono text-[9px] uppercase leading-relaxed tracking-[0.24em] text-primary/35">
+            Bangkok, Thailand
+            <span className="block">13.7563° N / 100.5018° E</span>
+          </div>
+
+          <div className="pointer-events-none absolute inset-0">
+            <p className="about-title-back absolute left-[3vw] top-[15vh] z-10 whitespace-nowrap font-heading text-[clamp(8rem,15vw,17rem)] leading-[0.72] tracking-[-0.065em]">
+              Systems
+            </p>
+            <p className="about-title-front absolute bottom-[11vh] right-[3vw] z-30 whitespace-nowrap font-heading text-[clamp(8rem,15vw,17rem)] italic leading-[0.72] tracking-[-0.065em]">
+              with soul.
+            </p>
+          </div>
+
+          <figure
+            ref={portraitRef}
+            className="absolute left-1/2 top-1/2 z-20 h-[72vh] w-[34vw] overflow-hidden bg-card [clip-path:polygon(10%_0%,100%_7%,91%_100%,0%_92%)]"
+          >
+            <Image
+              fill
+              sizes="34vw"
+              src={about.portrait.src}
+              alt="Worrachit Pongkatekarm working beside a sunlit window"
+              className="about-portrait-image object-cover object-center"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_58%,rgba(23,25,28,0.48)_100%)]" />
+            <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6 text-white">
+              <span className="font-mono text-[8px] uppercase leading-relaxed tracking-[0.26em] text-white/70">
+                Worrachit Pongkatekarm
+                <span className="block">Software developer</span>
+              </span>
+              <span className="font-heading text-5xl italic leading-none">
+                WP.
+              </span>
+            </figcaption>
+          </figure>
+
+          <p className="about-side-label absolute bottom-1/2 left-8 z-30 origin-bottom-left -rotate-90 font-mono text-[8px] uppercase tracking-[0.32em] text-primary/32">
+            Engineering × Design × Motion
+          </p>
 
           <div
-            className="relative will-change-transform h-full order-1 lg:order-2"
-            style={{ transformStyle: "preserve-3d" }}
+            ref={storyRef}
+            className="absolute right-[5vw] top-1/2 z-30 w-[39vw] -translate-y-1/2 opacity-0"
           >
-            <div ref={imgWrapRef} className="absolute inset-0 overflow-hidden">
-              <Image
-                ref={portraitRef}
-                fill
-                priority
-                sizes="56vw"
-                src={about.portrait.src}
-                alt={about.portrait.alt}
-                className="object-cover object-center grayscale-50"
-                style={{
-                  backfaceVisibility: "hidden",
-                  willChange: "transform",
-                }}
-              />
+            <p className="about-story-item font-mono text-[9px] uppercase tracking-[0.32em] text-primary/35">
+              My point of view
+            </p>
+            <p className="about-story-item mt-7 max-w-2xl text-pretty font-heading text-[clamp(3rem,5vw,5.7rem)] italic leading-[0.91] tracking-[-0.035em]">
+              I work between systems that scale and experiences that still feel
+              human.
+            </p>
+            <p className="about-story-item mt-8 max-w-xl text-pretty text-sm leading-relaxed text-primary/58">
+              I translate product intent into resilient software, then stay with
+              the details until every interaction feels considered. Structure
+              and expression are not opposing forces—they make each other
+              useful.
+            </p>
+
+            <div className="about-principles mt-12 border-b border-primary/15">
+              {principles.map(([number, title, description]) => (
+                <div
+                  key={number}
+                  className="about-principle grid grid-cols-[3rem_0.7fr_1fr] items-start gap-5 border-t border-primary/15 py-5"
+                >
+                  <span className="font-mono text-[8px] tracking-[0.24em] text-primary/28">
+                    {number}
+                  </span>
+                  <h3 className="font-heading text-2xl italic leading-none">
+                    {title}
+                  </h3>
+                  <p className="text-xs leading-relaxed text-primary/48">
+                    {description}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
 
-      <div className="border-y border-foreground/15 py-6 overflow-hidden">
-        <Marquee speed={0.6}>
-          {[...marqueeWords, ...marqueeWords, ...marqueeWords].map(
-            (word, i) => (
+          <div className="absolute inset-x-10 bottom-8 z-40 flex items-center gap-5">
+            <span className="font-mono text-[8px] uppercase tracking-[0.28em] text-primary/30">
+              Scroll to unfold
+            </span>
+            <div className="h-px flex-1 overflow-hidden bg-primary/12">
               <span
-                key={`${word}-${i}`}
-                className={`font-heading whitespace-nowrap mr-10 md:mr-16 text-[clamp(2rem,6vw,5rem)] leading-none ${
-                  word === "✦"
-                    ? "text-muted-foreground"
-                    : "text-foreground/15 hover:text-foreground transition-colors duration-500"
-                }`}
-              >
-                {word}
-              </span>
-            ),
-          )}
-        </Marquee>
+                ref={progressRef}
+                className="block h-full w-full origin-left scale-x-0 bg-primary/55"
+              />
+            </div>
+            <span className="font-mono text-[8px] uppercase tracking-[0.28em] text-primary/30">
+              02 — 03
+            </span>
+          </div>
+        </div>
       </div>
-    </div>
+
+      <div className="px-5 pb-28 pt-28 sm:px-10 sm:pb-40 sm:pt-40 lg:hidden">
+        <div className="flex items-center justify-between border-t border-primary/15 pt-4 font-mono text-[8px] uppercase tracking-[0.28em] text-primary/40">
+          <span>{about.sectionLabel}</span>
+          <span>Bangkok / TH</span>
+        </div>
+
+        <h2 className="about-mobile-reveal relative z-10 mt-14 font-heading text-[clamp(5rem,26vw,11rem)] leading-[0.67] tracking-[-0.06em]">
+          Systems
+          <span className="block text-right italic">with soul.</span>
+        </h2>
+
+        <figure className="about-mobile-reveal relative z-20 -mt-4 ml-auto aspect-[4/5] w-[82%] rotate-[2deg] overflow-hidden bg-card [clip-path:polygon(8%_0%,100%_5%,93%_100%,0%_94%)] sm:w-[72%]">
+          <Image
+            fill
+            sizes="82vw"
+            src={about.portrait.src}
+            alt="Worrachit Pongkatekarm working beside a sunlit window"
+            className="object-cover object-center"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_58%,rgba(23,25,28,0.5)_100%)]" />
+          <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 text-white">
+            <span className="font-mono text-[8px] uppercase leading-relaxed tracking-[0.22em] text-white/70">
+              Theme
+              <span className="block">Software developer</span>
+            </span>
+            <span className="font-heading text-4xl italic">WP.</span>
+          </figcaption>
+        </figure>
+
+        <div className="about-mobile-reveal mt-20">
+          <p className="font-mono text-[8px] uppercase tracking-[0.3em] text-primary/35">
+            My point of view
+          </p>
+          <p className="mt-6 text-pretty font-heading text-[clamp(2.8rem,12vw,5rem)] italic leading-[0.94] tracking-[-0.03em]">
+            I work between systems that scale and experiences that still feel
+            human.
+          </p>
+          <p className="mt-8 max-w-xl text-pretty text-sm leading-relaxed text-primary/58">
+            I translate product intent into resilient software, then stay with
+            the details until every interaction feels considered.
+          </p>
+        </div>
+
+        <div className="about-mobile-reveal mt-16 border-b border-primary/15">
+          {principles.map(([number, title, description]) => (
+            <article
+              key={number}
+              className="grid grid-cols-[2.5rem_1fr] gap-x-4 border-t border-primary/15 py-7"
+            >
+              <span className="font-mono text-[8px] tracking-[0.22em] text-primary/30">
+                {number}
+              </span>
+              <div>
+                <h3 className="font-heading text-3xl italic leading-none">
+                  {title}
+                </h3>
+                <p className="mt-3 max-w-sm text-xs leading-relaxed text-primary/48">
+                  {description}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
