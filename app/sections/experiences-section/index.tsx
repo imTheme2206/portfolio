@@ -130,8 +130,8 @@ export const Experiences = () => {
                   ))}
                 </div>
                 <div className="flex h-28 flex-col justify-between font-mono text-[8px] uppercase tracking-[0.22em] text-primary-foreground/28">
-                  <span>Now / systems</span>
-                  <span>Then / interface</span>
+                  <span>Now</span>
+                  <span>Then</span>
                 </div>
               </div>
             </div>

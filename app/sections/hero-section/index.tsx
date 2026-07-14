@@ -55,7 +55,7 @@ export const HeroIndex = () => {
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <div
           ref={contentRef}
-          className="relative z-10 mx-auto flex min-h-dvh max-w-[96rem] flex-col justify-between px-5 pb-8 pt-28 sm:px-10 sm:pb-10 sm:pt-32"
+          className="relative z-10 mx-auto flex min-h-dvh max-w-[98rem] flex-col justify-between px-5 pb-8 pt-28 sm:px-4 sm:pb-10 sm:pt-12"
         >
           <div className="hero-reveal flex items-center justify-between gap-6 font-mono text-[10px] uppercase tracking-[0.28em] text-primary/70">
             <span>Software engineer</span>
@@ -64,11 +64,11 @@ export const HeroIndex = () => {
 
           <div className="hero-reveal ml-auto max-w-2xl text-right">
             <p className="ml-auto max-w-xl text-sm leading-relaxed text-primary/70 sm:text-base">
-              Frontend engineering, systems thinking, and motion—composed into
-              digital experiences that remain clear under complexity.
+              I build websites that feel good to use — smooth, fast, and easy to
+              figure out.
             </p>
             <p className="mt-5 font-heading text-2xl italic sm:text-4xl">
-              Complex systems. Clear experiences.
+              Simple things, done well.
             </p>
           </div>
 

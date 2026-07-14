@@ -15,7 +15,7 @@
       "title": "Full-Stack Developer",
       "company": "Bit Concept Co., Ltd.",
       "range": "Oct 2025 - Present",
-      "description": "Embedded with a backend team to own frontend-facing infrastructure and cross-team API contract management. I design CI/CD pipelines, maintain developer tooling, and integrate AI-assisted workflows to accelerate complex feature delivery across distributed, async teams.",
+      "description": "I work closely with a backend team, mostly keeping the connection between frontend and backend from breaking. I set up the tools that build and test our code automatically, keep our dev setup tidy, and use AI to help ship features faster — usually with teammates a few timezones away.",
       "highlights": [
         {
           "title": "CI/CD Automation",
@@ -43,7 +43,7 @@
       "title": "Frontend Developer",
       "company": "Digithun Worldwide Co., Ltd.",
       "range": "Feb 2024 - Sept 2025",
-      "description": "Core contributor to ShopScape — a multi-tenant e-commerce platform serving brands like Yuedpao, SE-ED, and 365BeautyClub. I engineered complex CMS systems, bulk data pipelines, and real-time streaming UIs across Super Admin, Seller, and Buyer applications.",
+      "description": "One of the main devs on ShopScape, the online shopping platform behind brands like Yuedpao, SE-ED, and 365BeautyClub. I built the tools shops use to manage their content, the flows for importing lots of data at once, and the live-updating screens across the admin, seller, and shopper apps.",
       "highlights": [
         {
           "title": "CMS & Drag-and-Drop Engine",
@@ -71,7 +71,7 @@
       "title": "Frontend Developer",
       "company": "Bluewind Solution Co., Ltd.",
       "range": "Sept 2022 - Jan 2024",
-      "description": "First professional role building responsive enterprise web UIs within an ASP.NET MVC environment. Focused on cross-browser compatibility, REST API integration, and page performance across production systems used by enterprise clients.",
+      "description": "My first real job. I built web pages for big company clients and made sure they looked right in every browser, talked to the backend cleanly, and stayed fast.",
       "highlights": [
         {
           "title": "Enterprise UI Development",

@@ -23,7 +23,8 @@ export const ProjectPanel = ({ project, index, total }: ProjectPanelProps) => {
   return (
     <article className="project-panel-shell relative isolate overflow-clip px-3 py-5 sm:px-6 sm:py-8 lg:min-h-dvh lg:px-[3vw] lg:py-[6vh]">
       <div
-        className={`project-panel relative mx-auto grid w-full max-w-[96rem] grid-rows-[auto_auto_1fr] overflow-hidden rounded-[2rem] border border-current/10 px-5 py-7 shadow-[0_2rem_6rem_rgba(20,18,16,0.12)] will-change-transform sm:rounded-[3rem] sm:px-10 lg:min-h-[min(52rem,88svh)] lg:grid-cols-[minmax(0,1.08fr)_minmax(24rem,0.92fr)] lg:grid-rows-[auto_1fr_auto] lg:items-center lg:gap-x-16 lg:px-[5vw] lg:py-8 ${isPrimary ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"}`}
+        className={`project-panel relative mx-auto grid w-full max-w-[96rem] grid-rows-[auto_auto_1fr] overflow-hidden rounded-[2rem] border border-current/10 px-5 py-7 shadow-[0_2rem_6rem_rgba(20,18,16,0.12)] will-change-transform sm:rounded-[3rem] sm:px-10 lg:min-h-[min(52rem,88svh)] lg:grid-cols-[minmax(0,1.08fr)_minmax(24rem,0.92fr)] lg:grid-rows-[auto_1fr_auto] lg:items-center lg:gap-x-16 lg:px-[2vw] lg:py-8 ${isPrimary ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"}`}
+        data-cursor={!isPrimary ? "" : "invert"}
       >
         <div className="relative z-30 col-span-full flex items-center justify-between border-b border-current/15 pb-4 font-mono text-[8px] uppercase tracking-[0.28em]">
           <span className="opacity-55">
@@ -49,7 +50,7 @@ export const ProjectPanel = ({ project, index, total }: ProjectPanelProps) => {
         </span>
 
         <div
-          className={`project-panel-media relative z-10 mt-7 aspect-[4/3] overflow-hidden bg-card will-change-transform lg:row-start-2 lg:mt-0 lg:h-[68vh] lg:aspect-auto ${isReversed ? "lg:order-2" : "lg:order-1"}`}
+          className={`project-panel-media relative z-10 mt-7 aspect-[16/9] overflow-hidden bg-card will-change-transform lg:row-start-2 lg:mt-0 lg:h-[68vh] lg:aspect-auto ${isReversed ? "lg:order-2" : "lg:order-1"}`}
           style={{ clipPath: shape }}
         >
           <Image
@@ -64,7 +65,8 @@ export const ProjectPanel = ({ project, index, total }: ProjectPanelProps) => {
           <div className="pointer-events-none absolute inset-0 bg-black/10" />
         </div>
 
-        <div
+        <div className="project-panel-fragment"></div>
+        {/*<div
           aria-hidden="true"
           className={`project-panel-fragment pointer-events-none absolute z-30 hidden aspect-[5/4] w-[20%] overflow-hidden border-[7px] shadow-2xl will-change-transform lg:block ${isPrimary ? "border-primary" : "border-secondary"} ${isReversed ? "bottom-[11%] right-[38%]" : "right-[35%] top-[14%]"}`}
         >
@@ -78,7 +80,7 @@ export const ProjectPanel = ({ project, index, total }: ProjectPanelProps) => {
           <span className="absolute bottom-3 right-3 font-mono text-[7px] uppercase tracking-[0.2em] text-white/75">
             Detail / {String(index + 1).padStart(2, "0")}
           </span>
-        </div>
+        </div>*/}
 
         <div
           className={`project-panel-content relative z-20 py-9 lg:row-start-2 lg:self-center lg:py-0 ${isReversed ? "lg:order-1 lg:pl-5" : "lg:order-2 lg:pr-4"}`}
@@ -100,7 +102,7 @@ export const ProjectPanel = ({ project, index, total }: ProjectPanelProps) => {
           <ProjectLinks project={project} />
         </div>
 
-        <div className="relative z-30 col-span-full flex items-center gap-4 border-t border-current/15 pt-4">
+        {/*<div className="relative z-30 col-span-full flex items-center gap-4 border-t border-current/15 pt-4">
           <div className="h-px flex-1 overflow-hidden bg-current/15">
             <span className="project-panel-progress block h-full w-full origin-left scale-x-0 bg-current opacity-75 motion-reduce:scale-x-100" />
           </div>
@@ -108,7 +110,7 @@ export const ProjectPanel = ({ project, index, total }: ProjectPanelProps) => {
             {String(index + 1).padStart(2, "0")} /{" "}
             {String(total).padStart(2, "0")}
           </span>
-        </div>
+        </div>*/}
       </div>
     </article>
   );

@@ -5,9 +5,9 @@ import Image from "next/image";
 import { useAboutAnimation } from "./use-about-animation";
 
 const principles = [
-  ["01", "Clarity", "Make complexity feel inevitable, not intimidating."],
-  ["02", "Character", "Keep the human fingerprints visible in the system."],
-  ["03", "Continuity", "Build foundations that welcome the next idea."],
+  ["01", "Clarity", "Keep things simple enough that they just make sense."],
+  ["02", "Character", "Leave a bit of personality in everything I build."],
+  ["03", "Continuity", "Build it so the next idea is easy to add."],
 ] as const;
 
 export const About = () => {
@@ -27,7 +27,7 @@ export const About = () => {
         >
           <div
             aria-hidden="true"
-            className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] [background-size:8.333vw_8.333vw]"
+            className="absolute inset-0 opacity-[0.035]"
           />
 
           <div className="about-meta absolute left-10 top-10 z-30 font-mono text-[9px] uppercase tracking-[0.3em] text-primary/45">
@@ -35,15 +35,14 @@ export const About = () => {
           </div>
           <div className="about-meta absolute right-10 top-10 z-30 text-right font-mono text-[9px] uppercase leading-relaxed tracking-[0.24em] text-primary/35">
             Bangkok, Thailand
-            <span className="block">13.7563° N / 100.5018° E</span>
           </div>
 
           <div className="pointer-events-none absolute inset-0">
             <p className="about-title-back absolute left-[3vw] top-[15vh] z-10 whitespace-nowrap font-heading text-[clamp(8rem,15vw,17rem)] leading-[0.72] tracking-[-0.065em]">
-              Systems
+              Something
             </p>
             <p className="about-title-front absolute bottom-[11vh] right-[3vw] z-30 whitespace-nowrap font-heading text-[clamp(8rem,15vw,17rem)] italic leading-[0.72] tracking-[-0.065em]">
-              with soul.
+              about me.
             </p>
           </div>
 
@@ -82,14 +81,15 @@ export const About = () => {
               My point of view
             </p>
             <p className="about-story-item mt-7 max-w-2xl text-pretty font-heading text-[clamp(3rem,5vw,5.7rem)] italic leading-[0.91] tracking-[-0.035em]">
-              I work between systems that scale and experiences that still feel
-              human.
+              I like building things that work well and still feel like a person
+              made them.
             </p>
             <p className="about-story-item mt-8 max-w-xl text-pretty text-sm leading-relaxed text-primary/58">
-              I translate product intent into resilient software, then stay with
-              the details until every interaction feels considered. Structure
-              and expression are not opposing forces—they make each other
-              useful.
+              I actually studied physics, not computer science—I taught myself
+              to code and figured out pretty fast that I liked making things
+              people use way more than solving equations. Three years later I'm
+              still at it: mostly front-end, based in Bangkok, sticking around
+              to fix the little details until everything feels right.
             </p>
 
             <div className="about-principles mt-12 border-b border-primary/15">
@@ -111,7 +111,7 @@ export const About = () => {
               ))}
             </div>
           </div>
-
+          {/*
           <div className="absolute inset-x-10 bottom-8 z-40 flex items-center gap-5">
             <span className="font-mono text-[8px] uppercase tracking-[0.28em] text-primary/30">
               Scroll to unfold
@@ -125,7 +125,7 @@ export const About = () => {
             <span className="font-mono text-[8px] uppercase tracking-[0.28em] text-primary/30">
               02 — 03
             </span>
-          </div>
+          </div>*/}
         </div>
       </div>
 
@@ -136,8 +136,8 @@ export const About = () => {
         </div>
 
         <h2 className="about-mobile-reveal relative z-10 mt-14 font-heading text-[clamp(5rem,26vw,11rem)] leading-[0.67] tracking-[-0.06em]">
-          Systems
-          <span className="block text-right italic">with soul.</span>
+          Built
+          <span className="block text-right italic">with care.</span>
         </h2>
 
         <figure className="about-mobile-reveal relative z-20 -mt-4 ml-auto aspect-[4/5] w-[82%] rotate-[2deg] overflow-hidden bg-card [clip-path:polygon(8%_0%,100%_5%,93%_100%,0%_94%)] sm:w-[72%]">
@@ -163,12 +163,13 @@ export const About = () => {
             My point of view
           </p>
           <p className="mt-6 text-pretty font-heading text-[clamp(2.8rem,12vw,5rem)] italic leading-[0.94] tracking-[-0.03em]">
-            I work between systems that scale and experiences that still feel
-            human.
+            I like building things that work well and still feel like a person
+            made them.
           </p>
           <p className="mt-8 max-w-xl text-pretty text-sm leading-relaxed text-primary/58">
-            I translate product intent into resilient software, then stay with
-            the details until every interaction feels considered.
+            I studied physics, then taught myself to code—turns out I like
+            making things people use more than solving equations. Three years
+            in, still fixing the little details until everything feels right.
           </p>
         </div>
 

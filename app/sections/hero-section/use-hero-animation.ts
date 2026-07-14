@@ -15,10 +15,10 @@ export const useHeroAnimation = ({
   useGSAP(
     () => {
       const tiles = Array.from(galleryRef.current?.children ?? []);
-      const content = sectionRef.current?.querySelectorAll(".hero-reveal") ?? [];
-      const nameMarquee = sectionRef.current?.querySelector(
-        ".hero-name-marquee",
-      );
+      const content =
+        sectionRef.current?.querySelectorAll(".hero-reveal") ?? [];
+      const nameMarquee =
+        sectionRef.current?.querySelector(".hero-name-marquee");
       if (prefersReducedMotion()) return;
 
       const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -51,13 +51,17 @@ export const useHeroAnimation = ({
           },
         })
         .to(galleryRef.current, { scale: 0.94, yPercent: 6, ease: "none" }, 0)
-        .to(contentRef.current, { yPercent: -7, autoAlpha: 0.25, ease: "none" }, 0);
+        .to(
+          contentRef.current,
+          { yPercent: -7, autoAlpha: 0.25, ease: "none" },
+          0,
+        );
 
       if (nameMarquee) {
         scrollTimeline.fromTo(
           nameMarquee,
           { yPercent: 0, autoAlpha: 1 },
-          { yPercent: 38, autoAlpha: 0.18, ease: "none" },
+          { yPercent: -5, autoAlpha: 0.18, ease: "none" },
           0,
         );
       }

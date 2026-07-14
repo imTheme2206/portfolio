@@ -2,7 +2,6 @@
 
 import gsap from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
-import { NavBar } from "./components/navigation-bar";
 import { About } from "./sections/about-section";
 import { Contacts } from "./sections/contact-section";
 import { Experiences } from "./sections/experiences-section";
@@ -13,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 export default function Home() {
   return (
     <>
-      <NavBar />
+      {/*<NavBar />*/}
       <main className="relative z-20 bg-background">
         <HeroIndex />
         <Projects />
