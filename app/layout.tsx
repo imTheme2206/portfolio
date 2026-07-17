@@ -42,7 +42,7 @@ export default function RootLayout({
               }}
             />
           </head>
-          <body className={`antialiased overflow-x-hidden`}>
+          <body className="antialiased">
             <MouseTracker />
             <ScrollTrack />
             {children}

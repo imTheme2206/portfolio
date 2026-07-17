@@ -141,7 +141,7 @@ export const Experiences = () => {
             {workExperiences.map((role, index) => (
               <article
                 key={`${role.company}-${role.range}`}
-                className="experience-role relative flex min-h-dvh flex-col justify-center py-20 sm:py-24 lg:py-28"
+                className="experience-role relative flex min-h-dvh flex-col justify-center overflow-x-clip py-20 sm:py-24 lg:py-28"
               >
                 <span
                   aria-hidden="true"

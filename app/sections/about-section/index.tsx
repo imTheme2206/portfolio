@@ -136,8 +136,8 @@ export const About = () => {
         </div>
 
         <h2 className="about-mobile-reveal relative z-10 mt-14 font-heading text-[clamp(5rem,26vw,11rem)] leading-[0.67] tracking-[-0.06em]">
-          Built
-          <span className="block text-right italic">with care.</span>
+          About
+          <span className="block text-right italic">Me</span>
         </h2>
 
         <figure className="about-mobile-reveal relative z-20 -mt-4 ml-auto aspect-[4/5] w-[82%] rotate-[2deg] overflow-hidden bg-card [clip-path:polygon(8%_0%,100%_5%,93%_100%,0%_94%)] sm:w-[72%]">
