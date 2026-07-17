@@ -10,6 +10,9 @@ export const useAboutAnimation = () => {
   const portraitRef = useRef<HTMLElement>(null);
   const storyRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
+  const mobileJourneyRef = useRef<HTMLDivElement>(null);
+  const mobilePortraitRef = useRef<HTMLElement>(null);
+  const mobileProgressRef = useRef<HTMLSpanElement>(null);
 
   useGSAP(
     () => {
@@ -149,13 +152,139 @@ export const useAboutAnimation = () => {
       });
 
       media.add("(max-width: 1023px)", () => {
-        if (reduceMotion) return;
+        if (reduceMotion) {
+          gsap.set(mobileProgressRef.current, { scaleX: 1 });
+          return;
+        }
 
-        revealOnScroll(".about-mobile-reveal", sectionRef.current, {
-          y: 38,
-          stagger: 0.1,
-          duration: 0.75,
-          start: "top 75%",
+        const mobileTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: mobileJourneyRef.current,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 0.9,
+          },
+        });
+
+        mobileTimeline
+          .from(
+            ".about-mobile-meta",
+            { y: 14, autoAlpha: 0, duration: 0.12 },
+            0,
+          )
+          .from(
+            ".about-mobile-title-back",
+            { xPercent: -34, autoAlpha: 0, duration: 0.25 },
+            0,
+          )
+          .from(
+            ".about-mobile-title-front",
+            { xPercent: 42, autoAlpha: 0, duration: 0.25 },
+            0.04,
+          )
+          .fromTo(
+            mobilePortraitRef.current,
+            {
+              yPercent: 14,
+              rotation: -5,
+              scale: 0.82,
+              clipPath: "polygon(18% 0%, 100% 8%, 88% 100%, 0% 89%)",
+            },
+            {
+              yPercent: 0,
+              rotation: 2,
+              scale: 1,
+              clipPath: "polygon(8% 0%, 100% 5%, 93% 100%, 0% 94%)",
+              duration: 0.42,
+              ease: "power2.out",
+            },
+            0,
+          )
+          .from(
+            ".about-mobile-axis",
+            { y: 24, autoAlpha: 0, duration: 0.18 },
+            0.15,
+          )
+          .to(
+            ".about-mobile-title-back",
+            { xPercent: 22, yPercent: -18, autoAlpha: 0.14, duration: 0.48 },
+            0.44,
+          )
+          .to(
+            ".about-mobile-title-front",
+            { xPercent: -28, yPercent: 18, autoAlpha: 0.16, duration: 0.48 },
+            0.44,
+          )
+          .to(
+            mobilePortraitRef.current,
+            {
+              yPercent: -7,
+              rotation: -1.5,
+              scale: 0.91,
+              clipPath: "polygon(2% 4%, 94% 0%, 100% 92%, 7% 100%)",
+              duration: 0.48,
+              ease: "power3.inOut",
+            },
+            0.44,
+          )
+          .to(
+            ".about-mobile-portrait-image",
+            { scale: 1.12, yPercent: 4, duration: 1, ease: "none" },
+            0,
+          )
+          .to(
+            mobileProgressRef.current,
+            { scaleX: 1, duration: 1, ease: "none" },
+            0,
+          )
+          .to(
+            ".about-mobile-scroll",
+            { autoAlpha: 0.45, duration: 0.2 },
+            0.8,
+          );
+
+        revealOnScroll(".about-mobile-story-line", sectionRef.current, {
+          y: 44,
+          stagger: 0.12,
+          duration: 0.85,
+          start: "top 78%",
+        });
+
+        const principles = gsap.utils.toArray<HTMLElement>(
+          ".about-mobile-principle",
+        );
+
+        principles.forEach((principle, index) => {
+          const number = principle.querySelector(
+            ".about-mobile-principle-number",
+          );
+
+          gsap.from(principle, {
+            xPercent: index % 2 === 0 ? 12 : -12,
+            autoAlpha: 0,
+            duration: 0.72,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: principle,
+              start: "top 86%",
+              toggleActions: "play none none reverse",
+            },
+          });
+
+          gsap.fromTo(
+            number,
+            { yPercent: -90 },
+            {
+              yPercent: 90,
+              ease: "none",
+              scrollTrigger: {
+                trigger: principle,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.8,
+              },
+            },
+          );
         });
       });
 
@@ -170,5 +299,8 @@ export const useAboutAnimation = () => {
     portraitRef,
     storyRef,
     progressRef,
+    mobileJourneyRef,
+    mobilePortraitRef,
+    mobileProgressRef,
   };
 };
