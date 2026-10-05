@@ -12,7 +12,7 @@ export const Contacts = () => {
       ref={sectionRef}
       id="contact-section"
       aria-label="Contact"
-      className="relative z-40 -mt-8 rounded-t-[2rem] bg-background text-primary sm:-mt-12 sm:rounded-t-[3rem]"
+      className="relative z-40 -mt-px bg-background text-primary"
     >
       <div className="mx-auto flex min-h-dvh w-full max-w-[96rem] flex-col px-5 pb-24 pt-9 sm:px-10 sm:pb-10 sm:pt-12">
         <div

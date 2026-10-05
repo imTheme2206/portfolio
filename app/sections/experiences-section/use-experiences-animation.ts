@@ -1,251 +1,194 @@
-import { prefersReducedMotion } from "@/app/hook/use-reduced-motion";
-import { attachPointerParallax } from "@/app/lib/pointer-parallax";
-import { scrubProgress } from "@/app/lib/scroll-animations";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 export const useExperiencesAnimation = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
+  const overtureRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
-  const activeRoleRef = useRef<HTMLDivElement>(null);
-  const mobileActiveRoleRef = useRef<HTMLDivElement>(null);
-  const mobileProgressRef = useRef<HTMLSpanElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const exitRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      const reduceMotion = prefersReducedMotion();
-
-      const roles = Array.from(
-        listRef.current?.querySelectorAll<HTMLElement>(".experience-role") ?? [],
-      );
-
-      roles.forEach((role, index) => {
-        ScrollTrigger.create({
-          trigger: role,
-          start: "top 52%",
-          end: "bottom 48%",
-          onEnter: () => setActiveIndex(index),
-          onEnterBack: () => setActiveIndex(index),
-          onLeaveBack: () => setActiveIndex(Math.max(0, index - 1)),
-        });
-      });
-
-      if (reduceMotion) {
-        gsap.set(progressRef.current, { scaleY: 1 });
-        gsap.set(mobileProgressRef.current, { scaleX: 1 });
-        gsap.set(".experience-highlight-trace", { scaleX: 1 });
-        return;
-      }
-
       const media = gsap.matchMedia();
 
-      const introTimeline = gsap.timeline({
-        defaults: { ease: "power3.out" },
-        scrollTrigger: {
-          trigger: ".experience-header",
-          start: "top 68%",
-          toggleActions: "play none none reverse",
-        },
-      });
+      media.add(
+        "(min-width: 1024px) and (min-height: 700px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          const stage = overtureRef.current;
+          if (!stage) return;
 
-      introTimeline
-        .from(".experience-intro", {
-          y: 34,
-          autoAlpha: 0,
-          duration: 0.7,
-          stagger: 0.09,
-        })
-        .from(
-          ".experience-kicker",
-          { x: -28, autoAlpha: 0, duration: 0.55 },
-          "-=0.42",
-        )
-        .from(
-          ".experience-heading-line:first-child",
-          { xPercent: -18, autoAlpha: 0, duration: 1 },
-          "-=0.38",
-        )
-        .from(
-          ".experience-heading-line:last-child",
-          { xPercent: 18, autoAlpha: 0, duration: 1 },
-          "<",
-        );
-
-      gsap.fromTo(
-        ".experience-header-index",
-        { yPercent: -12, rotation: -4 },
-        {
-          yPercent: 24,
-          rotation: 2,
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".experience-header",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.1,
-          },
-        },
-      );
-
-      roles.forEach((role, index) => {
-        const rule = role.querySelector(".experience-chapter-rule");
-        const meta = role.querySelector(".experience-role-meta");
-        const title = role.querySelector(".experience-role-title");
-        const details = role.querySelectorAll(".experience-role-detail");
-        const year = role.querySelector(".experience-year");
-        const chapterIndex = role.querySelector(".experience-chapter-index");
-        const highlights = role.querySelectorAll(".experience-highlight");
-        const traces = role.querySelectorAll(".experience-highlight-trace");
-
-        const chapterTimeline = gsap.timeline({
-          defaults: { ease: "power3.out" },
-          scrollTrigger: {
-            trigger: role,
-            start: "top 72%",
-            toggleActions: "play none none reverse",
-          },
-        });
-
-        chapterTimeline
-          .from(rule, { scaleX: 0, duration: 0.9, ease: "power2.inOut" })
-          .from(
-            meta,
-            { x: index % 2 === 0 ? -26 : 26, autoAlpha: 0, duration: 0.55 },
-            "-=0.56",
-          )
-          .from(
-            title,
-            { yPercent: 110, rotation: 2, duration: 0.95 },
-            "-=0.32",
-          )
-          .from(
-            details,
-            { y: 30, autoAlpha: 0, stagger: 0.08, duration: 0.68 },
-            "-=0.52",
-          )
-          .from(
-            highlights,
-            {
-              y: 26,
-              autoAlpha: 0,
-              stagger: 0.1,
-              duration: 0.62,
-            },
-            "-=0.35",
-          )
-          .to(
-            traces,
-            {
-              scaleX: 1,
-              stagger: 0.08,
-              duration: 0.65,
-              ease: "power2.inOut",
-            },
-            "-=0.72",
+          const line = stage.querySelector(".experience-overture-line");
+          const heading = stage.querySelector(".experience-overture-heading");
+          const scenes = Array.from(
+            stage.querySelectorAll<HTMLElement>(".experience-scene"),
           );
 
-        gsap.fromTo(
-          year,
-          { xPercent: 24, yPercent: -12, rotation: -5 },
-          {
-            xPercent: -12,
-            yPercent: 16,
-            rotation: 1,
-            ease: "none",
+          gsap.set(scenes, {
+            autoAlpha: 0,
+            clipPath: "inset(0 100% 0 0)",
+          });
+          scenes.forEach((scene) => {
+            gsap.set(scene.querySelector(".experience-scene-detail"), {
+              autoAlpha: 0,
+              yPercent: 100,
+              clipPath: "polygon(0 7%, 100% 0, 100% 100%, 0 100%)",
+            });
+          });
+
+          const timeline = gsap.timeline({
+            defaults: { ease: "power3.out" },
             scrollTrigger: {
-              trigger: role,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1,
+              trigger: stage,
+              start: "top top",
+              end: () => "+=" + Math.round(window.innerHeight * 4.8),
+              pin: true,
+              scrub: 0.8,
+              invalidateOnRefresh: true,
+              onUpdate: (self) => {
+                gsap.set(progressRef.current, { scaleX: self.progress });
+              },
             },
-          },
-        );
+          });
+
+          timeline
+            .to(line, { scaleX: 1, duration: 0.55, ease: "power2.inOut" })
+            .to(heading, { yPercent: -16, autoAlpha: 0, duration: 0.45 }, ">-0.1");
+
+          scenes.forEach((scene) => {
+            const title = scene.querySelector(".experience-scene-title");
+            const company = scene.querySelector(".experience-scene-company");
+            const posterContent = scene.querySelector(".experience-scene-content");
+            const detail = scene.querySelector(".experience-scene-detail");
+
+            timeline
+              .fromTo(
+                scene,
+                { autoAlpha: 1, clipPath: "inset(0 100% 0 0)" },
+                {
+                  autoAlpha: 1,
+                  clipPath: "inset(0 0% 0 0)",
+                  duration: 0.65,
+                  ease: "power3.inOut",
+                },
+              )
+              .fromTo(
+                title,
+                { yPercent: 110, rotation: 2 },
+                { yPercent: 0, rotation: 0, duration: 0.6 },
+                "<0.12",
+              )
+              .fromTo(
+                company,
+                { y: 25, autoAlpha: 0 },
+                { y: 0, autoAlpha: 1, duration: 0.5 },
+                "<0.08",
+              )
+              .to(scene, { opacity: 1, duration: 0.12 })
+              .to(posterContent, {
+                y: () => -Math.min(window.innerHeight * 0.24, 200),
+                scale: 0.92,
+                duration: 0.55,
+                ease: "power2.inOut",
+              })
+              // A full sheet rises after the poster clears. Its angled top
+              // edge is the same motif used at the section boundaries.
+              .fromTo(
+                detail,
+                {
+                  autoAlpha: 1,
+                  yPercent: 100,
+                  clipPath: "polygon(0 7%, 100% 0, 100% 100%, 0 100%)",
+                },
+                {
+                  autoAlpha: 1,
+                  yPercent: 0,
+                  clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                  duration: 0.55,
+                  ease: "power3.inOut",
+                },
+                "<",
+              )
+              .to(detail, { opacity: 1, duration: 1.2 });
+          });
+        },
+      );
+
+      media.add(
+        "(max-width: 1023px) and (prefers-reduced-motion: no-preference), (max-height: 699px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          const scenes = gsap.utils.toArray<HTMLElement>(
+            ".experience-mobile-scene",
+          );
+
+          scenes.forEach((scene) => {
+            const title = scene.querySelector(".experience-mobile-title");
+            const company = scene.querySelector(".experience-mobile-company");
+            const details = scene.querySelectorAll(".experience-mobile-detail");
+
+            gsap
+              .timeline({
+                scrollTrigger: {
+                  trigger: scene,
+                  start: "top 70%",
+                  toggleActions: "play none none reverse",
+                },
+              })
+              .from(title, {
+                yPercent: 110,
+                duration: 0.8,
+                ease: "power3.out",
+              })
+              .from(
+                company,
+                { y: 24, autoAlpha: 0, duration: 0.55 },
+                "-=0.4",
+              );
+
+            gsap.from(details, {
+              y: 28,
+              autoAlpha: 0,
+              stagger: 0.1,
+              duration: 0.65,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: details[0],
+                start: "top 85%",
+                toggleActions: "play none none reverse",
+              },
+            });
+          });
+        },
+      );
+
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        const exit = exitRef.current;
+        if (!exit) return;
+
+        const accent = exit.querySelector(".experience-exit-accent");
+        const surface = exit.querySelector(".experience-exit-surface");
 
         gsap.fromTo(
-          chapterIndex,
-          { yPercent: 38 },
+          [accent, surface],
+          { yPercent: 85 },
           {
-            yPercent: -28,
+            yPercent: 0,
+            stagger: 0.08,
             ease: "none",
             scrollTrigger: {
-              trigger: role,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1.2,
+              trigger: exit,
+              start: "top 95%",
+              end: "bottom 70%",
+              scrub: 0.7,
             },
           },
         );
       });
-
-      media.add(
-        "(min-width: 1024px) and (hover: hover) and (pointer: fine)",
-        () => {
-          const cleanups = roles.map((role) => {
-            const content = role.querySelector<HTMLElement>(
-              ".experience-role-content",
-            );
-            const year = role.querySelector<HTMLElement>(".experience-year");
-
-            if (!content || !year) return () => undefined;
-
-            return attachPointerParallax(role, [
-              { el: content, strengthX: 0.035, strengthY: 0.025 },
-              {
-                el: year,
-                strengthX: -0.05,
-                strengthY: -0.035,
-                duration: 0.75,
-              },
-            ]);
-          });
-
-          return () => cleanups.forEach((cleanup) => cleanup());
-        },
-      );
-
-      scrubProgress(progressRef.current, listRef.current, { axis: "y" });
-      scrubProgress(mobileProgressRef.current, listRef.current, { axis: "x" });
 
       return () => media.revert();
     },
     { scope: sectionRef },
   );
 
-  useGSAP(
-    () => {
-      if (prefersReducedMotion()) return;
-
-      const activeDisplays = [
-        ...(activeRoleRef.current?.children ?? []),
-        ...(mobileActiveRoleRef.current?.children ?? []),
-      ];
-
-      gsap.fromTo(
-        activeDisplays,
-        { y: 16, autoAlpha: 0 },
-        {
-          y: 0,
-          autoAlpha: 1,
-          stagger: 0.035,
-          duration: 0.48,
-          ease: "power3.out",
-        },
-      );
-    },
-    { scope: sectionRef, dependencies: [activeIndex] },
-  );
-
-  return {
-    sectionRef,
-    listRef,
-    progressRef,
-    activeRoleRef,
-    mobileActiveRoleRef,
-    mobileProgressRef,
-    activeIndex,
-  };
+  return { sectionRef, overtureRef, progressRef, exitRef };
 };
