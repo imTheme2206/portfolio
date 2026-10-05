@@ -1,110 +1,45 @@
+import { prefersReducedMotion } from "@/app/hook/use-reduced-motion";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
 
 export const useContactAnimation = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const statusRef = useRef<HTMLDivElement>(null);
-  const infoRef = useRef<HTMLDivElement>(null);
-  const docsRowRef = useRef<HTMLDivElement>(null);
-  const footerRef = useRef<HTMLDivElement>(null);
+  const ruleRef = useRef<HTMLSpanElement>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
+  const emailRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      const lastSection = document.getElementById("last-section");
-      if (!lastSection) return;
+      if (prefersReducedMotion()) return;
 
-      const docCards = Array.from(docsRowRef.current?.children ?? []);
-      const infoCards = Array.from(infoRef.current?.children ?? []);
-      const statusDot = statusRef.current?.querySelector("span") ?? null;
-
-      gsap.set([statusRef.current, footerRef.current], {
-        y: 28,
-        opacity: 0,
-      });
-      gsap.set([...docCards, ...infoCards], {
-        y: 44,
-        opacity: 0,
-        rotateX: -7,
-        transformPerspective: 900,
-        transformOrigin: "center top",
-      });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: lastSection,
-          start: "bottom bottom",
-          toggleActions: "play none none reverse",
-        },
-      });
-
-      tl.to(statusRef.current, {
-        y: 0,
-        opacity: 1,
-        duration: 0.35,
-        ease: "power2.out",
-      });
-
-      if (statusDot) {
-        tl.to(
-          statusDot,
-          {
-            scale: 1.8,
-            repeat: 1,
-            yoyo: true,
-            duration: 0.28,
-            ease: "power2.inOut",
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
+            toggleActions: "play none none reverse",
           },
-          "-=0.05",
-        );
-      }
-
-      tl.to(
-        docCards,
-        {
-          y: 0,
-          opacity: 1,
-          rotateX: 0,
-          duration: 0.62,
-          stagger: 0.12,
-          ease: "expo.out",
-        },
-        "-=0.18",
-      )
-        .to(
-          infoRef.current,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.01,
-          },
-          "-=0.24",
+        })
+        .from(
+          ruleRef.current,
+          { scaleX: 0, duration: 0.7, ease: "power3.out" },
         )
-        .to(
-          infoCards,
-          {
-            y: 0,
-            opacity: 1,
-            rotateX: 0,
-            duration: 0.58,
-            stagger: 0.09,
-            ease: "expo.out",
-          },
-          "<",
-        )
-        .to(
-          footerRef.current,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.35,
-            ease: "power2.out",
-          },
-          "-=0.2",
-        );
+        .from(headingRef.current, {
+          y: 16,
+          opacity: 0,
+          duration: 0.55,
+          ease: "power2.out",
+        }, "-=0.5")
+        .from(emailRef.current, {
+          y: 36,
+          opacity: 0,
+          duration: 0.75,
+          ease: "power3.out",
+        }, "-=0.25");
     },
     { scope: sectionRef },
   );
 
-  return { sectionRef, statusRef, infoRef, docsRowRef, footerRef };
+  return { sectionRef, ruleRef, headingRef, emailRef };
 };
