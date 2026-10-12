@@ -10,7 +10,9 @@
       "description": "This site! I built it from scratch — the parallax gallery, the smooth scrolling, the animations that fire as you move down the page, and the light/dark switch are all hand-made.",
       "href": "/",
       "github": "https://github.com/imTheme2206/portfolio",
-      "image": "/assets/images/projects-section/portfolio.webp",
+      "images": [
+        "/assets/images/projects-section/portfolio.webp"
+      ],
       "frameworks": [
         {
           "id": 1,
@@ -40,7 +42,9 @@
       "description": "A little playground for learning Git. You type real Git commands and watch the branches, commits, and staging area move around live on the screen.",
       "href": "https://imtheme2206.github.io/giteractive/",
       "github": "https://github.com/imTheme2206/giteractive",
-      "image": "/assets/images/projects-section/giteractive.webp",
+      "images": [
+        "/assets/images/projects-section/giteractive.webp"
+      ],
       "frameworks": [
         {
           "id": 1,
@@ -74,7 +78,9 @@
       "description": "A Discord bot I made for my gaming friends. It finds the best Monster Hunter Wilds armor combos for you, reminds everyone about in-game events, and drops Genshin redeem codes in chat before they expire.",
       "href": "",
       "github": "https://github.com/imTheme2206/enlightened-fellows-discord-bot",
-      "image": "/assets/images/projects-section/enlightened-fellows.webp",
+      "images": [
+        "/assets/images/projects-section/enlightened-fellows.webp"
+      ],
       "frameworks": [
         {
           "id": 1,
@@ -99,6 +105,40 @@
         {
           "id": 6,
           "name": "Zod"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Seikret Sauce",
+      "description": "A Web application for Monster Hunter Wilds players. It has an armor optimizer that automatically find the best armor that satisfy the selected skills and a built-in set builder to allow user to customize and share their build to others using Discord OAuth.",
+      "href": "https://seikret-sauce.vercel.app",
+      "github": "https://github.com/imTheme2206/seikret-sauce",
+      "images": [
+        "/assets/images/projects-section/seikret-sauce/seikret-sauce-1.png",
+        "/assets/images/projects-section/seikret-sauce/seikret-sauce-2.png",
+        "/assets/images/projects-section/seikret-sauce/seikret-sauce-3.png"
+      ],
+      "frameworks": [
+        {
+          "id": 1,
+          "name": "TypeScript"
+        },
+        {
+          "id": 2,
+          "name": "React"
+        },
+        {
+          "id": 3,
+          "name": "Tailwind CSS"
+        },
+        {
+          "id": 4,
+          "name": "ShadCN UI"
+        },
+        {
+          "id": 5,
+          "name": "OpenAPI Contract"
         }
       ]
     }

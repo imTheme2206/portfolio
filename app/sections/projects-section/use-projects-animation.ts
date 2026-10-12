@@ -9,7 +9,7 @@ const entranceDirections = [
   { xPercent: 105, yPercent: 0, rotation: 2.5 },
   { xPercent: -105, yPercent: 0, rotation: -2.5 },
   { xPercent: 0, yPercent: 105, rotation: 1.5 },
-  { xPercent: 0, yPercent: -105, rotation: -1.5 },
+  // { xPercent: 0, yPercent: -105, rotation: -1.5 },
 ] as const;
 
 export const useProjectsAnimation = () => {
@@ -40,9 +40,6 @@ export const useProjectsAnimation = () => {
 
         panels.forEach((shell, index) => {
           const card = shell.querySelector<HTMLElement>(".project-panel");
-          const image = shell.querySelector<HTMLElement>(
-            ".project-panel-image",
-          );
           const mediaFrame = shell.querySelector<HTMLElement>(
             ".project-panel-media",
           );
@@ -61,7 +58,7 @@ export const useProjectsAnimation = () => {
           const direction =
             entranceDirections[index % entranceDirections.length];
 
-          if (!card || !image || !mediaFrame || !counter) return;
+          if (!card || !mediaFrame || !counter) return;
 
           gsap.fromTo(
             card,
@@ -95,12 +92,6 @@ export const useProjectsAnimation = () => {
                 invalidateOnRefresh: true,
               },
             })
-            .fromTo(
-              image,
-              { scale: 1.08, yPercent: -2 },
-              { scale: 1, yPercent: 2, ease: "none" },
-              0,
-            )
             .fromTo(
               counter,
               { yPercent: 14, rotation: 3 },
@@ -153,7 +144,6 @@ export const useProjectsAnimation = () => {
           panelsRef.current,
         );
         panels.forEach((panel, index) => {
-          const image = panel.querySelector(".project-panel-image");
           const title = panel.querySelector(".project-panel-ghost-title");
           const direction =
             entranceDirections[index % entranceDirections.length];
@@ -170,21 +160,6 @@ export const useProjectsAnimation = () => {
               start: "top 78%",
             },
           });
-          gsap.fromTo(
-            image,
-            { scale: 1.08, yPercent: -3 },
-            {
-              scale: 1,
-              yPercent: 3,
-              ease: "none",
-              scrollTrigger: {
-                trigger: panel,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 0.8,
-              },
-            },
-          );
           gsap.fromTo(
             title,
             { xPercent: 10 },

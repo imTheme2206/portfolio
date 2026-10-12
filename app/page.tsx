@@ -2,6 +2,7 @@
 
 import gsap from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
+import { useRestoreScroll } from "./hook/use-restore-scroll";
 import { About } from "./sections/about-section";
 import { Contacts } from "./sections/contact-section";
 import { Experiences } from "./sections/experiences-section";
@@ -10,6 +11,8 @@ import { Projects } from "./sections/projects-section";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 export default function Home() {
+  useRestoreScroll();
+
   return (
     <>
       {/*<NavBar />*/}
