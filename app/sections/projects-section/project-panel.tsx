@@ -1,13 +1,8 @@
-import type { Project } from "@/app/constants";
-import Image from "next/image";
-import { ProjectLinks } from "./project-links";
+"use client";
 
-const projectShapes = [
-  // "ellipse(46% 48% at 52% 50%)",
-  "polygon(5% 1%, 84% 2%, 95% 2%, 100% 82%, 92% 100%, 2% 94%, 0% 18%)",
-  "polygon(5% 3%, 94% 0%, 100% 82%, 82% 100%, 2% 94%, 0% 18%)",
-  "inset(2% 3% 5% 5% round 38% 4% 32% 7%)",
-] as const;
+import type { Project } from "@/app/constants";
+import { ProjectPreview } from "./project-preview";
+import { ProjectLinks } from "./project-links";
 
 type ProjectPanelProps = {
   project: Project;
@@ -16,7 +11,6 @@ type ProjectPanelProps = {
 };
 
 export const ProjectPanel = ({ project, index, total }: ProjectPanelProps) => {
-  const shape = projectShapes[index % projectShapes.length];
   const isPrimary = index % 2 === 0;
   const isReversed = index % 2 === 1;
 
@@ -50,37 +44,12 @@ export const ProjectPanel = ({ project, index, total }: ProjectPanelProps) => {
         </span>
 
         <div
-          className={`project-panel-media relative z-10 mt-7 aspect-[16/9] overflow-hidden bg-card will-change-transform lg:row-start-2 lg:mt-0 lg:h-[68vh] lg:aspect-auto ${isReversed ? "lg:order-2" : "lg:order-1"}`}
-          style={{ clipPath: shape }}
+          className={`project-panel-media relative z-10 mt-7 min-w-0 will-change-transform lg:row-start-2 lg:mt-0 ${isReversed ? "lg:order-2" : "lg:order-1"}`}
         >
-          <Image
-            src={project.image}
-            alt={`${project.name} project preview`}
-            fill
-            sizes="(min-width: 1024px) 56vw, 100vw"
-            className="project-panel-image object-cover will-change-transform"
-            priority={index === 0}
-            loading={index === 0 ? undefined : "eager"}
-          />
-          <div className="pointer-events-none absolute inset-0 bg-black/10" />
+          <ProjectPreview project={project} priority={index === 0} />
         </div>
 
-        <div className="project-panel-fragment"></div>
-        {/*<div
-          aria-hidden="true"
-          className={`project-panel-fragment pointer-events-none absolute z-30 hidden aspect-[5/4] w-[20%] overflow-hidden border-[7px] shadow-2xl will-change-transform lg:block ${isPrimary ? "border-primary" : "border-secondary"} ${isReversed ? "bottom-[11%] right-[38%]" : "right-[35%] top-[14%]"}`}
-        >
-          <Image
-            src={project.image}
-            alt=""
-            fill
-            sizes="20vw"
-            className="scale-[1.65] object-cover"
-          />
-          <span className="absolute bottom-3 right-3 font-mono text-[7px] uppercase tracking-[0.2em] text-white/75">
-            Detail / {String(index + 1).padStart(2, "0")}
-          </span>
-        </div>*/}
+        <div className="project-panel-fragment" />
 
         <div
           className={`project-panel-content relative z-20 py-9 lg:row-start-2 lg:self-center lg:py-0 ${isReversed ? "lg:order-1 lg:pl-5" : "lg:order-2 lg:pr-4"}`}

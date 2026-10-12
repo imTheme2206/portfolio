@@ -38,7 +38,7 @@ export type Project = {
   description: string;
   href?: string;
   github?: string;
-  image: string;
+  images: string[];
   bgImage?: string;
   frameworks: Framework[];
 };

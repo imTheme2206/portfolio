@@ -1,5 +1,6 @@
 "use client";
 
+import { markDocumentVisitFromHome } from "@/app/components/document-back-link";
 import { contact, documents, socials } from "@/app/constants";
 import Link from "next/link";
 import { useContactAnimation } from "./use-contact-animation";
@@ -87,9 +88,8 @@ export const Contacts = () => {
                 <Link
                   key={document.type}
                   data-cursor="clickable"
-                  href={document.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`/documents/${document.type.toLowerCase()}`}
+                  onClick={markDocumentVisitFromHome}
                   className="group flex min-h-20 items-center justify-between gap-5 border-b border-primary/20 py-3 transition-[border-color,scale] duration-150 ease-out-strong active:scale-[0.985] hover:border-primary/60 focus-visible:border-primary"
                 >
                   <span>
@@ -102,9 +102,9 @@ export const Contacts = () => {
                   </span>
                   <span
                     aria-hidden="true"
-                    className="font-heading text-2xl text-primary/45 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-focus-visible:-translate-y-1 group-focus-visible:translate-x-1"
+                    className="font-heading text-2xl text-primary/45 transition-transform duration-300 group-hover:translate-x-1 group-focus-visible:translate-x-1"
                   >
-                    ↗
+                    →
                   </span>
                 </Link>
               ))}
