@@ -79,6 +79,7 @@ html.dark {
     --font-display: "Syne";
     --text-paragraph: "font-size:clamp(1.2rem, 1.4vw, 2.5rem)";
     --screen-sidebar: var(--page-screen-size);
+    --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 body {
@@ -206,4 +207,19 @@ a.norris:hover span::after {
         0 0 14px var(--background),
         0 0 6px var(--background),
         0 1px 2px var(--background);
+}
+
+/* Theme toggle reveal (driven by ThemeSwitcher via the View Transitions API) */
+@media (prefers-reduced-motion: no-preference) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none;
+        mix-blend-mode: normal;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(root) {
+        animation-duration: 200ms;
+    }
 }

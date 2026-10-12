@@ -50,7 +50,7 @@ export const Contacts = () => {
             data-cursor="clickable"
             href={`mailto:${contact.email}`}
             aria-label={`Email ${contact.email}`}
-            className="group relative block w-fit max-w-full whitespace-nowrap font-heading text-2xl italic leading-none tracking-tight outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-8 focus-visible:ring-offset-background sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl 2xl:text-9xl"
+            className="group relative block w-fit max-w-full whitespace-nowrap font-heading text-2xl italic leading-none tracking-tight outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-8 focus-visible:ring-offset-background sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl 2xl:text-9xl transition-transform duration-150 ease-out-strong active:scale-[0.985]"
           >
             {contact.email}
             <span className="mt-5 block h-px w-full bg-primary/20 sm:mt-8">
@@ -73,7 +73,7 @@ export const Contacts = () => {
             <Link
               data-cursor="clickable"
               href={`tel:${contact.tel.replace(/\s/g, "")}`}
-              className="mt-4 inline-block font-heading text-2xl italic leading-tight underline decoration-primary/25 underline-offset-8 transition-colors hover:text-animated-accent focus-visible:text-animated-accent sm:text-3xl"
+              className="mt-4 inline-block font-heading text-2xl italic leading-tight underline decoration-primary/25 underline-offset-8 transition-[color,scale] duration-150 ease-out-strong active:scale-[0.97] hover:text-animated-accent focus-visible:text-animated-accent sm:text-3xl"
             >
               {contact.tel}
             </Link>
@@ -90,7 +90,7 @@ export const Contacts = () => {
                   href={document.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex min-h-20 items-center justify-between gap-5 border-b border-primary/20 py-3 transition-colors hover:border-primary/60 focus-visible:border-primary"
+                  className="group flex min-h-20 items-center justify-between gap-5 border-b border-primary/20 py-3 transition-[border-color,scale] duration-150 ease-out-strong active:scale-[0.985] hover:border-primary/60 focus-visible:border-primary"
                 >
                   <span>
                     <span className="block font-heading text-2xl italic leading-none sm:text-3xl">
@@ -129,7 +129,7 @@ export const Contacts = () => {
                   href={social.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary/65 underline decoration-primary/20 underline-offset-4 transition-colors hover:text-animated-accent focus-visible:text-animated-accent"
+                  className="text-primary/65 underline decoration-primary/20 underline-offset-4 transition-[color,scale] duration-150 ease-out-strong active:scale-[0.97] hover:text-animated-accent focus-visible:text-animated-accent"
                 >
                   {social.title}
                 </Link>

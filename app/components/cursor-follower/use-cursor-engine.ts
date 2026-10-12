@@ -159,16 +159,29 @@ export const useCursorEngine = () => {
     };
 
     let hoverTimeout: ReturnType<typeof setTimeout> | undefined;
+    let currentImageAttr: string | undefined;
     const onHover = (e: MouseEvent) => {
       const el = (e.target as HTMLElement).closest("[data-cursor]");
-      const variant = el?.getAttribute("data-cursor") as CursorVariant;
+      const variant = (el?.getAttribute("data-cursor") ||
+        "default") as CursorVariant;
       const image = el?.getAttribute("data-image") || undefined;
 
       clearTimeout(hoverTimeout);
 
-      hoverTimeout = setTimeout(() => {
-        updateCursor(variant || "default", image);
-      }, 70);
+      // Debounce only the fall-back to default, so gaps between targets don't flash.
+      if (variant === "default") {
+        hoverTimeout = setTimeout(() => {
+          currentImageAttr = undefined;
+          updateCursor("default");
+        }, 70);
+        return;
+      }
+
+      if (variant === currentVariant && image === currentImageAttr) return;
+      if (variant === "clickable" && currentVariant === "clicked") return;
+
+      currentImageAttr = image;
+      updateCursor(variant, image);
     };
 
     updateCursor("default");

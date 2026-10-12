@@ -73,11 +73,19 @@ export const HeroIndex = () => {
           </div>
 
           <div className="hero-reveal flex items-end justify-between gap-6">
-            <div className="group relative inline-flex items-center font-mono text-xl uppercase tracking-[0.3em] [--animated-base-color:var(--primary)] [--hover-text-color:var(--animated-accent)]">
-              <span className="pointer-events-none ml-3 inline-block transition-transform duration-300 group-hover:translate-y-1">
+            <a
+              href="#projects"
+              aria-label="Scroll to projects"
+              data-cursor="clickable"
+              className="group pointer-events-auto relative inline-flex min-h-12 min-w-12 items-center justify-center font-mono text-xl uppercase tracking-[0.3em] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current"
+            >
+              <span
+                aria-hidden="true"
+                className="pointer-events-none inline-block transition-transform duration-200 ease-out-strong group-hover:translate-y-1 group-focus-visible:translate-y-1 group-active:translate-y-1.5 motion-reduce:translate-none"
+              >
                 ↓
               </span>
-            </div>
+            </a>
             <p className="max-w-48 text-right font-mono text-[9px] uppercase leading-relaxed tracking-[0.24em] text-primary/55 sm:max-w-72">
               Frontend · Systems · Motion
             </p>
