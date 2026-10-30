@@ -7,7 +7,7 @@ import "react-pdf/dist/Page/TextLayer.css";
 
 // react-pdf requires workerSrc to be set in the same module that renders <Document>.
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
+  "pdfjs-dist/legacy/build/pdf.worker.min.mjs",
   import.meta.url,
 ).toString();
 
@@ -52,6 +52,7 @@ export const PdfPages = ({ file, title, loading, error }: PdfPagesProps) => {
               key={index}
               pageNumber={index + 1}
               width={width}
+              devicePixelRatio={Math.min(window.devicePixelRatio || 1, 2)}
               loading={null}
               aria-label={`${title}, page ${index + 1} of ${pageCount}`}
               className="overflow-hidden rounded-sm bg-white shadow-[0_1.5rem_4rem_rgba(20,18,16,0.14)] ring-1 ring-primary/10"

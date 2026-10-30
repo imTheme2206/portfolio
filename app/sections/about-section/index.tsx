@@ -25,7 +25,7 @@ export const About = () => {
     <section
       ref={sectionRef}
       id="about"
-      className="relative z-30 -mt-10 bg-background sm:-mt-16"
+      className="relative z-30 -mt-10 overflow-x-clip bg-background sm:-mt-16"
     >
       <div className="hidden h-[280vh] motion-reduce:h-auto lg:block">
         <div
