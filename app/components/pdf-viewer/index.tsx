@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { ViewerErrorBoundary } from "./viewer-error-boundary";
 
 // pdf.js touches browser-only APIs (DOMMatrix, workers), so it must not run during SSR.
 const PdfPages = dynamic(
@@ -45,21 +46,24 @@ export const PdfViewer = ({ file, title, preview }: PdfViewerProps) => {
         </p>
         <a
           href={file}
-          download
+          target="_blank"
+          rel="noopener noreferrer"
           className="mt-4 inline-block font-mono text-xs uppercase tracking-widest underline underline-offset-4"
         >
-          Download the PDF instead
+          Open the PDF instead ↗
         </a>
       </div>
     </div>
   );
 
   return (
-    <PdfPages
-      file={file}
-      title={title}
-      loading={placeholder}
-      error={error}
-    />
+    <ViewerErrorBoundary key={file} fallback={error}>
+      <PdfPages
+        file={file}
+        title={title}
+        loading={placeholder}
+        error={error}
+      />
+    </ViewerErrorBoundary>
   );
 };
